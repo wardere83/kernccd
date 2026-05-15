@@ -587,6 +587,14 @@
     html[data-a11y-spacing="on"] body { line-height:1.85; letter-spacing:0.02em; word-spacing:0.06em; }
     html[data-a11y-guide="on"] .a11y-reading-guide { display:block; }
     .a11y-reading-guide { position:fixed; left:0; right:0; height:34px; background:rgba(255,221,0,0.20); border-top:1px solid rgba(255,180,0,0.5); border-bottom:1px solid rgba(255,180,0,0.5); pointer-events:none; z-index:998; display:none; }
+
+    /* Rotating VR avatar — sits where the Active pill used to be in the
+       topbar-right. 36px sized so it stays proportional to the 38px icon-btn
+       neighbors without shifting the topbar height. */
+    .vr-avatar { width:36px; height:36px; border-radius:50%; flex-shrink:0; display:block; background:radial-gradient(circle at 30% 30%, #fefefe 0%, #e6ecf2 60%, #c7d2dd 100%); padding:2px; box-shadow:0 1px 3px rgba(15,23,42,0.18), inset 0 0 0 1px rgba(15,23,42,0.06); animation:vr-spin-cw 7s linear infinite; transform-origin:center; will-change:transform; }
+    .vr-avatar svg { display:block; width:100%; height:100%; }
+    @keyframes vr-spin-cw { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .vr-avatar { animation:none; } }
   </style>
 </head>
 <body>
@@ -682,8 +690,55 @@
         <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--success);background:var(--success-bg);padding:4px 12px;border-radius:20px;">
-          <span style="width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block;"></span> Active
+        <div class="vr-avatar" role="img" aria-label="Rotating avatar wearing a VR headset" title="Rotating avatar wearing a VR headset">
+          <svg viewBox="0 0 60 60" width="100%" height="100%" aria-hidden="true" focusable="false">
+            <defs>
+              <radialGradient id="vrSkin" cx="40%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#fbe0bf"/>
+                <stop offset="55%" stop-color="#e8c4a0"/>
+                <stop offset="100%" stop-color="#b78c63"/>
+              </radialGradient>
+              <linearGradient id="vrLens" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#54c2ff"/>
+                <stop offset="50%" stop-color="#1879d4"/>
+                <stop offset="100%" stop-color="#062c5b"/>
+              </linearGradient>
+              <linearGradient id="vrBand" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#2b2b2b"/>
+                <stop offset="40%" stop-color="#141414"/>
+                <stop offset="100%" stop-color="#000"/>
+              </linearGradient>
+            </defs>
+            <!-- Hair back -->
+            <ellipse cx="30" cy="24" rx="20" ry="19" fill="#2c1c12"/>
+            <!-- Face -->
+            <ellipse cx="30" cy="32" rx="15.5" ry="17.5" fill="url(#vrSkin)"/>
+            <!-- Hair front sweep -->
+            <path d="M14,23 Q30,9 46,23 Q44,18 38,15 Q30,11 22,15 Q16,18 14,23 Z" fill="#1f120a"/>
+            <!-- VR strap behind head -->
+            <rect x="2" y="33" width="56" height="3" rx="1.5" fill="url(#vrBand)"/>
+            <!-- VR headset main body -->
+            <rect x="8" y="27" width="44" height="14" rx="3.5" fill="url(#vrBand)"/>
+            <!-- Headset highlight -->
+            <rect x="9" y="28.5" width="42" height="1.5" rx="0.75" fill="#3a3a3a" opacity="0.85"/>
+            <!-- Left lens -->
+            <circle cx="22" cy="34" r="4.2" fill="#0a1a2c"/>
+            <circle cx="22" cy="34" r="3.4" fill="url(#vrLens)"/>
+            <circle cx="20.5" cy="32.5" r="1.1" fill="#fff" opacity="0.85"/>
+            <!-- Right lens -->
+            <circle cx="38" cy="34" r="4.2" fill="#0a1a2c"/>
+            <circle cx="38" cy="34" r="3.4" fill="url(#vrLens)"/>
+            <circle cx="36.5" cy="32.5" r="1.1" fill="#fff" opacity="0.85"/>
+            <!-- Nose -->
+            <path d="M30,40 Q31,43 30,44 Q29,43 30,40 Z" fill="#c79973" opacity="0.6"/>
+            <!-- Cheeks -->
+            <circle cx="22" cy="44" r="1.6" fill="#d99c75" opacity="0.55"/>
+            <circle cx="38" cy="44" r="1.6" fill="#d99c75" opacity="0.55"/>
+            <!-- Mouth -->
+            <path d="M26,47 Q30,49.5 34,47" stroke="#7a3f25" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+            <!-- Neck -->
+            <path d="M26,46 Q26,52 30,53 Q34,52 34,46 Z" fill="#c79973"/>
+          </svg>
         </div>
       </div>
     </header>
