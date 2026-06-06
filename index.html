@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>   
+<!DOCTYPE html>  
 <!--
   Kern CCD Project Dashboard
   Project dashboard for Kern CCD's VR EEO Faculty Development and Peer
@@ -10,19 +9,19 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="referrer" content="no-referrer-when-downgrade" />
   <meta name="color-scheme" content="light dark" />
   <title>Kern CCD Project · VR EEO Faculty Development &amp; Peer Mentoring Program</title>
   <meta name="description" content="Kern Community College District — VR EEO Faculty Development and Peer Mentoring Program dashboard. $150,000 Tier 1 award under the 2026–2028 EEO Innovative Best Practices initiative. Two-year, multi-college VR faculty development and peer mentoring across Bakersfield, Cerro Coso, and Porterville." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     /* ════════════ MINIMALIST POLISH ON KERN CCD PALETTE ════════════
-       Clean typography (Inter + Oswald), generous whitespace, subtle
+       Clean typography (Source Sans 3 + Crimson Text), generous whitespace, subtle
        layered shadows. KCCD slate-charcoal primary with Bakersfield
        Blue accents; KCCD red used sparingly for status/highlights.
     */
@@ -61,7 +60,7 @@
       --tier2-color:#357CAC; --tier2-bg:rgba(53,124,172,0.08);
       --lift-color:#B10B2D; --lift-bg:rgba(177,11,45,0.08);
       --success:#1a7a3c; --success-bg:rgba(26,122,60,0.08);
-      --font-display:'Oswald','Helvetica Neue',sans-serif; --font-body:'Inter','Helvetica Neue',sans-serif;
+      --font-display:'Crimson Text',Georgia,serif; --font-body:'Source Sans 3','Helvetica Neue',sans-serif;
       --sidebar-w:240px; --header-h:64px; --mobile-nav-h:60px; --content-max:1280px;
       --radius-sm:6px; --radius-md:10px; --radius-lg:16px; --radius-xl:20px;
       --shadow-sm:0 1px 3px rgba(15,23,42,0.08),0 1px 2px rgba(15,23,42,0.04);
@@ -81,31 +80,31 @@
       --shadow-sm:0 1px 3px rgba(0,0,0,0.25); --shadow-md:0 4px 12px rgba(0,0,0,0.35); --shadow-lg:0 12px 32px rgba(0,0,0,0.45);
     }
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-    html { scroll-behavior:smooth; -webkit-text-size-adjust:none; text-size-adjust:none; }
-    body { font-family:var(--font-body); background:var(--bg); color:var(--text-primary); min-height:100dvh; font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; transition:background var(--transition),color var(--transition); }
+    html { scroll-behavior:smooth; -webkit-overflow-scrolling:touch; -webkit-text-size-adjust:none; text-size-adjust:none; }
+    body { font-family:var(--font-body); background:var(--bg); color:var(--text-primary); min-height:100dvh; overflow-x:hidden; font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased; transition:background var(--transition),color var(--transition); }
     img,svg { display:block; max-width:100%; }
     button { cursor:pointer; background:none; border:none; font:inherit; color:inherit; }
     a { color:inherit; text-decoration:none; }
     table { border-collapse:collapse; width:100%; }
     .app { display:flex; min-height:100dvh; }
-    .sidebar { position:fixed; left:0; top:0; height:100dvh; width:var(--sidebar-w); background:var(--ccc-dark-blue); color:#fff; display:flex; flex-direction:column; z-index:200; overflow-y:auto; overflow-x:hidden; transition:transform var(--transition); scrollbar-width:none; will-change:transform; }
+    .sidebar { position:fixed; left:0; top:0; height:100dvh; width:var(--sidebar-w); background:var(--ccc-dark-blue); color:#fff; display:flex; flex-direction:column; z-index:200; overflow-y:hidden; overflow-x:hidden; transition:transform var(--transition); scrollbar-width:none; will-change:transform; }
     .sidebar::-webkit-scrollbar { display:none; }
-    .sidebar-logo { padding:24px 22px 18px; border-bottom:1px solid rgba(255,255,255,0.10); }
+    .sidebar-logo { padding:14px 18px 10px; border-bottom:1px solid rgba(255,255,255,0.10); display:flex; flex-direction:column; align-items:flex-start; }
     .logo-mark { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
     .logo-icon-wrap { width:36px; height:36px; background:var(--ccc-gold); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
     .logo-icon-wrap svg { color:var(--ccc-dark-blue); }
     .logo-title { font-family:var(--font-display); font-size:17px; font-weight:600; color:#fff; line-height:1.2; }
-    .logo-sub { font-size:12px; color:rgba(255,255,255,0.92); font-weight:500; line-height:1.45; margin:0; letter-spacing:0.005em; }
-    .sidebar-section-label { font-size:10.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.65); padding:20px 20px 6px; }
-    .nav-item { display:flex; align-items:center; gap:10px; padding:10px 20px; font-size:13.5px; font-weight:500; color:rgba(255,255,255,0.85); cursor:pointer; border-left:3px solid transparent; transition:all var(--transition); border:none; background:none; width:100%; text-align:left; }
+    .logo-sub { font-size:12.5px; color:rgba(255,255,255,0.95); font-weight:600; line-height:1.45; margin:0; letter-spacing:0.005em; text-align:left; }
+    .sidebar-section-label { font-size:9.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55); padding:14px 18px 4px; }
+    .sidebar-footer { margin-top:auto; padding:14px 18px 18px; border-top:1px solid rgba(255,255,255,0.10); }
+    .sidebar-footer-label { font-size:9.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.85); margin-bottom:4px; }
+    .sidebar-footer-val { font-size:12px; color:rgba(255,255,255,0.85); font-weight:500; line-height:1.35; }
+    .nav-item { display:flex; align-items:center; gap:10px; padding:7px 18px; font-size:13px; font-weight:500; color:rgba(255,255,255,0.85); cursor:pointer; border-left:3px solid transparent; transition:all var(--transition); border:none; background:none; width:100%; text-align:left; }
     .nav-item:hover { background:rgba(255,255,255,0.07); color:#fff; }
     .nav-item.active { background:rgba(255,255,255,0.06); color:#fff; border-left:3px solid var(--kccd-red); }
     .nav-item svg { flex-shrink:0; opacity:0.8; }
     .nav-item.active svg { opacity:1; }
-    .sidebar-footer { margin-top:auto; padding:16px 20px; border-top:1px solid rgba(255,255,255,0.1); }
-    .sidebar-footer-label { font-size:10.5px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.08em; font-weight:600; margin-bottom:4px; }
-    .sidebar-footer-val { font-size:12.5px; color:rgba(255,255,255,0.92); font-weight:500; }
-    .main { margin-left:var(--sidebar-w); flex:1; min-width:0; display:flex; flex-direction:column; height:100dvh; overflow:hidden; }
+                .main { margin-left:var(--sidebar-w); flex:1; min-width:0; display:flex; flex-direction:column; height:100dvh; overflow:hidden; }
     .topbar { position:sticky; top:0; background:var(--bg-surface); border-bottom:1px solid var(--border); height:var(--header-h); display:flex; align-items:center; justify-content:space-between; padding:0 28px; z-index:150; gap:16px; box-shadow:var(--shadow-sm); flex-shrink:0; }
     .topbar-left { display:flex; align-items:center; gap:12px; min-width:0; }
     .topbar-title { font-family:var(--font-display); font-size:20px; font-weight:600; color:var(--ccc-dark-blue); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -145,12 +144,12 @@
     @keyframes overview-ticker-scroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
     @media (prefers-reduced-motion: reduce) { .overview-ticker-track { animation:none; } }
 
-    .grant-meta { background:var(--ccc-dark-blue); border-radius:var(--radius-lg); padding:16px 24px; display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; margin-bottom:24px; }
-    .grant-meta-item { display:flex; flex-direction:column; gap:2px; flex:1 1 auto; min-width:0; }
+    .grant-meta { background:var(--ccc-dark-blue); border-radius:var(--radius-lg); padding:16px 24px; display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:20px; align-items:center; margin-bottom:24px; }
+    .grant-meta-item { display:flex; flex-direction:column; gap:2px; min-width:0; align-items:center; text-align:center; }
     .grant-meta-item label { font-size:10.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.78); margin-bottom:2px; }
     .grant-meta-item span { font-size:13px; font-weight:600; color:#fff; }
     .grant-meta-item span.gold { color:#4ADE80; font-weight:600; }
-    .grant-meta-divider { width:1px; height:32px; background:rgba(255,255,255,0.15); }
+    .grant-meta-divider { width:1px; height:32px; background:rgba(255,255,255,0.25); justify-self:center; }
     /* Overview KPIs — locked 5-up layout for the five tiles so they sit evenly in one row on desktop */
     .kpi-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin-bottom:24px; }
     /* LIFT chip floats above the "4" number on Tier 1 Districts, like a trademark on a logo.
@@ -166,13 +165,17 @@
       letter-spacing:0.06em;
       box-shadow:0 1px 3px rgba(0,0,0,0.18);
     }
-    .kpi-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px 14px; box-shadow:var(--shadow-sm); transition:box-shadow var(--transition),transform var(--transition); min-width:0; }
+    .kpi-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px 14px; box-shadow:var(--shadow-sm); transition:box-shadow var(--transition),transform var(--transition); min-width:0; display:flex; flex-direction:column; min-height:132px; }
+    .kpi-card .kpi-accent-bar { margin-bottom:10px; }
+    .kpi-card .kpi-label { margin:0 0 8px; min-height:14px; }
+    .kpi-card .kpi-value { margin:0 0 4px; }
+    .kpi-card .kpi-sub   { margin:0; }
     .kpi-card:hover { box-shadow:var(--shadow-md); transform:translateY(-1px); }
-    .kpi-label { font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-secondary); margin-bottom:8px; }
+    .kpi-label { font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
     .kpi-value { font-family:var(--font-display); font-size:28px; font-weight:600; line-height:1; margin-bottom:4px; }
     .kpi-value.blue { color:var(--ccc-dark-blue); }
     .kpi-value.medium-blue { color:var(--ccc-medium-blue); }
-    .kpi-value.gold { color:var(--ccc-dark-blue); }
+    .kpi-value.gold { color:var(--ccc-dark-gold); }
     .kpi-value.grey { color:var(--ccc-dark-grey); }
     .kpi-value.green { color:var(--success); }
     [data-theme="dark"] .kpi-value.blue { color:var(--accent-light); }
@@ -203,14 +206,17 @@
     .card-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:8px; background:var(--bg-surface-2); }
     .card-title { font-family:var(--font-display); font-size:16px; font-weight:600; color:var(--text-primary); }
     .card-body { padding:20px; }
-    .data-table-wrap { overflow-x:auto; }
+    .data-table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
     .data-table { width:100%; font-size:13px; }
-    .data-table th { font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-secondary); padding:11px 16px; text-align:left; border-bottom:2px solid var(--border); white-space:nowrap; background:var(--bg-surface-2); }
-    .data-table td { padding:11px 16px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .data-table th { font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-secondary); padding:10px 14px; text-align:left; border-bottom:2px solid var(--border); white-space:nowrap; background:var(--bg-surface-2); }
+    .data-table td { padding:8px 14px; border-bottom:1px solid var(--border); vertical-align:middle; line-height:1.4; }
     .data-table tr:last-child td { border-bottom:none; }
     .data-table tr:hover td { background:var(--bg-surface-2); }
     .data-table .amount { font-family:var(--font-body); font-weight:600; font-size:13px; color:var(--ccc-dark-blue); }
     [data-theme="dark"] .data-table .amount { color:var(--accent-light); }
+    /* Alignment helpers — added only to keep columns lined up; visual styling unchanged */
+    .data-table th.num, .data-table td.num { text-align:right; font-variant-numeric:tabular-nums; }
+    .data-table th.center, .data-table td.center { text-align:center; }
     .tier-badge { position:relative; display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; white-space:nowrap; }
     .tier-badge.tier1 { background:var(--tier1-bg); color:var(--tier1-color); }
     .tier-badge.tier2 { background:var(--tier2-bg); color:var(--tier2-color); }
@@ -367,6 +373,109 @@
     .budget-line.indirect-line .budget-line-label { color:var(--ccc-dark-gold); font-weight:700; }
     .budget-line.indirect-line .budget-line-amount { color:var(--ccc-dark-gold); }
 
+    /* ════════════ Budget Modification Request Form (interactive, mirrors Word doc) ════════════ */
+    .bmr-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); overflow:hidden; margin-top:22px; }
+    .bmr-card-head { background:var(--ccc-dark-blue); padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+    .bmr-title { font-family:var(--font-display); font-size:18px; font-weight:600; color:#fff; letter-spacing:-0.01em; }
+    .bmr-subtitle { font-size:12px; color:rgba(255,255,255,0.72); margin-top:3px; line-height:1.45; max-width:760px; }
+    .bmr-badge { background:#fff; color:var(--ccc-dark-blue); font-size:10.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:4px 11px; border-radius:20px; flex-shrink:0; display:inline-flex; align-items:center; box-sizing:border-box; width:118px; overflow:hidden; white-space:nowrap; }
+    .bmr-ticker { display:inline-flex; flex-shrink:0; animation:bmr-ticker 9s linear infinite; }
+    .bmr-ticker-text { flex-shrink:0; padding-right:1.8em; }
+    @keyframes bmr-ticker { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .bmr-ticker { animation:none; } }
+    .bmr-card-body { padding:20px 22px 22px; }
+
+    .bmr-meta-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px 18px; margin-bottom:20px; }
+    .bmr-field { display:flex; flex-direction:column; gap:5px; }
+    .bmr-field-label { font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text-muted); }
+    .bmr-input, .bmr-textarea { font-family:var(--font-body); font-size:13px; color:var(--text-primary); background:var(--bg-surface); border:1px solid var(--border-strong); border-radius:var(--radius-sm); padding:8px 11px; width:100%; transition:border-color var(--transition),box-shadow var(--transition); }
+    .bmr-input:focus, .bmr-textarea:focus { outline:none; border-color:var(--ccc-dark-blue); box-shadow:0 0 0 3px rgba(0,107,103,0.12); }
+    .bmr-textarea { resize:vertical; min-height:34px; line-height:1.4; }
+    .bmr-input::placeholder, .bmr-textarea::placeholder { color:var(--text-muted); opacity:0.65; }
+
+    .bmr-section-intro { font-size:12.5px; color:var(--text-muted); margin:0 0 16px; line-height:1.5; }
+
+    /* Two distinctly separated year blocks — Year 1 (blue) and Year 2 (gold) */
+    .bmr-year-block { border:1px solid var(--border-strong); border-radius:var(--radius-md); overflow:hidden; margin-bottom:22px; }
+    .bmr-year-block--y1 { border-top:3px solid var(--ccc-dark-blue); }
+    .bmr-year-block--y2 { border-top:3px solid var(--ccc-dark-gold); }
+    .bmr-year-head { display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:13px 18px; background:var(--bg-surface-2); border-bottom:1px solid var(--border); }
+    .bmr-year-chip { font-size:10.5px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; padding:4px 11px; border-radius:20px; color:#fff; white-space:nowrap; }
+    .bmr-year-block--y1 .bmr-year-chip { background:var(--ccc-dark-blue); }
+    .bmr-year-block--y2 .bmr-year-chip { background:var(--ccc-dark-gold); }
+    .bmr-year-head-title { font-family:var(--font-display); font-size:17px; font-weight:600; color:var(--ccc-dark-blue); letter-spacing:-0.01em; }
+    .bmr-year-block--y2 .bmr-year-head-title { color:var(--ccc-dark-gold); }
+    [data-theme="dark"] .bmr-year-block--y1 .bmr-year-head-title { color:var(--accent-light); }
+    .bmr-year-head-dates { font-size:12px; color:var(--text-muted); }
+    .bmr-year-head-total { margin-left:auto; font-size:12.5px; color:var(--text-secondary); white-space:nowrap; }
+    .bmr-year-head-total strong { color:var(--ccc-dark-blue); font-weight:700; }
+    .bmr-year-block--y2 .bmr-year-head-total strong { color:var(--ccc-dark-gold); }
+    [data-theme="dark"] .bmr-year-block--y1 .bmr-year-head-total strong { color:var(--accent-light); }
+    .bmr-year-block .bmr-table-wrap { border:none; border-radius:0; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+    .bmr-table-wrap { border:1px solid var(--border); border-radius:var(--radius-md); overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .bmr-table { width:100%; border-collapse:collapse; min-width:920px; font-size:12.5px; }
+    .bmr-table thead th { background:var(--bg-surface-2); color:var(--ccc-dark-blue); font-size:10.5px; font-weight:700; letter-spacing:0.03em; text-transform:uppercase; text-align:left; padding:10px 10px; border-bottom:2px solid var(--border-strong); vertical-align:bottom; white-space:nowrap; }
+    [data-theme="dark"] .bmr-table thead th { color:var(--accent-light); }
+    .bmr-table thead th small { display:block; font-size:9px; font-weight:600; letter-spacing:0.02em; text-transform:none; color:var(--text-muted); margin-top:2px; }
+    .bmr-table tbody td { padding:7px 8px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .bmr-table tbody tr:hover td { background:var(--bg-surface-2); }
+    .bmr-code { font-weight:700; color:var(--ccc-dark-blue); white-space:nowrap; font-size:13px; }
+    [data-theme="dark"] .bmr-code { color:var(--accent-light); }
+    .bmr-code.indirect { color:var(--ccc-dark-gold); }
+    .bmr-cell-input { font-family:var(--font-body); font-size:12.5px; color:var(--text-primary); background:transparent; border:1px solid transparent; border-radius:var(--radius-sm); padding:6px 8px; width:100%; transition:border-color var(--transition),background var(--transition); }
+    .bmr-cell-input:hover { border-color:var(--border); }
+    .bmr-cell-input:focus { outline:none; border-color:var(--ccc-dark-blue); background:var(--bg-surface); box-shadow:0 0 0 2px rgba(0,107,103,0.12); }
+    .bmr-num { text-align:right; font-variant-numeric:tabular-nums; }
+    .bmr-money-cell { position:relative; }
+    .bmr-money-cell::before { content:'$'; position:absolute; left:9px; top:50%; transform:translateY(-50%); font-size:12px; color:var(--text-muted); pointer-events:none; }
+    .bmr-money-cell .bmr-cell-input { padding-left:18px; }
+    .bmr-balance { text-align:right; font-variant-numeric:tabular-nums; font-weight:700; color:var(--ccc-dark-blue); white-space:nowrap; padding-right:9px; }
+    [data-theme="dark"] .bmr-balance { color:var(--accent-light); }
+    .bmr-balance.neg { color:#c53030; }
+    .bmr-proposed { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; color:var(--text-secondary); white-space:nowrap; padding-right:9px; }
+    .bmr-proposed.modified { color:var(--ccc-dark-gold); font-weight:700; }
+    .bmr-col-narrow { width:70px; }
+    .bmr-col-money { width:120px; }
+    .bmr-col-desc { min-width:150px; }
+    .bmr-col-notes { min-width:170px; }
+    .bmr-table tfoot td { padding:11px 10px; border-top:2px solid var(--border-strong); background:var(--bg-surface-2); font-weight:700; font-size:13px; color:var(--ccc-dark-blue); }
+    [data-theme="dark"] .bmr-table tfoot td { color:var(--accent-light); }
+    .bmr-table tfoot .bmr-total-num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; padding-right:9px; }
+
+    .bmr-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-top:18px; }
+    .bmr-summary-card { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:13px 15px; position:relative; overflow:hidden; }
+    .bmr-summary-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--ccc-dark-blue); }
+    .bmr-summary-card.gold::before { background:var(--ccc-dark-gold); }
+    .bmr-summary-card.grey::before { background:var(--ccc-dark-grey); }
+    .bmr-summary-label { font-size:10.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+    .bmr-summary-value { font-family:var(--font-display); font-size:21px; font-weight:600; color:var(--ccc-dark-blue); line-height:1; }
+    [data-theme="dark"] .bmr-summary-value { color:var(--accent-light); }
+    .bmr-summary-sub { font-size:11px; color:var(--text-muted); margin-top:5px; line-height:1.35; }
+    .bmr-summary-value.ok { color:#1f9d57; }
+    .bmr-summary-value.warn { color:#c53030; }
+    .bmr-reconcile-pill { display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:20px; margin-top:6px; }
+    .bmr-reconcile-pill.ok { background:rgba(31,157,87,0.12); color:#1f9d57; }
+    .bmr-reconcile-pill.warn { background:rgba(197,48,48,0.12); color:#c53030; }
+
+    .bmr-footer { display:flex; align-items:flex-end; justify-content:space-between; gap:18px; margin-top:20px; flex-wrap:wrap; }
+    .bmr-footer .bmr-field { flex:1; min-width:240px; }
+    .bmr-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .bmr-btn { font-family:var(--font-body); font-size:12.5px; font-weight:600; padding:9px 16px; border-radius:var(--radius-md); border:1px solid var(--border-strong); background:var(--bg-surface); color:var(--text-secondary); cursor:pointer; transition:all var(--transition); white-space:nowrap; }
+    .bmr-btn:hover { background:var(--bg-surface-2); border-color:var(--ccc-dark-blue); color:var(--ccc-dark-blue); }
+    .bmr-btn.primary { background:var(--ccc-dark-blue); border-color:var(--ccc-dark-blue); color:#fff; }
+    .bmr-btn.primary:hover { background:var(--ccc-darker-blue); color:#fff; }
+    .bmr-saved-note { font-size:11px; color:var(--text-muted); margin-top:10px; display:flex; align-items:center; gap:6px; }
+    @media (max-width:880px) {
+      .bmr-meta-grid { grid-template-columns:1fr; }
+      .bmr-summary { grid-template-columns:1fr 1fr; }
+    }
+    @media print {
+      .sidebar, .topbar, .mobile-nav, .bmr-actions { display:none !important; }
+      .main { margin-left:0 !important; }
+      .bmr-table-wrap { overflow:visible !important; }
+    }
+
     .timeline-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); overflow:hidden; margin-bottom:20px; }
     .timeline-row { display:flex; align-items:center; padding:10px 20px; border-bottom:1px solid var(--border); gap:12px; }
     .timeline-row:last-child { border-bottom:none; }
@@ -388,31 +497,41 @@
     .tl-hbi { flex:1; text-align:center; }
     .tl-ht { width:80px; flex-shrink:0; text-align:right; }
 
-    .contacts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
-    .contact-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); transition:box-shadow var(--transition); }
-    .contact-card:hover { box-shadow:var(--shadow-md); }
-    .contact-card-header { background:var(--ccc-dark-blue); padding:12px 16px; }
-    .contact-name { font-size:15px; font-weight:600; color:var(--text-primary); margin:2px 0 4px; }
-    .contact-card-region { font-size:13px; color:var(--text-secondary); margin-bottom:8px; }
-    .contact-card-address { display:none; }
-    .contact-phone { display:block; font-size:11.5px; color:var(--text-secondary); margin-top:1px; text-decoration:none; }
-    .contact-phone:hover { color:var(--ccc-medium-blue); }
-    [data-theme="dark"] .contact-phone:hover { color:var(--accent-light); }
-    .contact-body { padding:14px 16px; }
-    .contact-person { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
-    .contact-person:last-child { border-bottom:none; }
-    .contact-avatar { width:72px; height:72px; border-radius:50%; background:var(--tier1-bg); color:var(--tier1-color); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; flex-shrink:0; border:1px solid var(--border); }
-    .contact-info { flex:1; min-width:0; }
-    .contact-name { font-size:13px; font-weight:600; color:var(--text-primary); }
-    .contact-role { font-size:11px; color:var(--text-muted); margin-bottom:2px; }
-    .contact-email { font-size:11.5px; color:var(--ccc-medium-blue); word-break:break-all; }
-    [data-theme="dark"] .contact-email { color:var(--accent-light); }
+    .contacts-subhead { font-family:var(--font-display); font-size:clamp(11px, 3.4vw, 18px); font-weight:700; color:var(--ccc-dark-blue); letter-spacing:-0.012em; margin:24px 0 14px; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .contacts-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:18px; align-items:stretch; padding:4px 0; }
+    .contact-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px; transition:box-shadow var(--transition), border-color var(--transition); display:flex; gap:14px; align-items:stretch; box-shadow:var(--shadow-sm); min-height:250px; }
+    .contact-card:hover { box-shadow:var(--shadow-md); border-color:var(--ccc-medium-blue); }
+    .contact-photo { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:50%; overflow:hidden; background:linear-gradient(135deg, var(--tier1-bg) 0%, var(--bg-surface-2) 100%); }
+    .contact-photo-initials { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:22px; font-weight:600; letter-spacing:-0.01em; color:var(--ccc-dark-blue); z-index:0; }
+    [data-theme="dark"] .contact-photo-initials { color:var(--accent-light); }
+    .contact-photo img { width:100%; height:100%; object-fit:cover; object-position:center 22%; display:block; position:relative; z-index:1; }
+    .contact-card-body { flex:1; min-width:0; display:flex; flex-direction:column; }
+    .contact-card-name { font-family:var(--font-display); font-size:14.5px; font-weight:600; color:var(--text-primary); line-height:1.25; letter-spacing:-0.005em; margin:0 0 4px; min-height:18px; word-wrap:break-word; }
+    .contact-card-title { font-size:11.5px; color:var(--text-secondary); line-height:1.45; min-height:50px; }
+    .contact-card-role { display:block; align-self:stretch; text-align:center; font-size:9.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:var(--ccc-medium-blue); margin-top:14px; padding:6px 10px; border:1px solid var(--ccc-medium-blue); border-radius:4px; line-height:1.3; }
+    [data-theme="dark"] .contact-card-role { color:var(--accent-light); border-color:var(--accent-light); }
+    .contact-card-divider { height:1px; background:var(--border); margin:12px 0 10px; }
+    .contact-card-links { display:flex; flex-direction:column; gap:5px; min-width:0; }
+    .contact-card-body > .contact-card-divider { margin-top:auto; }
+    .contact-card-link { font-size:11.5px; color:var(--text-secondary); text-decoration:none; display:flex; align-items:center; gap:7px; line-height:1.4; min-width:0; cursor:pointer; }
+    .contact-card-link span { min-width:0; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .contact-card-link:hover { color:var(--ccc-medium-blue); text-decoration:underline; }
+    [data-theme="dark"] .contact-card-link:hover { color:var(--accent-light); }
+    .contact-card-link svg { flex-shrink:0; opacity:0.55; }
+    .contact-card-phone-row { display:flex; align-items:center; gap:6px; min-width:0; font-size:11.5px; line-height:1.4; }
+    .contact-card-phone-row .contact-card-link { flex:0 1 auto; }
+    .contact-card-phone-row .contact-card-link span { flex:0 0 auto; overflow:visible; text-overflow:clip; }
+    .contact-card-ext { color:var(--text-muted); flex-shrink:0; }
+    @media (max-width:1000px) { .contacts-grid { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
 
-    .mobile-nav { display:none; position:fixed; bottom:0; left:0; right:0; height:var(--mobile-nav-h); background:var(--ccc-dark-blue); border-top:1px solid rgba(255,255,255,0.1); z-index:300; padding:0 4px; }
-    .mobile-nav-inner { display:flex; height:100%; }
-    .mobile-nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; color:rgba(255,255,255,0.78); font-size:10px; font-weight:600; letter-spacing:0.03em; cursor:pointer; border-radius:8px; transition:all var(--transition); padding:6px 2px; border:none; background:none; }
+    .mobile-nav { display:none; position:fixed; top:var(--header-h); left:0; right:0; height:56px; background:var(--ccc-dark-blue); border-bottom:1px solid rgba(255,255,255,0.12); z-index:120; padding:0; overflow:hidden; }
+    .mobile-nav-inner { display:flex; align-items:stretch; height:100%; width:100%; padding:0 2px; }
+    .mobile-nav-btn { flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; color:rgba(255,255,255,0.65); font-size:10px; font-weight:600; letter-spacing:0.01em; cursor:pointer; transition:color var(--transition); padding:6px 2px; border:none; background:none; position:relative; }
+    .mobile-nav-btn span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+    .mobile-nav-btn svg { width:18px; height:18px; flex-shrink:0; }
     .mobile-nav-btn.active { color:#fff; }
-    .mobile-nav-btn svg { flex-shrink:0; }
+    .mobile-nav-btn.active::after { content:''; position:absolute; left:6px; right:6px; bottom:0; height:3px; background:var(--ccc-gold); border-radius:2px; }
+    .mobile-nav-btn:active { background:rgba(255,255,255,0.06); }
     .hamburger-btn { display:none; width:38px; height:38px; border-radius:var(--radius-md); align-items:center; justify-content:center; color:var(--text-secondary); border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; transition:all var(--transition); }
     .hamburger-btn:hover { background:var(--bg-surface-2); }
     .sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:150; }
@@ -420,10 +539,8 @@
       .sidebar { transform:translateX(-100%); }
       .sidebar.open { transform:translateX(0); box-shadow:var(--shadow-lg); }
       .sidebar-overlay.open { display:block; }
-      .hamburger-btn { display:flex; }
-      .main { margin-left:0; height:auto; }
-      .topbar { padding:0 16px; }
-      .content { padding:16px; }
+      .hamburger-btn { display:none !important; }
+      .main { margin-left:0; height:auto; padding-bottom:0; }
     }
     @media (max-width:880px) {
       .kpi-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
@@ -435,7 +552,6 @@
       .chart-grid { grid-template-columns:1fr; }
       .outcomes-grid { grid-template-columns:1fr; }
       .mobile-nav { display:flex; }
-      .main { padding-bottom:var(--mobile-nav-h); height:auto; }
       .district-grid,.contacts-grid,.budget-grid { grid-template-columns:1fr; }
       .grant-meta { gap:14px; }
       .grant-meta-divider { display:none; }
@@ -472,11 +588,11 @@
     .cccco-logo-link:focus-visible { outline:2px solid var(--ccc-gold); outline-offset:4px; border-radius:6px; }
     .cccco-wordmark { display:block; width:100%; max-width:220px; height:auto; }
     .cccco-wordmark--white { filter:drop-shadow(0 1px 2px rgba(0,0,0,0.08)); }
-    .kern-logo-link { display:block; text-decoration:none; margin:0 0 12px; line-height:0; }
+    .kern-logo-link { display:block; text-decoration:none; margin:0 0 8px; line-height:0; -webkit-tap-highlight-color:transparent; }
     .kern-logo-link:focus-visible { outline:2px solid var(--kccd-red); outline-offset:6px; border-radius:6px; }
-    .kern-logo-mark { display:block; width:auto; max-width:100%; height:32px; }
-    .logo-divider { height:1px; background:rgba(255,255,255,0.16); margin:14px 0 12px; }
-    .logo-attribution { font-size:11px; color:rgba(255,255,255,0.65); letter-spacing:0.02em; margin-top:6px; line-height:1.4; }
+    .kern-logo-mark { display:block; width:auto; max-width:100%; height:38px; image-rendering:-webkit-optimize-contrast; image-rendering:crisp-edges; filter:drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
+    .logo-divider { height:1px; background:linear-gradient(90deg, rgba(255,255,255,0.28), rgba(255,255,255,0.05)); margin:8px 0 8px; width:100%; }
+    .logo-attribution { font-size:10.5px; color:rgba(255,255,255,0.6); letter-spacing:0.04em; margin-top:4px; line-height:1.35; font-weight:500; }
     .cccco-topbar-stamp { display:inline-flex; align-items:center; padding:6px 14px; height:44px; border-radius:22px; border:1px solid var(--border); background:var(--bg-surface); box-shadow:0 1px 2px rgba(0,47,109,0.04); transition:box-shadow .15s ease, border-color .15s ease; }
     .cccco-topbar-stamp:hover { box-shadow:0 2px 6px rgba(0,47,109,0.08); border-color:rgba(0,47,109,0.2); }
     .cccco-topbar-stamp img { height:26px; width:auto; display:block; object-fit:contain; }
@@ -495,7 +611,17 @@
     @media (max-width:760px) { .kccd-topbar-stamp { padding:4px 10px; height:34px; } .kccd-topbar-stamp img { height:18px; } } @media (max-width:520px) { .kccd-topbar-stamp { display:none; } }
 
     /* Overview hero card — wraps title + ticker on dark slate */
-    .overview-hero { background:var(--bg-surface); border-radius:var(--radius-lg); padding:22px 26px 18px; margin-bottom:24px; box-shadow:var(--shadow-sm); border:1px solid var(--border); border-left:3px solid var(--kccd-red); }
+    .overview-hero { background:var(--bg-surface); border-radius:var(--radius-lg); padding:18px 26px 18px; margin-bottom:24px; box-shadow:var(--shadow-sm); border:1px solid var(--border); border-left:3px solid var(--kccd-red); position:relative; }
+    .overview-hero-text { position:relative; }
+    .overview-hero-text h2 { padding-right:64px; }
+    .overview-hero-text .overview-ticker { padding-right:60px; }
+    .overview-hero-avatar { position:absolute; right:6px; top:4px; width:54px; height:54px; pointer-events:none; border-radius:50%; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.15), 0 0 0 1px var(--border); background:#f6f4ef; perspective:520px; }
+    .overview-hero-avatar .vr-woman { width:100%; height:100%; display:block; overflow:visible; }
+    .vr-woman .vrw-breath { transform-origin:100px 100px; animation:vrw-breath 5.6s ease-in-out infinite; }
+    .vr-woman .vrw-head   { transform-origin:100px 110px; transform-box:fill-box; transform-style:preserve-3d; transition:transform 0.35s cubic-bezier(.4,.0,.2,1); will-change:transform; }
+    .vr-woman .vrw-catch  { animation:vrw-catch 4.6s ease-in-out infinite; }
+    .vr-woman .vrw-led    { animation:vrw-led 2.6s ease-in-out infinite; }
+    @media (max-width:560px) { .overview-hero { padding:16px 18px 14px; } .overview-hero-text h2 { padding-right:52px; } .overview-hero-text .overview-ticker { padding-right:48px; } .overview-hero-avatar { width:44px; height:44px; right:4px; top:4px; } }
     .overview-hero h2 { font-family:var(--font-display); font-size:26px; font-weight:600; color:var(--text-primary); line-height:1.2; margin:0; letter-spacing:-0.02em; }
     .overview-hero .overview-ticker { margin-top:12px; }
     [data-theme="dark"] .overview-hero { background:var(--bg-card); border-left-color:var(--kccd-red); }
@@ -507,7 +633,7 @@
     /* Accessibility feature — drop-in pill button + fixed-overlay modal.
        The button reuses .cccco-topbar-stamp sizing/borders so the topbar
        layout, alignment and structure are unchanged. */
-    .a11y-stamp { color:var(--ccc-dark-blue); cursor:pointer; padding:0 16px; font-family:var(--font-body),Inter,sans-serif; font-size:12.5px; font-weight:600; letter-spacing:0.02em; }
+    .a11y-stamp { color:var(--ccc-dark-blue); cursor:pointer; padding:0 16px; font-family:var(--font-body),Source Sans 3,Helvetica Neue,sans-serif; font-size:12.5px; font-weight:600; letter-spacing:0.02em; }
     .a11y-stamp:hover { color:var(--ccc-medium-blue); border-color:var(--ccc-medium-blue); }
     .a11y-stamp:focus-visible { outline:2px solid var(--ccc-dark-blue); outline-offset:2px; }
     .a11y-stamp-label { display:inline-block; line-height:1; }
@@ -515,9 +641,9 @@
     .a11y-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:24px; }
     .a11y-modal[hidden] { display:none; }
     .a11y-modal-backdrop { position:absolute; inset:0; background:rgba(15,23,42,0.55); animation:a11yFadeIn 0.18s ease; }
-    .a11y-modal-card { position:relative; width:100%; max-width:420px; max-height:calc(100vh - 48px); overflow-y:auto; background:#fff; color:#0f172a; border-radius:14px; box-shadow:0 24px 64px rgba(15,23,42,0.32),0 4px 12px rgba(15,23,42,0.18); padding:22px 22px 18px; animation:a11ySlideIn 0.22s cubic-bezier(0.16,1,0.3,1); font-family:var(--font-body),Inter,sans-serif; }
+    .a11y-modal-card { position:relative; width:100%; max-width:420px; max-height:calc(100vh - 48px); overflow-y:auto; background:#fff; color:#0f172a; border-radius:14px; box-shadow:0 24px 64px rgba(15,23,42,0.32),0 4px 12px rgba(15,23,42,0.18); padding:22px 22px 18px; animation:a11ySlideIn 0.22s cubic-bezier(0.16,1,0.3,1); font-family:var(--font-body),Source Sans 3,Helvetica Neue,sans-serif; }
     .a11y-modal-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:4px; }
-    .a11y-modal-title { font-family:var(--font-display),Oswald,sans-serif; font-size:20px; font-weight:600; color:#0f172a; margin:0; letter-spacing:-0.01em; }
+    .a11y-modal-title { font-family:var(--font-display),Crimson Text,Georgia,serif; font-size:20px; font-weight:600; color:#0f172a; margin:0; letter-spacing:-0.01em; }
     .a11y-modal-close { width:32px; height:32px; padding:0; display:inline-flex; align-items:center; justify-content:center; background:transparent; border:none; color:#475569; cursor:pointer; border-radius:6px; }
     .a11y-modal-close:hover { background:#f1f5f9; color:#0f172a; }
     .a11y-modal-close:focus-visible { outline:2px solid #0066BA; outline-offset:2px; }
@@ -588,16 +714,25 @@
     html[data-a11y-spacing="on"] body { line-height:1.85; letter-spacing:0.02em; word-spacing:0.06em; }
     html[data-a11y-guide="on"] .a11y-reading-guide { display:block; }
     .a11y-reading-guide { position:fixed; left:0; right:0; height:34px; background:rgba(255,221,0,0.20); border-top:1px solid rgba(255,180,0,0.5); border-bottom:1px solid rgba(255,180,0,0.5); pointer-events:none; z-index:998; display:none; }
-
-    /* Rotating VR avatar — sits where the Active pill used to be in the
-       topbar-right. 36px sized so it stays proportional to the 38px icon-btn
-       neighbors without shifting the topbar height. */
-    .vr-avatar { width:36px; height:36px; border-radius:50%; flex-shrink:0; display:block; background:radial-gradient(circle at 30% 30%, #fefefe 0%, #e6ecf2 60%, #c7d2dd 100%); padding:2px; box-shadow:0 1px 3px rgba(15,23,42,0.18), inset 0 0 0 1px rgba(15,23,42,0.06); animation:vr-spin-ccw 7s linear infinite; transform-origin:center; will-change:transform; }
-    .vr-avatar svg { display:block; width:100%; height:100%; }
-    /* Counter-clockwise (negative rotation) = motion reads "left → right"
-       across the top of the circle, matching natural reading direction. */
-    @keyframes vr-spin-ccw { from { transform:rotate(0deg); } to { transform:rotate(-360deg); } }
-    @media (prefers-reduced-motion: reduce) { .vr-avatar { animation:none; } }
+    /* Program Overview avatar — realistic cartoon with interactive head loop */
+    @keyframes vrw-breath { 0%, 100% { transform:scale(1); } 50% { transform:scale(1.018); } }
+    @keyframes vrw-catch {
+      0%, 100% { opacity:0.92; }
+      30%      { opacity:0.55; }
+      50%      { opacity:0.1; }    /* implied blink */
+      55%      { opacity:0.85; }
+      75%      { opacity:0.6; }
+    }
+    @keyframes vrw-led   { 0%, 100% { opacity:0.95; } 50% { opacity:0.55; } }
+    @media (prefers-reduced-motion: reduce) {
+      .vr-woman .vrw-breath, .vr-woman .vrw-head, .vr-woman .vrw-catch, .vr-woman .vrw-led { animation:none; }
+    }
+      /* Mobile nav clearance */
+    @media (max-width:768px) {
+      .mobile-nav { display:flex; }
+      .content { padding-top:56px; }
+      .main { padding-bottom:0; height:100dvh; }
+    }
   </style>
 </head>
 <body>
@@ -611,8 +746,11 @@
 <div class="app">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <a class="kern-logo-link" href="https://www.kccd.edu" target="_blank" rel="noopener noreferrer" aria-label="Kern Community College District"><img class="kern-logo-mark" src="Kern_small_logo.png" alt="Kern CCD" /></a>
-      <div class="logo-sub">VR EEO Faculty Development &amp; Peer Mentoring</div>
+      <a class="kern-logo-link" href="https://www.kccd.edu" target="_blank" rel="noopener noreferrer" aria-label="Kern Community College District">
+        <img class="kern-logo-mark" src="Kern_small_logo.png" alt="Kern Community College District" width="1254" height="160" />
+      </a>
+      <div class="logo-divider" aria-hidden="true"></div>
+      <div class="logo-sub">VR EEO Faculty Development<br/>&amp; Peer Mentoring</div>
       <div class="logo-attribution">Bakersfield &middot; Cerro Coso &middot; Porterville</div>
     </div>
 
@@ -652,11 +790,9 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
       Spend-Down Monitor
     </button>
-
     <div class="sidebar-footer">
-      <div class="sidebar-footer-label" data-i18n="meta_monitor">Grant Monitor</div>
-      <div class="sidebar-footer-val">Bulle Consulting</div>
-      <div class="sidebar-footer-val" style="color:rgba(255,255,255,0.35);font-size:11px;margin-top:2px;">admin@bulleconsulting.com</div>
+      <div class="sidebar-footer-label">Administered by</div>
+      <div class="sidebar-footer-val">California Community Colleges Chancellor&rsquo;s Office</div>
     </div>
   </aside>
 
@@ -668,8 +804,7 @@
         <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Open menu">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
-        <span class="topbar-title" data-i18n="topbar_title">Kern CCD Project</span>
-        <span class="topbar-badge">2026–2028 EEO IBP</span>
+        
       </div>
       <div class="topbar-right">
       <button class="cccco-topbar-stamp a11y-stamp" id="a11yStamp" type="button" onclick="openA11yModal()" aria-haspopup="dialog" aria-controls="a11yModal" aria-label="Open accessibility options" title="Accessibility"><span class="a11y-stamp-label">Accessibility</span></button>
@@ -685,63 +820,16 @@
             <button class="lang-option active" onclick="setLang('en')"><span class="lang-flag">🇺🇸</span><span class="lang-name">English</span><span class="lang-native">English</span></button>
             <button class="lang-option" onclick="setLang('es')"><span class="lang-flag">🇲🇽</span><span class="lang-name">Spanish</span><span class="lang-native">Español</span></button>
             <button class="lang-option" onclick="setLang('vi')"><span class="lang-flag">🇻🇳</span><span class="lang-name">Vietnamese</span><span class="lang-native">Tiếng Việt</span></button>
-            <button class="lang-option" onclick="setLang('ar')"><span class="lang-flag">🇸🇦</span><span class="lang-name">Arabic</span><span class="lang-native">العربية</span></button>
-            <button class="lang-option" onclick="setLang('tl')"><span class="lang-flag">🇵🇭</span><span class="lang-name">Tagalog</span><span class="lang-native">Tagalog</span></button>
+            <button class="lang-option" onclick="setLang('hy')"><span class="lang-flag">🇦🇲</span><span class="lang-name">Armenian</span><span class="lang-native">Հայերեն</span></button>
+            <button class="lang-option" onclick="setLang('ko')"><span class="lang-flag">🇰🇷</span><span class="lang-name">Korean</span><span class="lang-native">한국어</span></button>
             <button class="lang-option" onclick="setLang('zh')"><span class="lang-flag">🇹🇼</span><span class="lang-name">Chinese (Traditional)</span><span class="lang-native">繁體中文</span></button>
           </div>
         </div>
         <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <div class="vr-avatar" role="img" aria-label="Rotating avatar wearing a VR headset" title="Rotating avatar wearing a VR headset">
-          <svg viewBox="0 0 60 60" width="100%" height="100%" aria-hidden="true" focusable="false">
-            <defs>
-              <radialGradient id="vrSkin" cx="40%" cy="35%" r="65%">
-                <stop offset="0%" stop-color="#fbe0bf"/>
-                <stop offset="55%" stop-color="#e8c4a0"/>
-                <stop offset="100%" stop-color="#b78c63"/>
-              </radialGradient>
-              <linearGradient id="vrLens" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#54c2ff"/>
-                <stop offset="50%" stop-color="#1879d4"/>
-                <stop offset="100%" stop-color="#062c5b"/>
-              </linearGradient>
-              <linearGradient id="vrBand" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#2b2b2b"/>
-                <stop offset="40%" stop-color="#141414"/>
-                <stop offset="100%" stop-color="#000"/>
-              </linearGradient>
-            </defs>
-            <!-- Hair back -->
-            <ellipse cx="30" cy="24" rx="20" ry="19" fill="#2c1c12"/>
-            <!-- Face -->
-            <ellipse cx="30" cy="32" rx="15.5" ry="17.5" fill="url(#vrSkin)"/>
-            <!-- Hair front sweep -->
-            <path d="M14,23 Q30,9 46,23 Q44,18 38,15 Q30,11 22,15 Q16,18 14,23 Z" fill="#1f120a"/>
-            <!-- VR strap behind head -->
-            <rect x="2" y="33" width="56" height="3" rx="1.5" fill="url(#vrBand)"/>
-            <!-- VR headset main body -->
-            <rect x="8" y="27" width="44" height="14" rx="3.5" fill="url(#vrBand)"/>
-            <!-- Headset highlight -->
-            <rect x="9" y="28.5" width="42" height="1.5" rx="0.75" fill="#3a3a3a" opacity="0.85"/>
-            <!-- Left lens -->
-            <circle cx="22" cy="34" r="4.2" fill="#0a1a2c"/>
-            <circle cx="22" cy="34" r="3.4" fill="url(#vrLens)"/>
-            <circle cx="20.5" cy="32.5" r="1.1" fill="#fff" opacity="0.85"/>
-            <!-- Right lens -->
-            <circle cx="38" cy="34" r="4.2" fill="#0a1a2c"/>
-            <circle cx="38" cy="34" r="3.4" fill="url(#vrLens)"/>
-            <circle cx="36.5" cy="32.5" r="1.1" fill="#fff" opacity="0.85"/>
-            <!-- Nose -->
-            <path d="M30,40 Q31,43 30,44 Q29,43 30,40 Z" fill="#c79973" opacity="0.6"/>
-            <!-- Cheeks -->
-            <circle cx="22" cy="44" r="1.6" fill="#d99c75" opacity="0.55"/>
-            <circle cx="38" cy="44" r="1.6" fill="#d99c75" opacity="0.55"/>
-            <!-- Mouth -->
-            <path d="M26,47 Q30,49.5 34,47" stroke="#7a3f25" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-            <!-- Neck -->
-            <path d="M26,46 Q26,52 30,53 Q34,52 34,46 Z" fill="#c79973"/>
-          </svg>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--success);background:var(--success-bg);padding:4px 12px;border-radius:20px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block;"></span> Active
         </div>
       </div>
     </header>
@@ -751,19 +839,218 @@
       <!-- OVERVIEW -->
       <div id="section-overview" class="section active">
         <div class="overview-hero">
-          <h2 data-i18n="overview_title">Program Overview</h2>
-          <div class="overview-ticker" aria-label="Program overview headline">
-            <div class="overview-ticker-track">
-              <span class="overview-ticker-item" data-i18n="overview_sub">Kern Community College District — Tier 1 grantee, VR EEO Faculty Development and Peer Mentoring Program</span>
-              <span class="overview-ticker-item" data-i18n="overview_sub" aria-hidden="true">Kern Community College District — Tier 1 grantee, VR EEO Faculty Development and Peer Mentoring Program</span>
-              <span class="overview-ticker-item" data-i18n="overview_sub" aria-hidden="true">Kern Community College District — Tier 1 grantee, VR EEO Faculty Development and Peer Mentoring Program</span>
+          <div class="overview-hero-text">
+            <h2 data-i18n="overview_title">Program Overview</h2>
+            <div class="overview-ticker" aria-label="Program overview headline">
+              <div class="overview-ticker-track">
+                <span class="overview-ticker-item" data-i18n="overview_sub">Kern Community College District — Tier 1 grantee, VR EEO Faculty Development and Peer Mentoring Program</span>
+                <span class="overview-ticker-item" data-i18n="overview_sub" aria-hidden="true">Kern Community College District — Tier 1 grantee, VR EEO Faculty Development and Peer Mentoring Program</span>
+                <span class="overview-ticker-item" data-i18n="overview_sub" aria-hidden="true">Kern Community College District — Tier 1 grantee, VR EEO Faculty Development and Peer Mentoring Program</span>
+              </div>
             </div>
+          </div>
+          <div class="overview-hero-avatar" role="img" aria-label="Animated cartoon portrait of a person wearing a white VR headset, head looks left, right, and up on a loop">
+            <svg id="vrwAvatar" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="vr-woman" aria-hidden="true">
+              <defs>
+                <!-- ===== Realistic skin shading (multi-stop with subsurface warmth) ===== -->
+                <radialGradient id="vrwSkinBase" cx="46%" cy="42%" r="68%">
+                  <stop offset="0%"   stop-color="#fbdbb1"/>
+                  <stop offset="40%"  stop-color="#e6b18a"/>
+                  <stop offset="78%"  stop-color="#9d6e4b"/>
+                  <stop offset="100%" stop-color="#5a371f"/>
+                </radialGradient>
+                <radialGradient id="vrwSkinKey" cx="40%" cy="30%" r="40%">
+                  <stop offset="0%"   stop-color="#fff1d8" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#fff1d8" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="vrwSkinFill" cx="68%" cy="62%" r="48%">
+                  <stop offset="0%"   stop-color="#a06038" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#a06038" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="vrwSkinCheek" cx="50%" cy="55%" r="55%">
+                  <stop offset="0%"   stop-color="#e9836b" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#e9836b" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="vrwSkinJaw" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#000" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#3a1f12" stop-opacity="0.42"/>
+                </linearGradient>
+                <linearGradient id="vrwSkinTemple" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="#5e3920" stop-opacity="0.5"/>
+                  <stop offset="22%"  stop-color="#5e3920" stop-opacity="0"/>
+                  <stop offset="78%"  stop-color="#5e3920" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#5e3920" stop-opacity="0.5"/>
+                </linearGradient>
+                <!-- ===== Hair ===== -->
+                <linearGradient id="vrwHair" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#2e1a10"/>
+                  <stop offset="55%"  stop-color="#170c06"/>
+                  <stop offset="100%" stop-color="#080302"/>
+                </linearGradient>
+                <linearGradient id="vrwHairShine" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#8c5530" stop-opacity="0.85"/>
+                  <stop offset="100%" stop-color="#8c5530" stop-opacity="0"/>
+                </linearGradient>
+                <!-- ===== Vision-Pro WHITE headset ===== -->
+                <linearGradient id="vrwHsBody" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#ffffff"/>
+                  <stop offset="40%"  stop-color="#f1f3f6"/>
+                  <stop offset="80%"  stop-color="#d9dde2"/>
+                  <stop offset="100%" stop-color="#aeb4bb"/>
+                </linearGradient>
+                <linearGradient id="vrwHsHi" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="#b9bec5"/>
+                  <stop offset="50%"  stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#b9bec5"/>
+                </linearGradient>
+                <linearGradient id="vrwHsRim" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#000" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#2a2f35" stop-opacity="0.45"/>
+                </linearGradient>
+                <linearGradient id="vrwGlass" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#3a414c"/>
+                  <stop offset="22%"  stop-color="#1c2330"/>
+                  <stop offset="60%"  stop-color="#0a0e16"/>
+                  <stop offset="100%" stop-color="#04060b"/>
+                </linearGradient>
+                <linearGradient id="vrwGlassReflect" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+                <radialGradient id="vrwLens" cx="38%" cy="32%" r="76%">
+                  <stop offset="0%"   stop-color="#cfeaff"/>
+                  <stop offset="22%"  stop-color="#4ea7f2"/>
+                  <stop offset="60%"  stop-color="#0c3f7b"/>
+                  <stop offset="92%"  stop-color="#03102a"/>
+                  <stop offset="100%" stop-color="#010512"/>
+                </radialGradient>
+                <radialGradient id="vrwLensRim" cx="50%" cy="50%" r="55%">
+                  <stop offset="78%"  stop-color="#000" stop-opacity="0"/>
+                  <stop offset="100%" stop-color="#000" stop-opacity="0.7"/>
+                </radialGradient>
+                <linearGradient id="vrwStrap" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#eceae5"/>
+                  <stop offset="100%" stop-color="#b8b4ab"/>
+                </linearGradient>
+                <linearGradient id="vrwFoam" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#2a2a2e"/>
+                  <stop offset="100%" stop-color="#0e0e10"/>
+                </linearGradient>
+                <filter id="vrwSoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="0.45"/></filter>
+                <filter id="vrwLed"  x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <filter id="vrwShadow" x="-20%" y="-20%" width="140%" height="160%"><feGaussianBlur in="SourceAlpha" stdDeviation="1.2"/><feOffset dx="0" dy="1.4"/><feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+
+              <!-- soft frame background -->
+              <rect x="0" y="0" width="200" height="200" fill="#f4f1ea"/>
+
+              <g class="vrw-breath">
+                <g class="vrw-head">
+
+                  <!-- Hair halo -->
+                  <path d="M46,82 Q48,40 100,36 Q152,40 154,82 L156,134 Q132,142 100,142 Q68,142 44,134 Z" fill="url(#vrwHair)"/>
+                  <path d="M56,62 Q92,38 100,38 Q108,38 144,62 Q108,52 100,52 Q92,52 56,62 Z" fill="url(#vrwHairShine)" opacity="0.6"/>
+                  <path d="M46,98 Q40,138 60,144 L74,142 Q70,118 72,96 Z" fill="url(#vrwHair)"/>
+                  <path d="M154,98 Q160,138 140,144 L126,142 Q130,118 128,96 Z" fill="url(#vrwHair)"/>
+                  <!-- baby hairs -->
+                  <path d="M62,68 Q72,64 82,68" stroke="#0e0805" stroke-width="0.8" fill="none" opacity="0.65"/>
+                  <path d="M118,68 Q128,64 138,68" stroke="#0e0805" stroke-width="0.8" fill="none" opacity="0.65"/>
+
+                  <!-- Face: base + key light + fill shadow + temple shading -->
+                  <path d="M66,80 Q66,50 100,50 Q134,50 134,80 L132,116 Q126,138 100,140 Q74,138 68,116 Z" fill="url(#vrwSkinBase)" filter="url(#vrwSoft)"/>
+                  <ellipse cx="86" cy="74" rx="18" ry="14" fill="url(#vrwSkinKey)"/>
+                  <ellipse cx="118" cy="116" rx="18" ry="14" fill="url(#vrwSkinFill)"/>
+                  <path d="M66,68 L134,68 L132,118 Q100,138 68,118 Z" fill="url(#vrwSkinTemple)"/>
+                  <ellipse cx="80" cy="112" rx="6.2" ry="3.8" fill="url(#vrwSkinCheek)"/>
+                  <ellipse cx="120" cy="112" rx="6.2" ry="3.8" fill="url(#vrwSkinCheek)"/>
+                  <!-- cheekbone highlights -->
+                  <ellipse cx="82" cy="106" rx="6" ry="3.4" fill="#fff1d6" opacity="0.4"/>
+                  <ellipse cx="118" cy="106" rx="6" ry="3.4" fill="#fff1d6" opacity="0.4"/>
+                  <!-- Jawline shadow -->
+                  <path d="M68,118 Q100,138 132,118 L130,128 Q100,142 70,128 Z" fill="url(#vrwSkinJaw)"/>
+
+                  <!-- Ears (subtle) -->
+                  <path d="M64,90 Q60,98 62,108 Q66,114 74,112 L74,88 Z" fill="url(#vrwSkinBase)"/>
+                  <path d="M64,93 Q63,100 64,107" stroke="#6b3f25" stroke-width="0.6" fill="none" opacity="0.55"/>
+                  <path d="M136,90 Q140,98 138,108 Q134,114 126,112 L126,88 Z" fill="url(#vrwSkinBase)"/>
+                  <path d="M136,93 Q137,100 136,107" stroke="#6b3f25" stroke-width="0.6" fill="none" opacity="0.55"/>
+
+                  <!-- Bangs over forehead -->
+                  <path d="M64,66 Q86,46 100,46 Q116,46 136,68 Q116,56 100,56 Q86,56 64,66 Z" fill="url(#vrwHair)"/>
+
+                  <!-- Eyebrows (multi-stroke for realism) -->
+                  <path d="M74,72 Q86,66 96,72" stroke="#1c0e07" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                  <path d="M77,71 Q83,68 89,70" stroke="#1c0e07" stroke-width="0.6" fill="none" opacity="0.75"/>
+                  <path d="M104,72 Q114,66 126,72" stroke="#1c0e07" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                  <path d="M111,70 Q117,68 123,71" stroke="#1c0e07" stroke-width="0.6" fill="none" opacity="0.75"/>
+
+                  <!-- Nose: cartoon-realistic with one-sided lighting -->
+                  <path d="M97,104 Q96,114 98,118.5 Q100,120 102,118.5 Q104,114 103,104 Z" fill="#c79172" opacity="0.6"/>
+                  <path d="M97,104 Q96,114 98,118 L99,114 Q98,109 98,104 Z" fill="#ffe1b8" opacity="0.6"/>
+                  <path d="M103,104 Q104,114 102,118 L101,114 Q102,109 102,104 Z" fill="#7a4630" opacity="0.4"/>
+                  <ellipse cx="98.2" cy="118.6" rx="0.8" ry="0.5" fill="#5a3320" opacity="0.55"/>
+                  <ellipse cx="101.8" cy="118.6" rx="0.8" ry="0.5" fill="#5a3320" opacity="0.55"/>
+
+                  <!-- Lips: natural -->
+                  <path d="M88,124 Q100,121 112,124 Q107,131 100,131.5 Q93,131 88,124 Z" fill="#b5604a"/>
+                  <path d="M88.6,124.4 Q100,125.4 111.4,124.4" stroke="#5a2818" stroke-width="0.55" fill="none" opacity="0.55"/>
+                  <path d="M93,129 Q100,129.6 107,129" stroke="#ffffff" stroke-width="0.35" fill="none" opacity="0.35"/>
+                  <path d="M89,124 Q95,123 100,124.5 Q105,123 111,124" stroke="#8a3a26" stroke-width="0.5" fill="none" opacity="0.5"/>
+
+                  <!-- chin shadow -->
+                  <path d="M90,134 Q100,138 110,134" stroke="#5a3320" stroke-width="0.5" fill="none" opacity="0.35"/>
+
+                  <!-- ===== Vision-Pro WHITE headset ===== -->
+                  <ellipse cx="100" cy="100" rx="48" ry="8" fill="#000" opacity="0.16"/>
+                  <!-- Strap behind -->
+                  <path d="M46,76 Q38,86 42,98 Q48,104 56,102 L72,96 Q66,86 66,76 Z" fill="url(#vrwStrap)"/>
+                  <path d="M154,76 Q162,86 158,98 Q152,104 144,102 L128,96 Q134,86 134,76 Z" fill="url(#vrwStrap)"/>
+                  <path d="M46,80 Q20,90 20,108 Q24,124 50,128" stroke="url(#vrwStrap)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
+                  <path d="M154,80 Q180,90 180,108 Q176,124 150,128" stroke="url(#vrwStrap)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
+
+                  <!-- White face plate -->
+                  <path d="M58,74 Q62,66 74,64 L126,64 Q138,66 142,74 L143,98 Q138,108 126,110 L74,110 Q62,108 57,98 Z" fill="url(#vrwHsBody)" filter="url(#vrwShadow)"/>
+                  <path d="M58,74 Q62,66 74,64 L126,64 Q138,66 142,74 L142,78 Q100,70 58,78 Z" fill="url(#vrwHsHi)" opacity="0.7"/>
+                  <path d="M58,98 Q100,108 142,98 L143,104 Q100,114 57,104 Z" fill="url(#vrwHsRim)"/>
+
+                  <!-- Visor glass -->
+                  <path d="M66,78 Q70,72 78,72 L122,72 Q130,72 134,78 L134,96 Q130,102 122,102 L78,102 Q70,102 66,96 Z" fill="url(#vrwGlass)"/>
+                  <path d="M68,78 Q72,72.5 78,72.5 L122,72.5 Q128,72.5 132,78 L132,82 Q100,76 68,82 Z" fill="url(#vrwGlassReflect)"/>
+                  <path d="M76,72 L96,100 L92,100 L72,76 Z" fill="#ffffff" opacity="0.06"/>
+                  <path d="M94,102 Q100,106 106,102 L106,98 Q100,100 94,98 Z" fill="#050709"/>
+
+                  <!-- Lens wells with internal pupil parallax targets -->
+                  <ellipse cx="82" cy="86" rx="9.6" ry="7.4" fill="#020610"/>
+                  <ellipse cx="82" cy="86" rx="7.6" ry="5.8" fill="url(#vrwLens)"/>
+                  <ellipse cx="82" cy="86" rx="7.6" ry="5.8" fill="url(#vrwLensRim)"/>
+                  <ellipse class="vrw-pupil" data-cx="82" data-cy="86" cx="82" cy="86" rx="1.6" ry="1.6" fill="#0a1e3a" opacity="0.85"/>
+                  <ellipse class="vrw-catch" cx="79" cy="83" rx="2.4" ry="1.4" fill="#ffffff" opacity="0.92"/>
+
+                  <ellipse cx="118" cy="86" rx="9.6" ry="7.4" fill="#020610"/>
+                  <ellipse cx="118" cy="86" rx="7.6" ry="5.8" fill="url(#vrwLens)"/>
+                  <ellipse cx="118" cy="86" rx="7.6" ry="5.8" fill="url(#vrwLensRim)"/>
+                  <ellipse class="vrw-pupil" data-cx="118" data-cy="86" cx="118" cy="86" rx="1.6" ry="1.6" fill="#0a1e3a" opacity="0.85"/>
+                  <ellipse class="vrw-catch" cx="115" cy="83" rx="2.4" ry="1.4" fill="#ffffff" opacity="0.92"/>
+
+                  <!-- Foam liner -->
+                  <path d="M62,104 Q100,112 138,104 L137,109 Q100,116 63,109 Z" fill="url(#vrwFoam)"/>
+                  <path d="M64,106 Q100,113 136,106" stroke="#46464c" stroke-width="0.5" fill="none" opacity="0.75"/>
+
+                  <!-- Strap mount caps -->
+                  <rect x="54" y="78" width="9" height="16" rx="2.6" fill="#d6dadf"/>
+                  <rect x="55" y="79" width="2.6" height="4" rx="0.8" fill="#ffffff" opacity="0.9"/>
+                  <rect x="137" y="78" width="9" height="16" rx="2.6" fill="#d6dadf"/>
+                  <rect x="142.4" y="79" width="2.6" height="4" rx="0.8" fill="#ffffff" opacity="0.9"/>
+
+                  <!-- Power LED -->
+                  <circle class="vrw-led" cx="143" cy="91" r="1.1" fill="#22ff7a" filter="url(#vrwLed)"/>
+                </g>
+              </g>
+            </svg>
           </div>
         </div>
 
         <div class="grant-meta">
-          <div class="grant-meta-item"><label data-i18n="meta_monitor">Grant Monitor</label><span>Bulle Consulting</span></div>
-          <div class="grant-meta-divider"></div>
           <div class="grant-meta-item"><label data-i18n="meta_grantid">Grant ID</label><span>2026-2028 EEO IBP</span></div>
           <div class="grant-meta-divider"></div>
           <div class="grant-meta-item"><label data-i18n="meta_start">Start</label><span>Jan 1, 2026</span></div>
@@ -772,10 +1059,10 @@
         </div>
 
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-accent-bar blue"></div><div class="kpi-label" data-i18n="kpi_total_funding">Total Grant Funding</div><div class="kpi-value blue">$150,000</div><div class="kpi-sub" data-i18n="kpi_across">VR Faculty Development &amp; Peer Mentoring</div></div>
+          <div class="kpi-card"><div class="kpi-accent-bar blue"></div><div class="kpi-label" data-i18n="kpi_total_funding">Total Funding</div><div class="kpi-value blue">$150,000</div><div class="kpi-sub" data-i18n="kpi_across">VR Faculty Development &amp; Peer Mentoring</div></div>
           <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label" data-i18n="kpi_grant_tier">Grant Tier</div><div class="kpi-value medium-blue">Tier 1</div><div class="kpi-sub" data-i18n="kpi_grant_tier_sub">2026&ndash;2028 EEO IBP</div></div>
           <div class="kpi-card"><div class="kpi-accent-bar blue"></div><div class="kpi-label" data-i18n="kpi_dr_target">Faculty Trained</div><div class="kpi-value blue">&ge; 30</div><div class="kpi-sub" data-i18n="kpi_dr_target_sub">Across all 3 Kern colleges</div></div>
-          <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label" data-i18n="kpi_mentor_target">Participating Colleges</div><div class="kpi-value medium-blue">3</div><div class="kpi-sub" data-i18n="kpi_mentor_target_sub">Bakersfield &middot; Cerro Coso &middot; Porterville</div></div>
+          <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label" data-i18n="kpi_mentor_target">Colleges</div><div class="kpi-value medium-blue">3</div><div class="kpi-sub" data-i18n="kpi_mentor_target_sub">Bakersfield &middot; Cerro Coso &middot; Porterville</div></div>
           <div class="kpi-card"><div class="kpi-accent-bar grey"></div><div class="kpi-label" data-i18n="kpi_focus">Focus Areas</div><div class="kpi-value grey">4</div><div class="kpi-sub" data-i18n="kpi_focus_sub">VR Pedagogy &middot; Peer Mentoring &middot; Inclusive Design &middot; Leadership Pipeline</div></div>
         </div>
 
@@ -1037,14 +1324,71 @@
         <div class="page-header"><h2 data-i18n="budget_title">Budget Breakdown</h2><p data-i18n="budget_sub">Total award $150,000 split across two budget years. Indirect line ($7,496) is 5% of direct costs ($142,504).</p></div>
 
         <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
-          <div class="kpi-card"><div class="kpi-accent-bar blue"></div><div class="kpi-label">Total Award</div><div class="kpi-value blue">$150,000</div><div class="kpi-sub">Tier 1 award</div></div>
-          <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label">Direct Costs</div><div class="kpi-value medium-blue">$142,504</div><div class="kpi-sub">95% of total</div></div>
-          <div class="kpi-card"><div class="kpi-accent-bar gold"></div><div class="kpi-label">Indirect (7000)</div><div class="kpi-value gold">$7,496</div><div class="kpi-sub">5% of direct</div></div>
-          <div class="kpi-card"><div class="kpi-accent-bar grey"></div><div class="kpi-label">Y1 / Y2 Split</div><div class="kpi-value grey">82% / 18%</div><div class="kpi-sub">$122,638 / $27,362</div></div>
+          <div class="kpi-card"><div class="kpi-accent-bar blue"></div><div class="kpi-label">Total Award</div><div class="kpi-value blue" id="kpi-total-award">$150,000</div><div class="kpi-sub">Tier 1 award</div></div>
+          <div class="kpi-card"><div class="kpi-accent-bar medium-blue"></div><div class="kpi-label">Direct Costs</div><div class="kpi-value medium-blue" id="kpi-direct">$142,504</div><div class="kpi-sub" id="kpi-direct-sub">95% of total</div></div>
+          <div class="kpi-card"><div class="kpi-accent-bar gold"></div><div class="kpi-label">Indirect (7000)</div><div class="kpi-value gold" id="kpi-indirect">$7,496</div><div class="kpi-sub" id="kpi-indirect-sub">5% of direct</div></div>
+          <div class="kpi-card"><div class="kpi-accent-bar grey"></div><div class="kpi-label">Y1 / Y2 Split</div><div class="kpi-value grey" id="kpi-split">82% / 18%</div><div class="kpi-sub" id="kpi-split-sub">$122,638 / $27,362</div></div>
         </div>
 
         <div class="budget-grid budget-grid--2col" id="budget-grid"></div>
+        <!-- INTERACTIVE BUDGET MODIFICATION REQUEST FORM (mirrors Word doc; auto-calculates & drives project totals) -->
+        <div class="bmr-card" id="budget-mod-form">
+          <div class="bmr-card-head">
+            <div>
+              <div class="bmr-title">Budget Modification Request Form</div>
+              <div class="bmr-subtitle">Please complete this form if you require substantial budget modifications, including the addition or elimination of expenditures. Enter a change in <strong>Expenditure Updates</strong> (+ to add, − to reduce) or revise <strong>Proposed Funds</strong>, Fund Balance and the Totals calculate automatically, and the Year 1 / Year 2 cards and project KPIs above update live.</div>
+            </div>
+            <span class="bmr-badge"><span class="bmr-ticker"><span class="bmr-ticker-text">CCCCO SUPPORTS YOUR JOURNEY!</span><span class="bmr-ticker-text" aria-hidden="true">CCCCO SUPPORTS YOUR JOURNEY!</span></span></span>
+          </div>
+          <div class="bmr-card-body">
+            <div class="bmr-meta-grid">
+              <label class="bmr-field"><span class="bmr-field-label">Community College District</span><input class="bmr-input" type="text" data-bmr-meta="district" placeholder="Antelope Valley CCD"></label>
+              <label class="bmr-field"><span class="bmr-field-label">Submitted by - Name &amp; Designated Grant Role</span><input class="bmr-input" type="text" data-bmr-meta="submittedBy" placeholder="Name, Project Lead"></label>
+              <label class="bmr-field"><span class="bmr-field-label">Your Email</span><input class="bmr-input" type="email" data-bmr-meta="email" placeholder="name@avc.edu"></label>
+              <label class="bmr-field"><span class="bmr-field-label">Submission Date</span><input class="bmr-input" type="date" data-bmr-meta="date"></label>
+            </div>
+
+            <p class="bmr-section-intro">Year 1 and Year 2 are listed separately below, enter each modification under the correct year. Each year's Proposed Funds match the Year 1 / Year 2 budget cards above.</p>
+
+            <!-- Two distinctly separated year blocks (Year 1 = blue, Year 2 = gold) rendered by JS -->
+            <div id="bmr-year-blocks"></div>
+
+            <div class="bmr-summary" id="bmr-summary">
+              <div class="bmr-summary-card">
+                <div class="bmr-summary-label">Total Award (Ceiling)</div>
+                <div class="bmr-summary-value" id="bmr-sum-award">$100,000</div>
+                <div class="bmr-summary-sub">Fixed CCCCO Tier 2 grant award</div>
+              </div>
+              <div class="bmr-summary-card">
+                <div class="bmr-summary-label">Modified Project Budget</div>
+                <div class="bmr-summary-value" id="bmr-sum-proposed">$100,000</div>
+                <div class="bmr-summary-sub">Both years, after modifications</div>
+              </div>
+              <div class="bmr-summary-card grey">
+                <div class="bmr-summary-label">Variance vs Award</div>
+                <div class="bmr-summary-value" id="bmr-sum-variance">$0</div>
+                <span class="bmr-reconcile-pill ok" id="bmr-sum-pill">Balanced</span>
+              </div>
+              <div class="bmr-summary-card gold">
+                <div class="bmr-summary-label">Modified Y1 / Y2</div>
+                <div class="bmr-summary-value" id="bmr-sum-year">$62,627 / $37,373</div>
+                <div class="bmr-summary-sub" id="bmr-sum-year-sub">Baseline $62,627 / $37,373</div>
+              </div>
+            </div>
+
+            <div class="bmr-footer">
+              <label class="bmr-field"><span class="bmr-field-label">Approved by</span><input class="bmr-input" type="text" data-bmr-meta="approvedBy" placeholder="Approver name &amp; title"></label>
+              <div class="bmr-actions">
+                <button type="button" class="bmr-btn" onclick="resetBudgetModForm()">Reset to Current Budget</button>
+                <button type="button" class="bmr-btn primary" onclick="window.print()">Print / Save PDF</button>
+              </div>
+            </div>
+            <div class="bmr-saved-note" id="bmr-saved-note">Entries are saved automatically in this browser.</div>
+          </div>
+        </div>
       </div>
+
+
 
       <!-- TIMELINE -->
       <div id="section-timeline" class="section">
@@ -1104,22 +1448,21 @@
 
       <!-- CONTACTS -->
       <div id="section-contacts" class="section">
-        <div class="page-header"><h2 data-i18n="contacts_title">Project Contacts</h2><p data-i18n="contacts_sub">Project leads, alternates, and fiscal reporters</p></div>
+        <div class="page-header" style="margin-bottom:14px;"><h2 data-i18n="contacts_title" style="font-size:clamp(11px, 3.4vw, 18px);font-weight:700;color:var(--ccc-dark-blue);letter-spacing:-0.012em;line-height:1.2;margin:0;white-space:nowrap;">Project Contacts</h2></div>
         <div class="card mb-24">
           <div class="card-header" style="background:var(--ccc-dark-blue);">
             <div class="card-title" style="color:#fff;" data-i18n="meta_monitor">Grant Monitor</div>
-            <img src="Bulle Cloud Logo-white.png" alt="Bulle Cloud" style="height:72px;width:auto;display:block;opacity:1;" />
+            <img src="Bulle Cloud Logo-white.png" alt="Bulle Cloud" width="376" height="191" style="height:36px;width:auto;display:block;opacity:0.95;image-rendering:-webkit-optimize-contrast;" />
           </div>
-          <div class="card-body">
-            <div class="contact-person" style="border:none;padding:0;">
-              <div class="contact-info">
-                <div class="contact-name">Bulle Consulting</div>
-                <div class="contact-role">Grant Monitor</div>
-                <div class="contact-email"><a href="mailto:admin@bulleconsulting.com">admin@bulleconsulting.com</a></div>
-              </div>
+          <div class="card-body" style="padding:12px 20px;">
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--text-primary);line-height:1.35;">Bulle Consulting</div>
+              <div style="font-size:16px;color:var(--text-secondary);line-height:1.35;">Grant Monitor</div>
+              <div style="font-size:16px;line-height:1.35;"><a href="mailto:admin@bulleconsulting.com" style="color:var(--ccc-dark-blue);text-decoration:none;font-weight:500;">admin@bulleconsulting.com</a></div>
             </div>
           </div>
         </div>
+        <h3 class="contacts-subhead">Project Leads | Alternates | Fiscal Reporters | Plan Approvers</h3>
         <div class="contacts-grid" id="contacts-grid"></div>
       </div>
 
@@ -1151,7 +1494,7 @@
           <div class="card-header"><div class="card-title" data-i18n="spend_table_title">Spend-Down Detail</div><div class="chart-label" data-i18n="spend_table_sub">Kern CCD · Year-by-Year Allocation vs. Spend</div></div>
           <div class="data-table-wrap">
             <table class="data-table" id="spend-table">
-              <thead><tr><th data-i18n="th_period">Period</th><th data-i18n="th_period_budget">Period Budget</th><th data-i18n="th_share">Share of Total</th><th data-i18n="th_project_year">Project Year</th><th data-i18n="th_disbursed_pct">Spent So Far</th><th data-i18n="th_spend_pace">Spend Pace</th><th data-i18n="th_status">Status</th></tr></thead>
+              <thead><tr><th data-i18n="th_period">Period</th><th class="num" data-i18n="th_period_budget">Period Budget</th><th class="num" data-i18n="th_disbursed_pct">Spent So Far</th><th class="center" data-i18n="th_spend_pace">Pace</th><th class="center" data-i18n="th_status">Status</th></tr></thead>
               <tbody id="spend-table-body"></tbody>
             </table>
           </div>
@@ -1198,16 +1541,18 @@ const districts = [
       'Leadership Pipeline Development: ≥40% of Year-1 participants advance to mentor roles in Year-2 and ≥25% of alumni document new leadership/service in professional portfolios',
       'Student Engagement & Equity: In participating sections, ≥70% of students report increased engagement/interest (post-lesson survey), with no engagement gap >10 percentage points between student demographic groups'
     ],
-    contact:{name:'Bobby Becka',role:'Project Lead Contact',email:'bobby.becka@kccd.edu',phone:'(661) 395-4102'},
-    altContact:{name:'Dr. Bonita Steele',role:'Alternate Project Lead Contact',email:'bsteele@kccd.edu',phone:'(661) 336-5046'},
-    fiscalReporter:{name:'Cathi Jacob',role:'Institution Project Fiscal Reporter',email:'cjacob@kccd.edu',phone:'(661) 336-5105'},
-    planApprover:{name:'Melissa Thornsberry',role:'Plan Approver',email:'melissa.thornsberry@kccd.edu',phone:'(661) 336-5142'},
+    contact:{name:'Bobby Becka',title:'Director, Grants & Resource Development · Workforce & Economic Development',role:'Project Lead Contact',email:'bobby.becka@kccd.edu',phone:'(661) 395-4102',photo:'photos/bobby-beck.jpeg'},
+    altContact:{name:'Dr. Bonita Steele',title:'Director, Programs and Program Development · Workforce & Economic Development',role:'Alternate Project Lead Contact',email:'bsteele@kccd.edu',phone:'(661) 336-5046',photo:'photos/bonita-steele.jpeg'},
+    fiscalReporter:{name:'Cathi Jacob',title:'Assistant Director, Grants · Business Services',role:'Institution Project Fiscal Reporter',email:'cjacob@kccd.edu',phone:'(661) 336-5105'},
+    planApprover:{name:'Dr. Melissa Thornsberry',title:'Vice Chancellor, Finance & Administrative Services · Chief Financial Officer',role:'Plan Approver',email:'melissa.thornsberry@kccd.edu',phone:'(661) 336-5142',photo:'photos/melissa-thornsberry.jpg'},
     additionalContacts:[
-      {name:'Rachel Tatro-Duarte',role:'Project Lead Contact (Porterville)',email:'rachel.tatroduarte@portervillecollege.edu',phone:''},
-      {name:'Todd Coston',role:'Project Lead Contact · AVC Planning & Educational Technology',email:'tcoston@kccd.edu',phone:'(661) 336-5078'},
-      {name:'Jonathan Kim',role:'Institution Project Fiscal Reporter',email:'jonathan.kim@kccd.edu',phone:'(661) 336-5109'},
-      {name:'Bryan Lainez',role:'Institution Project Fiscal Reporter',email:'bryan.lainez@kccd.edu',phone:''},
-      {name:'Marisol Cuevas',role:'Institution Project Fiscal Reporter',email:'marisol.cuevas@kccd.edu',phone:'(661) 336-5110'}
+      {name:'Dr. Rachel Tatro-Duarte',title:'Professor of English & VR Coordinator · Porterville College',role:'Project Lead Contact',email:'rachel.tatroduarte@portervillecollege.edu',phone:'',photo:'photos/rachel-tatro-duarte.png'},
+      {name:'Todd Coston',title:'Associate Vice Chancellor, Planning & Educational Technology · Educational Services',role:'Project Lead Contact',email:'tcoston@kccd.edu',phone:'(661) 336-5078',photo:'photos/todd-coston.jpeg'},
+      {name:'Tanumeet Kaur',title:'Director, Budget Operations · Business Services',role:'Institution Project Fiscal Reporter',email:'tanumeet.kaur@kccd.edu',phone:'(661) 336-5124',photo:'photos/tanumeet-kaur.png'},
+      {name:'Jonathan Kim',title:'Accounting Coordinator · Business Services',role:'Institution Project Fiscal Reporter',email:'jonathan.kim@kccd.edu',phone:'(661) 336-5109',photo:'photos/jonathan-kim.png'},
+      {name:'Bryan Lainez',title:'Interim Accounting Manager – Grants · Business Services',role:'Institution Project Fiscal Reporter',email:'bryan.lainez@kccd.edu',phone:''},
+      {name:'Marisol Cuevas',title:'Accounting Coordinator · Business Services',role:'Institution Project Fiscal Reporter',email:'marisol.cuevas@kccd.edu',phone:'(661) 336-5110',photo:'photos/marisol-cuevas.png'},
+      {name:'Jacqueline Santiago',title:'Accountant III · Business Services',role:'Institution Project Fiscal Reporter',email:'',phone:'',photo:'photos/jacqueline-santiago.png'}
     ],
     fundMonitor:{name:'Bulle Consulting',role:'Grant Monitor',email:'admin@bulleconsulting.com',phone:''},
     budgetHighlights:{'Instructional Salaries (1000)':32660,'Employee Benefits (3000)':7074,'Supplies and Materials (4000)':90750,'Other Operating Expenses and Services (5000)':12020,'Indirect Costs (7000)':7496},
@@ -1243,7 +1588,7 @@ const translations = {
     goals_title:'Goals & Objectives', goals_sub:'Project goals from the Kern CCD workplan (Section 2.1) — paired with the two-year activities, five measurable outcomes, and responsible leadership.',
     overview_title:'Program Overview', overview_sub:'Kern Community College District — Tier 1 grantee, VR EEO Faculty Development and Peer Mentoring Program. $150,000 award from the 2026–2028 EEO IBP grant cycle, across Bakersfield, Cerro Coso, and Porterville colleges.',
     meta_monitor:'Grant Monitor', meta_grantid:'Grant ID', meta_start:'Start', meta_duration:'Funding Cycle', meta_status:'Status',
-    kpi_total_funding:'Total Grant Funding', kpi_across:'VR Faculty Development &amp; Peer Mentoring',
+    kpi_total_funding:'Total Funding', kpi_across:'VR Faculty Development &amp; Peer Mentoring',
     kpi_total_districts:'Total Districts', kpi_all_submitted:'All submitted',
     kpi_tier1:'Tier 1 Districts', kpi_tier1_sub:'$150K each (avg)',
     kpi_tier2:'Tier 2 Districts', kpi_tier2_sub:'$100K each',
@@ -1311,7 +1656,7 @@ const translations = {
     tl_total:'Total',
     tl_pace_label:'Pace:',
     kpi_y1_total_label:'Year 1 Total',
-    overview_lift_sub:'AVC · Citrus · Peralta · WVM',
+    overview_lift_sub:'Bakersfield · Cerro Coso · Porterville',
     spend_for_grant_total:'Tier 1 award',
     sb_dashboard:'Dashboard',
     sb_performance:'Performance',
@@ -1339,7 +1684,7 @@ const translations = {
     th_project_year:'Project Year',
     kpi_dr_target:'DRS Trained',
     kpi_dr_target_sub:'Classified staff over two cohorts',
-    kpi_mentor_target:'Mentor Cohort',
+    kpi_mentor_target:'Colleges',
     kpi_mentor_target_sub:'4 faculty mentors · 8 mentees', kpi_grant_tier:'Grant Tier', kpi_grant_tier_sub:'2026–2028 EEO IBP', kpi_colleges:'Participating Colleges', kpi_colleges_sub:'Bakersfield · Cerro Coso · Porterville', kpi_faculty_target:'Faculty Target', kpi_faculty_target_sub:'Trained across the district by Year 2',},
   es: {
     nav_overview:'Resumen', nav_goals:'Metas y Objetivos', nav_districts:'Perfil del Proyecto', nav_outcomes:'Resultados', nav_budget:'Presupuesto', nav_timeline:'Cronograma', nav_contacts:'Contactos', nav_spenddown:'Monitor de Gastos',
@@ -1414,7 +1759,7 @@ const translations = {
     tl_total:'Total',
     tl_pace_label:'Ritmo:',
     kpi_y1_total_label:'Total Año 1',
-    overview_lift_sub:'AVC · Citrus · Peralta · WVM',
+    overview_lift_sub:'Bakersfield · Cerro Coso · Porterville',
     spend_for_grant_total:'Los 11 distritos',
     sb_dashboard:'Panel',
     sb_performance:'Rendimiento',
@@ -1504,7 +1849,7 @@ const translations = {
     tl_total:'Tổng',
     tl_pace_label:'Tốc độ:',
     kpi_y1_total_label:'Tổng Năm 1',
-    overview_lift_sub:'AVC · Citrus · Peralta · WVM',
+    overview_lift_sub:'Bakersfield · Cerro Coso · Porterville',
     spend_for_grant_total:'Tất cả 11 quận',
     sb_dashboard:'Bảng điều khiển',
     sb_performance:'Hiệu suất',
@@ -1521,185 +1866,320 @@ const translations = {
     kpi_colleges_sub:'Bakersfield · Cerro Coso · Porterville',
     kpi_faculty_target:'Mục Tiêu Giảng Viên',
     kpi_faculty_target_sub:'Đào tạo trên toàn quận đến Năm 2',},
-  ar: {
-    nav_overview:'نظرة عامة', nav_funds:'التخصيصات', nav_districts:'ملف المشروع', nav_outcomes:'النتائج', nav_budget:'الميزانية', nav_timeline:'الجدول الزمني', nav_contacts:'جهات الاتصال', nav_spenddown:'مراقب الإنفاق',
-    topbar_title:'مشروع Kern CCD',
-    overview_title:'نظرة عامة على البرنامج', overview_sub:'نظرة عامة على مستوى الولاية لمبادرة منحة الممارسات المبتكرة الأفضل لتكافؤ فرص العمل (EEO)، تشمل 11 مقاطعة كليات مجتمعية في كاليفورنيا.',
-    meta_monitor:'مراقب المنحة', meta_grantid:'معرّف المنحة', meta_start:'البداية', meta_duration:'دورة التمويل', meta_status:'الحالة',
-    kpi_total_funding:'إجمالي التمويل', kpi_across:'تطوير أعضاء هيئة التدريس بـ VR والإرشاد',
-    kpi_total_districts:'إجمالي المقاطعات', kpi_all_submitted:'جميعها مُقدَّمة',
-    kpi_tier1:'مقاطعات الفئة 1', kpi_tier1_sub:'$150K لكل منها',
-    kpi_tier2:'مقاطعات الفئة 2', kpi_tier2_sub:'$100K لكل منها',
-    kpi_lift:'تحالف LIFT', kpi_focus:'مجالات التركيز', kpi_focus_sub:'الواقع الافتراضي · تطوير الأساتذة · الإرشاد · التعليم الشامل',
-    lift_title:'تحالف LIFT — معهد القيادة من أجل الغد',
-    lift_desc:'أربع من بين 11 مقاطعة أعضاء في تحالف ولائي يضم 10 كليات و10 مناطق.',
-    chart_tier_dist:'توزيع الأموال حسب الفئة', chart_total_dist:'التوزيع الكلي',
-    chart_focus_areas:'مجالات تركيز البرنامج', chart_by_type:'حسب نوع المبادرة',
-    table_district_summary:'ملخص المقاطعات',
-    th_district:'المقاطعة', th_tier:'الفئة', th_funding:'التمويل', th_y1:'السنة 1', th_y2:'السنة 2', th_focus:'التركيز الرئيسي', th_total:'الإجمالي',
-    funds_title:'تخصيصات الأموال', funds_sub:'تفصيل تمويل المنحة عبر جميع المقاطعات الـ11',
-    kpi_total_allocated:'الإجمالي المخصص', kpi_all_11:'جميع المقاطعات الـ11',
-    kpi_tier1_total:'إجمالي الفئة 1', kpi_7dist:'7 مقاطعات',
-    kpi_tier2_total:'إجمالي الفئة 2', kpi_4dist:'4 مقاطعات × $100K',
-    kpi_y1_total:'إجمالي السنة 1', kpi_y1_sub:'يناير 2026 – يونيو 2027',
-    chart_funding_district:'التمويل حسب المقاطعة', chart_direct:'التخصيص المباشر',
-    chart_tier_split:'التقسيم حسب الفئة', chart_y1y2:'السنة 1 مقابل السنة 2', chart_by_dist:'حسب المقاطعة',
-    table_alloc_detail:'تفاصيل التخصيص على مستوى المقاطعة',
-    districts_title:'ملفات المقاطعات', districts_sub:'جميع المقاطعات الـ11 المشاركة',
-    filter_by:'تصفية حسب:', filter_all:'الجميع', filter_tier1:'الفئة 1', filter_tier2:'الفئة 2', filter_lift:'تحالف LIFT',
-    outcomes_title:'نتائج البرنامج', outcomes_sub:'المخرجات القابلة للقياس من كل مقترح مقاطعة',
-    budget_title:'تفصيل الميزانية', budget_sub:'النفقات مقسمة بين السنة 1 (يناير 2026 – يونيو 2027) والسنة 2 (يوليو 2027 – يونيو 2028). يتم توزيع التكاليف غير المباشرة بشكل تناسبي.',
-    timeline_title:'الجدول الزمني للتنفيذ', timeline_sub:'دورة تمويل لمدة سنتين · 1 يناير 2026 → 30 يونيو 2028',
-    chart_yearly:'ملف الإنفاق السنوي', chart_all_districts:'جميع المقاطعات',
-    tl_y1:'السنة 1 (يناير 2026 – يونيو 2027)', tl_y2:'السنة 2 (يوليو 2027 – يونيو 2028)',
-    contacts_title:'جهات اتصال المقاطعة', contacts_sub:'قادة المشروع والبدلاء ومراسلو الميزانية',
-    spend_title:'مراقب الإنفاق',
-    spend_sub:'تتبع نفقات المنحة خلال دورة التمويل لمدة سنتين وتمييز المقاطعات المعرضة لخطر الإنفاق الناقص',
-    underspend_title:'⚠ تنبيهات مخاطر الإنفاق الناقص',
-    calculating:'جارٍ الحساب...',
-    underspend_desc:'تُمَيَّز المقاطعات عندما تكون وتيرة الإنفاق بطيئة أو سريعة أو ناقصة التمويل. اضبط الوتيرة على معتدلة لإزالة العلامة.',
-    spend_table_title:'تفاصيل الإنفاق',
-    spend_table_sub:'التخصيصات مقابل الإنفاق السنوي · دورة سنتين',
-    th_total_grant:'إجمالي المنحة',
-    th_y1_budget:'ميزانية السنة 1',
-    th_y2_budget:'ميزانية السنة 2',
-    th_disbursed_pct:'النسبة المصروفة من الإجمالي',
-    th_spend_pace:'وتيرة الإنفاق',
-    th_status:'الحالة',
-    kpi_total_grant_label:'إجمالي المنحة',
-    kpi_y1_budget_label:'ميزانية السنة 1',
-    kpi_y2_budget_label:'ميزانية السنة 2',
-    kpi_all_11_districts:'جميع المقاطعات الـ11',
-    kpi_y1_window:'من المنحة · يناير 2026 – يونيو 2027',
-    kpi_y2_window:'من المنحة · يوليو 2027 – يونيو 2028',
-    pace_slow:'بطيء',
-    pace_moderate:'معتدل',
-    pace_fast:'سريع',
-    pace_underfunded:'ناقص التمويل',
-    status_on:'على المسار',
-    status_off:'خارج المسار',
-    th_direct_funding:'إجمالي التمويل',
-    th_pct_total:'٪ من الإجمالي',
-    th_cccco_disbursed:'المنطقة المصروفة',
-    th_cccco_disbursed_rate:'معدل صرف المنطقة',
-    all_districts_total:'Kern CCD · $150,000 الإجمالي',
-    role_project_lead:'قائد المشروع',
-    role_alt_project_lead:'قائد بديل للمشروع',
-    role_fiscal_reporter:'مراسل الميزانية',
-    role_plan_approver:'معتمد الخطة',
-    all_clear:'✓ Kern CCD على المسار — لم يُكتشف أي خطر إنفاق ناقص.',
-    flagged_one:'بند ميزانية مُمَيَّز',
-    flagged_many:'بنود ميزانية مُمَيَّزة',
-    tl_total:'الإجمالي',
-    tl_pace_label:'الوتيرة:',
-    kpi_y1_total_label:'إجمالي السنة 1',
-    overview_lift_sub:'AVC · Citrus · Peralta · WVM',
-    spend_for_grant_total:'جميع المقاطعات الـ11',
-    sb_dashboard:'لوحة التحكم',
-    sb_performance:'الأداء',
-    sb_program:'الفريق',
-    sb_spend_monitor:'مراقب الإنفاق',
-    select_language:'اختر اللغة',
-    status_active:'نشط',
-    y1_window_short:'يناير 2026 – يونيو 2027',
-    y2_window_short:'يوليو 2027 – يونيو 2028',
-  
-    kpi_grant_tier:'فئة المنحة',
-    kpi_grant_tier_sub:'2026–2028 EEO IBP',
-    kpi_colleges:'الكليات المشاركة',
-    kpi_colleges_sub:'بيكرسفيلد · سيرو كوسو · بورترفيل',
-    kpi_faculty_target:'هدف أعضاء هيئة التدريس',
-    kpi_faculty_target_sub:'تدريب على مستوى المنطقة بنهاية السنة 2',},
-  tl: {
-    nav_overview:'Pangkalahatang-tanaw', nav_goals:'Mga Layunin at Mithiin', nav_districts:'Profile ng Proyekto', nav_outcomes:'Mga Resulta', nav_budget:'Badyet', nav_timeline:'Iskedyul', nav_contacts:'Mga Kontak', nav_spenddown:'Spend-Down Monitor',
-    topbar_title:'Kern CCD Project',
-    overview_title:'Pangkalahatang-tanaw ng Programa', overview_sub:'Kern Community College District — Tier 2 grantee, Professional Development at EEO Representative Programs. $100,000 grant mula sa 2026–2028 EEO IBP cycle.',
-    meta_monitor:'Grant Monitor', meta_grantid:'ID ng Grant', meta_start:'Simula', meta_duration:'Funding Cycle', meta_status:'Katayuan',
-    kpi_total_funding:'Kabuuang Pondo', kpi_across:'VR Faculty Development &amp; Peer Mentoring',
-    kpi_total_districts:'Kabuuang Distrito', kpi_all_submitted:'Lahat naihain',
-    kpi_tier1:'Mga Distrito ng Tier 1', kpi_tier1_sub:'$150K bawat isa',
-    kpi_tier2:'Mga Distrito ng Tier 2', kpi_tier2_sub:'$100K bawat isa',
-    kpi_lift:'Alyansa ng LIFT', kpi_focus:'Mga Pokus', kpi_focus_sub:'Equity in Hiring · Inclusive Pedagogy · Mentorship · Reflective Practice',
-    lift_title:'Alyansa ng LIFT — Leadership Institute for Tomorrow',
-    lift_desc:'Inilulunsad ng Kern CCD ang dalawang-taong VR Faculty Development at Peer Mentoring Program sa Bakersfield, Cerro Coso, at Porterville — kaagapay ng peer mentorship upang palakasin ang pamumuno ng faculty at tugunan ang post-hire gap sa 2024–2027 EEO Plan.',
-    chart_tier_dist:'Paglalaan ng Pondo ayon sa Tier', chart_total_dist:'Kabuuang Pamamahagi',
-    chart_focus_areas:'Mga Larangan ng Pokus', chart_by_type:'Ayon sa Uri ng Inisyatibo',
-    table_district_summary:'Buod ng Distrito',
-    th_district:'Distrito', th_tier:'Tier', th_funding:'Pondo', th_y1:'Taon 1', th_y2:'Taon 2', th_focus:'Pangunahing Pokus', th_total:'Kabuuan',
-    funds_title:'Pagbibigay-pondo', funds_sub:'Detalyadong breakdown ng grant funding sa lahat ng 11 distrito',
-    kpi_total_allocated:'Kabuuang Inilaan', kpi_all_11:'Lahat ng 11 distrito',
-    kpi_tier1_total:'Kabuuan ng Tier 1', kpi_7dist:'7 distrito',
-    kpi_tier2_total:'Kabuuan ng Tier 2', kpi_4dist:'4 distrito × $100K',
-    kpi_y1_total:'Kabuuan ng Taon 1', kpi_y1_sub:'Ene 2026 – Hun 2027',
-    chart_funding_district:'Pondo ayon sa Distrito', chart_direct:'Direktang Paglalaan',
-    chart_tier_split:'Hatiin ng Tier', chart_y1y2:'Taon 1 vs. Taon 2', chart_by_dist:'Ayon sa Distrito',
-    table_alloc_detail:'Detalye ng Paglalaan sa Antas ng Distrito',
-    districts_title:'Mga Profil ng Distrito', districts_sub:'Lahat ng 11 kalahok na distrito',
-    filter_by:'I-filter ayon sa:', filter_all:'Lahat', filter_tier1:'Tier 1', filter_tier2:'Tier 2', filter_lift:'Alyansa ng LIFT',
-    outcomes_title:'Mga Resulta ng Programa', outcomes_sub:'Mga nasusukat na resulta mula sa bawat panukala',
-    budget_title:'Breakdown ng Badyet', budget_sub:'Mga gastusin sa object-code, hinati sa Taon 1 (Ene 2026 – Hun 2027) at Taon 2 (Hul 2027 – Hun 2028). Indirect costs ay tinitipon proporsyonal sa bawat taon.',
-    timeline_title:'Iskedyul ng Pagpapatupad', timeline_sub:'2-taong funding cycle · Ene 1, 2026 → Hun 30, 2028',
-    chart_yearly:'Profile ng Paggastos Taon-taon', chart_all_districts:'Lahat ng Distrito',
-    tl_y1:'Taon 1 (Ene 2026 – Hun 2027)', tl_y2:'Taon 2 (Hul 2027 – Hun 2028)',
-    contacts_title:'Mga Kontak ng Distrito', contacts_sub:'Mga lider ng proyekto, kapalit, at fiscal reporter',
+  hy: {
+    nav_overview:'Ընդհանուր ակնարկ',
+    nav_goals:'Նպատակներ և նպատակներ',
+    nav_districts:'Ծրագրի պրոֆիլը',
+    nav_outcomes:'Արդյունքներ',
+    nav_budget:'Բյուջեի բաշխում',
+    nav_timeline:'Ժամանակացույց',
+    nav_contacts:'Կոնտակտներ',
+    nav_spenddown:'Spend-Down Monitor',
+    topbar_title:'Kern CCD նախագիծ',
+    goals_title:'Նպատակներ և նպատակներ',
+    goals_sub:'Ծրագրի նպատակները Kern CCD աշխատանքային պլանից (Բաժին 2.1) – զուգորդված երկամյա գործունեության, հինգ չափելի արդյունքների և պատասխանատու ղեկավարության հետ:',
+    overview_title:'Ծրագրի ակնարկ',
+    overview_sub:'Kern Community College District — Tier 1-ի դրամաշնորհառու, VR EEO Ֆակուլտետի զարգացման և Peer Mentoring ծրագիր: $150,000 մրցանակ 2026–2028 EEO IBP դրամաշնորհային ցիկլից, Բեյքերսֆիլդի, Սերրո Կոսոյի և Պորտերվիլի քոլեջներում:',
+    meta_monitor:'Դրամաշնորհային մոնիտոր',
+    meta_grantid:'Դրամաշնորհի ID',
+    meta_start:'Սկսել',
+    meta_duration:'Ֆինանսավորման ցիկլ',
+    meta_status:'Կարգավիճակ',
+    kpi_total_funding:'Ընդհանուր ֆինանսավորում',
+    kpi_across:'VR ֆակուլտետի զարգացում և գործընկերների մենթորություն',
+    kpi_total_districts:'Ընդհանուր շրջաններ',
+    kpi_all_submitted:'Բոլորը ներկայացված են',
+    kpi_tier1:'1-ին մակարդակի շրջաններ',
+    kpi_tier1_sub:'150 հազար դոլար յուրաքանչյուրը (միջին)',
+    kpi_tier2:'2-րդ մակարդակի շրջաններ',
+    kpi_tier2_sub:'Յուրաքանչյուրը 100 հազար դոլար',
+    kpi_lift:'LIFT դաշինք',
+    kpi_focus:'Ֆոկուս տարածքներ',
+    kpi_focus_sub:'Արդարություն աշխատանքի ընդունման մեջ · Ներառական մանկավարժություն · Մենթորություն · Ռեֆլեկտիվ պրակտիկա',
+    lift_title:'Ծրագրի ուշադրության կենտրոնում — DRS-ի աշխատանքի ընդունում + ֆակուլտետի մենթորություն',
+    lift_desc:'Kern CCD-ը սկսում է երկամյա VR Ֆակուլտետի զարգացման և Peer Mentoring ծրագիր Բեյքերսֆիլդում, Սերրո Կոսոյում և Պորտերվիլում. զուգակցելով կառուցվածքային VR մանկավարժության ուսուցումը հասակակիցների մենթորության հետ՝ ստեղծելու դասախոսների ղեկավարությունը և փակելու 2024-2027 թվականների EEO պլանի հետ վարձույթի բացը:',
+    chart_tier_dist:'Ֆոնդերի բաշխում ըստ մակարդակների',
+    chart_total_dist:'Ընդհանուր բաշխում',
+    chart_focus_areas:'Ծրագրի ուշադրության տարածքներ',
+    chart_by_type:'Ըստ նախաձեռնության տեսակի',
+    table_district_summary:'Ծրագրի ամփոփում',
+    th_district:'թաղամաս',
+    th_tier:'Շերտ',
+    th_funding:'Ֆինանսավորում',
+    th_y1:'Տարի 1',
+    th_y2:'Տարի 2',
+    th_focus:'Առաջնային ուշադրության կենտրոնում',
+    th_total:'Ընդամենը',
+    funds_title:'Նպատակներ և նպատակներ',
+    funds_sub:'Kern CCD ծրագրի նպատակներն ու արդյունքները',
+    kpi_total_allocated:'Ընդհանուր հատկացված',
+    kpi_all_11:'1-ին մակարդակի մրցանակ',
+    kpi_tier1_total:'Tier 1 Ընդամենը',
+    kpi_7dist:'7 շրջան',
+    kpi_tier2_total:'Tier 2 Ընդամենը',
+    kpi_4dist:'4 շրջան × 100 հազար դոլար',
+    kpi_y1_total:'Տարի 1 Ընդամենը',
+    kpi_y1_sub:'2026 թվականի հունվար – 2027 թվականի հունիս',
+    chart_funding_district:'Ֆինանսավորումն ըստ շրջանի',
+    chart_direct:'Ուղղակի տեղաբաշխում',
+    chart_tier_split:'Tier Split',
+    chart_y1y2:'Տարի 1 ընդդեմ Տարի 2 Ծախս',
+    chart_by_dist:'Ըստ շրջանի',
+    table_alloc_detail:'Շրջանային մակարդակի հատկացման մանրամասներ',
+    districts_title:'Ծրագրի պրոֆիլը',
+    districts_sub:'Քերն համայնքային քոլեջի շրջան',
+    filter_by:'Զտել ըստ՝',
+    filter_all:'Բոլոր շրջանները',
+    filter_tier1:'1-ին աստիճան',
+    filter_tier2:'2-րդ աստիճան',
+    filter_lift:'LIFT դաշինք',
+    outcomes_title:'Ծրագրի արդյունքները',
+    budget_title:'Բյուջեի բաշխում',
+    budget_sub:'Օբյեկտային ծածկագրի ծախսերը բաժանված են 1-ին (հունվար 2026 - հունիս 2027) և 2 տարի (հուլիս 2027 - հունիս 2028): VR ապարատային գնումներ drive Y1; ծառայությունները և ֆակուլտետի նորարարության կրթաթոշակները մղում են Y2:',
+    timeline_title:'Իրականացման ժամանակացույց',
+    timeline_sub:'2-ամյա ֆինանսավորման ցիկլ · 2026 թվականի հունվարի 1 → 2028 թվականի հունիսի 30',
+    chart_yearly:'Տարեցտարի ծախսերի պրոֆիլ',
+    chart_all_districts:'Բոլոր շրջանները',
+    tl_y1:'Տարի 1 (հունվար 2026 - հունիս 2027)',
+    tl_y2:'Տարի 2 (հուլիս 2027 - հունիս 2028)',
+    contacts_title:'Ծրագրի կոնտակտներ',
+    contacts_sub:'Ծրագրի ղեկավարներ, փոխարինողներ և հարկաբյուջետային լրագրողներ',
     spend_title:'Spend-Down Monitor',
-    spend_sub:'Subaybayan ang gastos ng grant sa loob ng 2-taong funding cycle at i-flag ang mga distritong nasa panganib ng underspending',
-    filter_combined:'Combined View', filter_y1:'Year 1', filter_y2:'Year 2',
-    underspend_title:'⚠ Underspend Risk Alerts',
-    calculating:'Kinakalkula...',
-    underspend_desc:'Naka-flag ang mga distrito kapag ang Spend Pace ay nakatakda sa Slow, Fast, o Underfunded. Itakda sa Moderate sa table upang alisin ang flag.',
-    spend_table_title:'Detalye ng Spend-Down',
-    spend_table_sub:'Mga Paglalaan vs. Taon-taong Gastos · 2-Year Cycle',
-    th_total_grant:'Kabuuang Grant',
-    th_y1_budget:'Badyet Taon 1',
-    th_y2_budget:'Badyet Taon 2',
-    th_disbursed_pct:'Naipamahagi % ng Kabuuan',
-    th_spend_pace:'Spend Pace',
-    th_status:'Katayuan',
-    kpi_total_grant_label:'Kabuuang Grant',
-    kpi_y1_budget_label:'Badyet Taon 1',
-    kpi_y2_budget_label:'Badyet Taon 2',
-    kpi_all_11_districts:'Lahat ng 11 distrito',
-    kpi_y1_window:'ng grant · Ene 2026 – Hun 2027',
-    kpi_y2_window:'ng grant · Hul 2027 – Hun 2028',
-    pace_slow:'Mabagal',
-    pace_moderate:'Katamtaman',
-    pace_fast:'Mabilis',
-    pace_underfunded:'Kulang sa Pondo',
-    status_on:'On Track',
-    status_off:'Off Track',
-    th_direct_funding:'Kabuuang Pondo',
-    th_pct_total:'% ng Kabuuan',
-    th_cccco_disbursed:'District Disbursed',
-    th_cccco_disbursed_rate:'District Disbursed Rate',
-    all_districts_total:'Kern CCD · $150,000 Kabuuan',
-    role_project_lead:'Lider ng Proyekto',
-    role_alt_project_lead:'Kapalit na Lider ng Proyekto',
-    role_fiscal_reporter:'Fiscal Reporter',
-    role_plan_approver:'Plan Approver',
-    all_clear:'✓ Kern CCD ay nasa tamang landas — walang underspend risk na natuklasan.',
-    flagged_one:'Detalye ng Badyet na Naka-flag',
-    flagged_many:'Mga Detalye ng Badyet na Naka-flag',
-    tl_total:'Kabuuan',
-    tl_pace_label:'Pace:',
-    kpi_y1_total_label:'Kabuuan ng Taon 1',
-    overview_lift_sub:'AVC · Citrus · Peralta · WVM',
-    spend_for_grant_total:'Lahat ng 11 distrito',
-    sb_dashboard:'Dashboard',
-    sb_performance:'Performance',
-    sb_program:'Equipo',
-    sb_spend_monitor:'Spend Monitor',
-    select_language:'Pumili ng Wika',
-    status_active:'Aktibo',
-    y1_window_short:'Ene 2026 – Hun 2027',
-    y2_window_short:'Hul 2027 – Hun 2028',
-  
-    kpi_grant_tier:'Tier ng Grant',
+    spend_sub:'Հետևեք դրամաշնորհների ծախսերին 2-ամյա ֆինանսավորման ցիկլում և նշեք թերի ծախսման վտանգի տակ գտնվող շրջանները',
+    filter_combined:'Համակցված տեսք',
+    filter_y1:'Տարի 1',
+    filter_y2:'Տարի 2',
+    underspend_title:'⚠ Թերի ծախսել ռիսկերի մասին ահազանգերը',
+    calculating:'Հաշվարկվում է...',
+    underspend_desc:'Շրջանները դրոշակվում են, երբ ծախսերի տեմպերը սահմանվում են դանդաղ կամ արագ: Դրոշը մաքրելու համար ներքևի աղյուսակում դրեք «Չափավոր» տեմպը:',
+    spend_table_title:'Ծախսել-Դուք Մանրամասն',
+    spend_table_sub:'Հատկացումներն ընդդեմ տարեցտարի ծախսերի · 2-ամյա ցիկլ',
+    th_total_grant:'Ընդհանուր դրամաշնորհ',
+    th_y1_budget:'1-ին տարվա բյուջե',
+    th_y2_budget:'2-րդ տարվա բյուջե',
+    th_disbursed_pct:'Հատկացված տոկոսը Ընդհանուր',
+    th_spend_pace:'Ծախսել տեմպը',
+    th_status:'Կարգավիճակ',
+    kpi_total_grant_label:'Ընդհանուր դրամաշնորհ',
+    kpi_y1_budget_label:'1-ին տարվա բյուջե',
+    kpi_y2_budget_label:'2-րդ տարվա բյուջե',
+    kpi_all_11_districts:'1-ին մակարդակի մրցանակ',
+    kpi_y1_window:'դրամաշնորհ · 2026 թվականի հունվար – 2027 թվականի հունիս',
+    kpi_y2_window:'դրամաշնորհ · 2027 թվականի հուլիս – 2028 թվականի հունիս',
+    pace_slow:'Դանդաղ',
+    pace_moderate:'Չափավոր',
+    pace_fast:'Արագ',
+    pace_underfunded:'Թերֆինանսավորված',
+    status_on:'Հետևում',
+    status_off:'Անջատված ուղու վրա',
+    th_direct_funding:'Ընդհանուր ֆինանսավորում',
+    th_pct_total:'% Ընդհանուր',
+    th_cccco_disbursed:'Տարածաշրջան Հատկացվել է',
+    th_cccco_disbursed_rate:'Շրջանային հատկացված դրույքաչափը',
+    all_districts_total:'Kern CCD · $150,000 Ընդամենը',
+    role_project_lead:'Ծրագրի ղեկավար',
+    role_alt_project_lead:'Ծրագրի այլընտրանքային ղեկավար',
+    role_fiscal_reporter:'Ֆինանսական թղթակից',
+    role_plan_approver:'Ծրագրի հաստատող',
+    all_clear:'✓ Kern CCD-ը ճիշտ ուղու վրա է՝ թերսպասման ռիսկեր չեն հայտնաբերվել:',
+    flagged_one:'Բյուջեի մանրամասները դրոշակված են',
+    flagged_many:'Բյուջեի մանրամասները դրոշակված են',
+    tl_total:'Ընդամենը',
+    tl_pace_label:'Տեմպերը:',
+    kpi_y1_total_label:'Տարի 1 Ընդամենը',
+    overview_lift_sub:'Bakersfield · Cerro Coso · Porterville',
+    spend_for_grant_total:'1-ին մակարդակի մրցանակ',
+    sb_dashboard:'Վահանակ',
+    sb_performance:'Կատարում',
+    sb_program:'Թիմ',
+    sb_spend_monitor:'Ծախսել մոնիտոր',
+    select_language:'Ընտրեք Լեզուն',
+    status_active:'Ակտիվ',
+    y1_window_short:'2026 թվականի հունվար – 2027 թվականի հունիս',
+    y2_window_short:'2027 թվականի հուլիս - 2028 թվականի հունիս',
+    kpi_total_allocated_sub:'1-ին մակարդակի մրցանակ',
+    kpi_direct_costs:'Ուղղակի ծախսեր',
+    kpi_direct_costs_sub:'ընդհանուրի 95%-ը',
+    kpi_indirect_costs:'Անուղղակի (5%)',
+    kpi_indirect_costs_sub:'Օբյեկտի կոդը 7000',
+    kpi_y1y2_split:'Տարի 1 / Տարի 2',
+    kpi_y1y2_split_sub:'$122,638 / $27,362',
+    chart_funding_objcode:'Ֆինանսավորում օբյեկտի կոդով',
+    chart_direct_indirect:'Ուղղակի ընդդեմ անուղղակի',
+    chart_by_objcode:'Օբյեկտի կոդով',
+    table_alloc_sub:'Kern CCD հավելվածի համաձայն՝ կազմում է $150,000',
+    th_period:'Ժամանակաշրջան',
+    th_period_budget:'Ժամանակաշրջանի բյուջե',
+    th_share:'Ընդհանուր մասնաբաժինը',
+    th_project_year:'Ծրագրի տարի',
+    kpi_dr_target:'DRS վերապատրաստված',
+    kpi_dr_target_sub:'Դասակարգված անձնակազմը երկու խմբի վրա',
+    kpi_mentor_target:'Քոլեջներ',
+    kpi_mentor_target_sub:'Ֆակուլտետի 4 մենթոր · 8 մենթի',
+    kpi_grant_tier:'Դրամաշնորհային մակարդակ',
     kpi_grant_tier_sub:'2026–2028 EEO IBP',
-    kpi_colleges:'Mga Kalahok na Kolehiyo',
+    kpi_colleges:'Մասնակից քոլեջներ',
     kpi_colleges_sub:'Bakersfield · Cerro Coso · Porterville',
-    kpi_faculty_target:'Target na Faculty',
-    kpi_faculty_target_sub:'Sanay sa buong distrito sa Year 2',},
+    kpi_faculty_target:'Ֆակուլտետի թիրախ',
+    kpi_faculty_target_sub:'Վերապատրաստվել է շրջանի 2-րդ տարում'
+  },
+  ko: {
+    nav_overview:'개요',
+    nav_goals:'목표 및 목표',
+    nav_districts:'프로젝트 프로필',
+    nav_outcomes:'결과',
+    nav_budget:'예산 내역',
+    nav_timeline:'타임라인',
+    nav_contacts:'콘택트 렌즈',
+    nav_spenddown:'지출감소 모니터',
+    topbar_title:'컨 CCD 프로젝트',
+    goals_title:'목표 및 목표',
+    goals_sub:'Kern CCD 작업 계획(섹션 2.1)의 프로젝트 목표 - 2년 활동, 5가지 측정 가능한 결과 및 책임 있는 리더십과 결합됩니다.',
+    overview_title:'프로그램 개요',
+    overview_sub:'Kern Community College District — 1등급 수혜자, VR EEO 교수진 개발 및 동료 멘토링 프로그램. Bakersfield, Cerro Coso 및 Porterville 대학 전체에 걸쳐 2026~2028 EEO IBP 보조금 주기에서 $150,000 지원.',
+    meta_monitor:'그랜트 모니터',
+    meta_grantid:'부여 ID',
+    meta_start:'시작',
+    meta_duration:'자금주기',
+    meta_status:'상태',
+    kpi_total_funding:'총 자금',
+    kpi_across:'VR 교수진 개발 및 동료 멘토링',
+    kpi_total_districts:'총 지구',
+    kpi_all_submitted:'모두 제출됨',
+    kpi_tier1:'계층 1 지구',
+    kpi_tier1_sub:'각 $150,000(평균)',
+    kpi_tier2:'계층 2 지구',
+    kpi_tier2_sub:'각각 $100,000',
+    kpi_lift:'리프트 얼라이언스',
+    kpi_focus:'중점 분야',
+    kpi_focus_sub:'채용의 형평성 · 포용적 교육학 · 멘토십 · 성찰적 실천',
+    lift_title:'프로그램 스포트라이트 — DRS 채용 + 교수진 멘토십',
+    lift_desc:'Kern CCD는 Bakersfield, Cerro Coso 및 Porterville에서 2년간의 VR 교수진 개발 및 동료 멘토링 프로그램을 시작합니다. 구조화된 VR 교육학 교육과 동료 멘토링을 결합하여 교수진 리더십을 구축하고 2024~2027 EEO 계획에서 채용 후 격차를 줄입니다.',
+    chart_tier_dist:'계층별 자금 할당',
+    chart_total_dist:'총 분배',
+    chart_focus_areas:'프로그램 중점 분야',
+    chart_by_type:'이니셔티브 유형별',
+    table_district_summary:'프로젝트 요약',
+    th_district:'구역',
+    th_tier:'층',
+    th_funding:'자금 조달',
+    th_y1:'1년차',
+    th_y2:'2년차',
+    th_focus:'주요 초점',
+    th_total:'총',
+    funds_title:'목표 및 목표',
+    funds_sub:'Kern CCD 프로젝트 목표 및 결과',
+    kpi_total_allocated:'할당된 총액',
+    kpi_all_11:'1등급 수상',
+    kpi_tier1_total:'계층 1 합계',
+    kpi_7dist:'7개 지구',
+    kpi_tier2_total:'계층 2 합계',
+    kpi_4dist:'4개 지구 × $100,000',
+    kpi_y1_total:'1년차 합계',
+    kpi_y1_sub:'2026년 1월 – 2027년 6월',
+    chart_funding_district:'지구별 자금 조달',
+    chart_direct:'직접 할당',
+    chart_tier_split:'계층 분할',
+    chart_y1y2:'1년차와 2년차 지출',
+    chart_by_dist:'지구별',
+    table_alloc_detail:'지구 수준 할당 세부정보',
+    districts_title:'프로젝트 프로필',
+    districts_sub:'컨 커뮤니티 칼리지 지구',
+    filter_by:'필터링 기준:',
+    filter_all:'모든 지구',
+    filter_tier1:'1단계',
+    filter_tier2:'2단계',
+    filter_lift:'리프트 얼라이언스',
+    outcomes_title:'프로그램 결과',
+    budget_title:'예산 내역',
+    budget_sub:'개체 코드 지출은 1년차(2026년 1월~2027년 6월)와 2년차(2027년 7월~2028년 6월)에 걸쳐 분할됩니다. VR 하드웨어 구매로 Y1 드라이브; 서비스 및 교수진 혁신 장학금이 Y2를 촉진합니다.',
+    timeline_title:'구현 일정',
+    timeline_sub:'2년 펀딩 주기 · 2026년 1월 1일 → 2028년 6월 30일',
+    chart_yearly:'연도별 지출 프로필',
+    chart_all_districts:'모든 지구',
+    tl_y1:'1년차(2026년 1월 – 2027년 6월)',
+    tl_y2:'2년차(2027년 7월 – 2028년 6월)',
+    contacts_title:'프로젝트 연락처',
+    contacts_sub:'프로젝트 리더, 대체 담당자 및 회계 보고자',
+    spend_title:'지출감소 모니터',
+    spend_sub:'2년 자금 조달 주기에 걸쳐 보조금 지출을 추적하고 지출이 부족할 위험이 있는 지구를 표시합니다.',
+    filter_combined:'결합된 보기',
+    filter_y1:'1년차',
+    filter_y2:'2년차',
+    underspend_title:'⚠ 위험 경고를 과소지출',
+    calculating:'계산 중...',
+    underspend_desc:'지출 속도가 느림 또는 빠름으로 설정된 경우 구역에 플래그가 지정됩니다. 플래그를 제거하려면 아래 표에서 속도를 보통으로 설정하세요.',
+    spend_table_title:'지출 세부정보',
+    spend_table_sub:'할당 대 연도별 지출 · 2년 주기',
+    th_total_grant:'총 보조금',
+    th_y1_budget:'1년차 예산',
+    th_y2_budget:'2년차 예산',
+    th_disbursed_pct:'총 지출 비율(%)',
+    th_spend_pace:'지출 속도',
+    th_status:'상태',
+    kpi_total_grant_label:'총 보조금',
+    kpi_y1_budget_label:'1년차 예산',
+    kpi_y2_budget_label:'2년차 예산',
+    kpi_all_11_districts:'1등급 수상',
+    kpi_y1_window:'보조금 · 2026년 1월 – 2027년 6월',
+    kpi_y2_window:'보조금 · 2027년 7월 – 2028년 6월',
+    pace_slow:'느린',
+    pace_moderate:'보통의',
+    pace_fast:'빠른',
+    pace_underfunded:'자금 부족',
+    status_on:'온 트랙',
+    status_off:'오프 트랙',
+    th_direct_funding:'총 자금',
+    th_pct_total:'전체 대비 %',
+    th_cccco_disbursed:'지구에 지급됨',
+    th_cccco_disbursed_rate:'지구 지급률',
+    all_districts_total:'컨 CCD · 총 $150,000',
+    role_project_lead:'프로젝트 리더',
+    role_alt_project_lead:'대체 프로젝트 리더',
+    role_fiscal_reporter:'회계보고관',
+    role_plan_approver:'계획 승인자',
+    all_clear:'✓ Kern CCD가 순조롭게 진행 중입니다. 지출 부족 위험이 감지되지 않습니다.',
+    flagged_one:'예산 세부정보가 표시됨',
+    flagged_many:'예산 세부정보가 표시됨',
+    tl_total:'총',
+    tl_pace_label:'속도:',
+    kpi_y1_total_label:'1년차 합계',
+    overview_lift_sub:'베이커스필드 · 세로 코소 · 포터빌',
+    spend_for_grant_total:'1등급 수상',
+    sb_dashboard:'계기반',
+    sb_performance:'성능',
+    sb_program:'팀',
+    sb_spend_monitor:'지출 모니터',
+    select_language:'언어 선택',
+    status_active:'활동적인',
+    y1_window_short:'2026년 1월 – 2027년 6월',
+    y2_window_short:'2027년 7월 – 2028년 6월',
+    kpi_total_allocated_sub:'1등급 수상',
+    kpi_direct_costs:'직접 비용',
+    kpi_direct_costs_sub:'전체의 95%',
+    kpi_indirect_costs:'간접 (5%)',
+    kpi_indirect_costs_sub:'개체 코드 7000',
+    kpi_y1y2_split:'1년차 / 2년차',
+    kpi_y1y2_split_sub:'$122,638 / $27,362',
+    chart_funding_objcode:'개체 코드별 자금 조달',
+    chart_direct_indirect:'직접 대 간접',
+    chart_by_objcode:'개체 코드별',
+    table_alloc_sub:'Kern CCD 신청서당 — 총 $150,000',
+    th_period:'기간',
+    th_period_budget:'기간예산',
+    th_share:'전체 비중',
+    th_project_year:'프로젝트 연도',
+    kpi_dr_target:'DRS 교육을 받았습니다.',
+    kpi_dr_target_sub:'두 집단에 걸쳐 분류된 직원',
+    kpi_mentor_target:'대학',
+    kpi_mentor_target_sub:'교직원 멘토 4명 · 멘티 8명',
+    kpi_grant_tier:'보조금 등급',
+    kpi_grant_tier_sub:'2026~2028년 EEO IBP',
+    kpi_colleges:'참여대학',
+    kpi_colleges_sub:'베이커스필드 · 세로 코소 · 포터빌',
+    kpi_faculty_target:'교수대상',
+    kpi_faculty_target_sub:'2년차까지 지역 전역에서 교육을 받았습니다.'
+  },
   zh: {
     nav_overview:'總覽', nav_goals:'目標與宗旨', nav_districts:'計畫簡介', nav_outcomes:'成果', nav_budget:'預算明細', nav_timeline:'時間表', nav_contacts:'聯絡資訊', nav_spenddown:'支出進度監測',
     topbar_title:'Kern CCD 計畫',
@@ -1768,7 +2248,7 @@ const translations = {
     flagged_many:'項預算明細已被標記',
     tl_total:'總計', tl_pace_label:'進度:',
     kpi_y1_total_label:'第 1 年總計',
-    overview_lift_sub:'AVC · Citrus · Peralta · WVM',
+    overview_lift_sub:'Bakersfield · Cerro Coso · Porterville',
     spend_for_grant_total:'全部 11 個學區',
     sb_dashboard:'儀表板',
     sb_performance:'績效',
@@ -1799,7 +2279,7 @@ function applyTranslation(lang) {
     const key = el.getAttribute('data-i18n');
     if (dict[key]) el.textContent = dict[key];
   });
-  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  document.documentElement.setAttribute('dir', 'ltr');
 }
 function setLang(lang) {
   currentLang = lang;
@@ -1807,10 +2287,10 @@ function setLang(lang) {
   document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
   const chosen = document.querySelector(`.lang-option[onclick="setLang('${lang}')"]`);
   if (chosen) chosen.classList.add('active');
-  const names = { en:'English', es:'Español', vi:'Tiếng Việt', ar:'العربية', tl:'Tagalog', zh:'繁體中文' };
+  const names = { en:'English', es:'Español', vi:'Tiếng Việt', hy:'Հայերեն', ko:'한국어', zh:'繁體中文' };
   document.getElementById('transLabel').textContent = lang === 'en' ? 'Translate' : names[lang];
   const banner = document.getElementById('transBanner');
-  const fullNames = { en:'English', es:'Spanish (Español)', vi:'Vietnamese (Tiếng Việt)', ar:'Arabic (العربية)', tl:'Tagalog', zh:'Chinese Traditional (繁體中文)' };
+  const fullNames = { en:'English', es:'Spanish (Español)', vi:'Vietnamese (Tiếng Việt)', hy:'Armenian (Հայերեն)', ko:'Korean (한국어)', zh:'Chinese Traditional (繁體中文)' };
   if (lang !== 'en') { banner.classList.add('show'); document.getElementById('transLangName').textContent = fullNames[lang]; }
   else banner.classList.remove('show');
   toggleTranslate();
@@ -1984,30 +2464,91 @@ function renderOutcomes() {
     </div>`).join('');
 }
 
+
+/* ════════════════════════════════════════════════════════════════
+   BUDGET MODEL — single source of truth for the Budget Breakdown.
+   The Year 1 / Year 2 cards, the KPI cards, the Timeline, and the
+   interactive Budget Modification Request Form all read & write this
+   one model. Each line keeps its baseline Y1/Y2 split so that when a
+   modification changes a line's Proposed Funds, the new amount is
+   redistributed across the two years by the original ratio and every
+   downstream total updates live.
+════════════════════════════════════════════════════════════════ */
+const BUDGET_BASELINE = [
+  { code:'1000', label:'Instructional Salaries',     y1:14400, y2:18260 },
+  { code:'3000', label:'Employee Benefits',          y1: 3120, y2: 3954 },
+  { code:'4000', label:'Supplies & Materials',       y1:86750, y2:    0 },
+  { code:'5000', label:'Other Operating & Services', y1:12240, y2: 3780 },
+  { code:'7000', label:'Indirect',                   y1: 6128, y2: 1368 }
+];
+// Working copy that modifications mutate (deep clone of the baseline).
+let BUDGET_MODEL = BUDGET_BASELINE.map(r => ({ ...r }));
+const codeProposed = r => r.y1 + r.y2;            // combined per-line budget
+const budgetTotal  = () => BUDGET_MODEL.reduce((s,r) => s + codeProposed(r), 0);
+
+// Baseline amount for a given object code and project year ('y1' | 'y2').
+const baselineYear = (code, yk) => { const b = BUDGET_BASELINE.find(x => x.code === code); return b ? b[yk] : 0; };
+
+// Resolve a line's modified proposed funds from what was typed in Expenditure
+// Updates, relative to the current (baseline) funds:
+//   "+5000"  -> ADD to current funds            (base + 5000)
+//   "-3000"  -> SUBTRACT from current funds      (base - 3000)
+//   "12000"  -> set as the new amount (replace)  (12000)
+//   blank    -> no change                        (base)
+function modifiedFromUpdates(base, raw) {
+  if (raw == null) return base;
+  const s = String(raw).trim();
+  if (s === '') return base;
+  const amt = parseMoney(s);
+  return /^[+\-−]/.test(s) ? base + amt : amt;   // leading sign = delta, else replacement
+}
+
+// Rebuild the whole model from the per-year modification requests.
+//   getRawUpdate(code, yearKey) -> string | null   (the raw Expenditure Updates entry)
+function applyBudgetMods(getRawUpdate) {
+  BUDGET_MODEL = BUDGET_BASELINE.map(r => ({ ...r }));
+  BUDGET_BASELINE.forEach(bl => {
+    const cur = BUDGET_MODEL.find(x => x.code === bl.code);
+    ['y1', 'y2'].forEach(yk => {
+      cur[yk] = modifiedFromUpdates(bl[yk], getRawUpdate(bl.code, yk));
+    });
+  });
+  districts[0].yearlyBudget = {
+    y1: BUDGET_MODEL.reduce((s, x) => s + x.y1, 0),
+    y2: BUDGET_MODEL.reduce((s, x) => s + x.y2, 0)
+  };
+}
+
+/* ════════════ BUDGET KPI CARDS — driven by BUDGET_MODEL ════════════ */
+function renderBudgetKPIs() {
+  const d = districts[0];
+  const total = budgetTotal();
+  const indirect = codeProposed(BUDGET_MODEL.find(r => r.code === '7000') || { y1:0, y2:0 });
+  const direct = total - indirect;
+  const y1 = BUDGET_MODEL.reduce((s,x) => s + x.y1, 0);
+  const y2 = BUDGET_MODEL.reduce((s,x) => s + x.y2, 0);
+  const pct = (a,b) => b > 0 ? Math.round((a / b) * 100) : 0;
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('kpi-total-award', fmt(d.funding));
+  set('kpi-direct', fmt(direct));
+  set('kpi-direct-sub', `${pct(direct, total)}% of budget`);
+  set('kpi-indirect', fmt(indirect));
+  set('kpi-indirect-sub', `${pct(indirect, direct)}% of direct`);
+  set('kpi-split', `${pct(y1, total)}% / ${pct(y2, total)}%`);
+  set('kpi-split-sub', `${fmt(y1)} / ${fmt(y2)}`);
+}
+
 /* ════════════ BUDGET — Year 1 / Year 2 cards with object-code lines, share bars, and a note ════════════ */
 function renderBudget() {
+  renderBudgetKPIs();
   const grid = document.getElementById('budget-grid');
   if (!grid) return;
-  const d = districts[0];
-  // Kern CCD budget line items per project year (Y1 = FY 2025-26 + FY 2026-27, Y2 = FY 2027-28)
-  const Y1 = [
-    { code:'1000', label:'1000 — Instructional Salaries',     amount:  26128 },
-    { code:'3000', label:'3000 — Employee Benefits',          amount:   5659 },
-    { code:'4000', label:'4000 — Supplies & Materials (VR hardware-heavy)', amount: 75000 },
-    { code:'5000', label:'5000 — Other Operating & Services', amount:   9613 },
-    { code:'7000', label:'7000 — Indirect',                   amount:   6238 }
-  ];
-  const Y2 = [
-    { code:'1000', label:'1000 — Instructional Salaries',     amount:   6532 },
-    { code:'3000', label:'3000 — Employee Benefits',          amount:   1415 },
-    { code:'4000', label:'4000 — Supplies & Materials',       amount:  15750 },
-    { code:'5000', label:'5000 — Other Operating & Services', amount:   2407 },
-    { code:'7000', label:'7000 — Indirect',                   amount:   1258 }
-  ];
-  const Y1_TOTAL = d.yearlyBudget.y1;
-  const Y2_TOTAL = d.yearlyBudget.y2;
-  const Y1_NOTE = 'Y1 (18 months) is hardware-heavy: VR headsets and peripherals for Bakersfield, Cerro Coso, and Porterville dominate the 4000 line; faculty stipends and the first peer-mentor cohort launch in Fall 2026.';
-  const Y2_NOTE = 'Y2 (12 months) emphasizes services (Unity / VR creation training, dissemination, final showcase) plus supplemental hardware and Faculty Innovation Stipends.';
+  const Y1 = BUDGET_MODEL.map(r => ({ code:r.code, label:`${r.code} - ${r.label}`, amount:r.y1 }));
+  const Y2 = BUDGET_MODEL.map(r => ({ code:r.code, label:`${r.code} - ${r.label}`, amount:r.y2 }));
+  const Y1_TOTAL = Y1.reduce((s,r) => s + r.amount, 0);
+  const Y2_TOTAL = Y2.reduce((s,r) => s + r.amount, 0);
+  const Y1_NOTE = 'Y1 (18 months) is hardware-heavy: the 4000 line ($86,750) covers Meta Quest 3 VR headsets, storage carts, and development computers for Bakersfield, Cerro Coso, and Porterville; faculty training stipends begin in 2026-27.';
+  const Y2_NOTE = 'Y2 (12 months) shifts to faculty stipends and Faculty Innovation Stipends (1000) plus VR headset-management software (5000); no new hardware is purchased.';
   const renderLines = (rows, total) => rows.map(r => {
     const isIndirect = r.code === '7000';
     const cls = isIndirect ? ' indirect-line' : '';
@@ -2027,6 +2568,243 @@ function renderBudget() {
       <div class="budget-lines-wrap">${renderLines(Y2, Y2_TOTAL)}</div>
       <div class="budget-note">${Y2_NOTE}</div>
     </div>`;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   INTERACTIVE BUDGET MODIFICATION REQUEST FORM
+   - Mirrors the District's Word form (object-code rows + Totals).
+   - Fund Balance auto-calculates (Proposed − Actuals).
+   - Column Totals auto-sum.
+   - Editing Proposed Funds rewrites BUDGET_MODEL and re-renders the
+     Year 1 / Year 2 cards, the KPI cards and the Timeline live.
+   - All entries persist in localStorage.
+════════════════════════════════════════════════════════════════ */
+const BMR_STORE = 'avc_budget_mod_form_v1';
+const parseMoney = s => { const n = parseFloat(String(s).replace(/−/g, '-').replace(/[^0-9.\-]/g, '')); return isFinite(n) ? n : 0; };
+
+function loadBmrState() {
+  try { return JSON.parse(localStorage.getItem(BMR_STORE)) || {}; } catch(e) { return {}; }
+}
+function saveBmrState(state) {
+  try { localStorage.setItem(BMR_STORE, JSON.stringify(state)); } catch(e) {}
+}
+
+// The project year the form is currently showing ('y1' | 'y2').
+const yearMeta = { y1:{ label:'Year 1', dates:'Jan 2026 – Jun 2027' }, y2:{ label:'Year 2', dates:'Jul 2027 – Jun 2028' } };
+// Pull the saved modification rows for one year ({} if none).
+const yearRows = (state, yk) => (state.years && state.years[yk] && state.years[yk].rows) || {};
+
+// One distinctly-styled, clearly-labelled block per project year.
+function yearBlockHTML(yk, rowState) {
+  const meta = yearMeta[yk];
+  const moneyVal = v => (v != null ? Number(v).toLocaleString() : '');
+  const rows = BUDGET_BASELINE.map(r => {
+    const rs = rowState[r.code] || {};
+    const isIndirect = r.code === '7000';
+    const baseAmt = r[yk];   // this year's current proposed funds (matches the Y1/Y2 card)
+    return `
+      <tr data-code="${r.code}" data-year="${yk}">
+        <td><span class="bmr-code${isIndirect ? ' indirect' : ''}">${r.code}</span></td>
+        <td><input class="bmr-cell-input" type="text" data-bmr="description" value="${rs.description != null ? String(rs.description).replace(/"/g,'&quot;') : ''}" placeholder="${r.label}"></td>
+        <td class="bmr-proposed bmr-num" data-bmr-proposed>${fmt(baseAmt)}</td>
+        <td class="bmr-money-cell"><input class="bmr-cell-input bmr-num" type="text" inputmode="decimal" data-bmr="actuals" value="${moneyVal(rs.actuals)}" placeholder="0"></td>
+        <td class="bmr-money-cell"><input class="bmr-cell-input bmr-num" type="text" inputmode="decimal" data-bmr="balance" value="${moneyVal(rs.balance)}" placeholder="0"></td>
+        <td class="bmr-money-cell"><input class="bmr-cell-input bmr-num" type="text" inputmode="decimal" data-bmr="projections" value="${moneyVal(rs.projections)}" placeholder="0"></td>
+        <td class="bmr-money-cell"><input class="bmr-cell-input bmr-num" type="text" inputmode="decimal" data-bmr="updates" value="${rs.updates != null ? String(rs.updates).replace(/"/g,'&quot;') : ''}" placeholder="+ / − or new amt"></td>
+      </tr>`;
+  }).join('');
+  return `
+    <div class="bmr-year-block bmr-year-block--${yk}" data-year="${yk}">
+      <div class="bmr-year-head">
+        <span class="bmr-year-chip">${meta.label}</span>
+        <span class="bmr-year-head-title">${meta.label} Budget Modification</span>
+        <span class="bmr-year-head-dates">${meta.dates}</span>
+        <span class="bmr-year-head-total">Modified budget: <strong data-bmr-yeartotal>$0</strong></span>
+      </div>
+      <div class="bmr-table-wrap">
+        <table class="bmr-table">
+          <thead>
+            <tr>
+              <th class="bmr-col-narrow">Expenditure Type<small>per original grant submission</small></th>
+              <th class="bmr-col-desc">Description</th>
+              <th class="bmr-col-money bmr-num">Proposed Funds<small>current → modified</small></th>
+              <th class="bmr-col-money bmr-num">Actuals<small>spent to date</small></th>
+              <th class="bmr-col-money bmr-num">Fund Balance<small>entered by district</small></th>
+              <th class="bmr-col-money bmr-num">Projections<small>to be spent by Jun 2028</small></th>
+              <th class="bmr-col-money bmr-num">Expenditure Updates<small>+ add / − reduce, or new amount</small></th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2">${meta.label} Totals:</td>
+              <td class="bmr-total-num" data-bmr-total="proposed">$0</td>
+              <td class="bmr-total-num" data-bmr-total="actuals">$0</td>
+              <td class="bmr-total-num" data-bmr-total="balance">$0</td>
+              <td class="bmr-total-num" data-bmr-total="projections">$0</td>
+              <td class="bmr-total-num" data-bmr-total="updates">+$0</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>`;
+}
+
+function renderBudgetModForm() {
+  const wrap = document.getElementById('bmr-year-blocks');
+  if (!wrap) return;
+  const state = loadBmrState();
+  wrap.innerHTML = ['y1', 'y2'].map(yk => yearBlockHTML(yk, yearRows(state, yk))).join('');
+
+  // Restore meta fields
+  document.querySelectorAll('[data-bmr-meta]').forEach(el => {
+    const k = el.getAttribute('data-bmr-meta');
+    if (state.meta && state.meta[k] != null) el.value = state.meta[k];
+    if (k === 'district' && !el.value) el.value = districts[0].name;
+  });
+
+  // Wire row inputs (both year blocks)
+  wrap.querySelectorAll('input[data-bmr]').forEach(inp => {
+    inp.addEventListener('input', onBmrInput);
+    inp.addEventListener('blur', onBmrBlur);
+  });
+  document.querySelectorAll('[data-bmr-meta]').forEach(el => {
+    if (el.dataset.bmrBound) return;      // meta inputs are static — bind once
+    el.dataset.bmrBound = '1';
+    el.addEventListener('input', () => persistBmr());
+  });
+
+  bmrRecalc();
+}
+
+function onBmrInput(e) {
+  const field = e.target.getAttribute('data-bmr');
+  persistBmr();
+  // A modification (new proposed amount in Expenditure Updates) re-flows through
+  // the Year 1 / Year 2 cards, KPIs and Timeline for the whole project.
+  if (field === 'updates') recomputeBudgetFromState();
+  bmrRecalc();
+}
+
+function onBmrBlur(e) {
+  const field = e.target.getAttribute('data-bmr');
+  const s = e.target.value.trim();
+  if (field === 'updates') {
+    // Preserve the leading +/− sign (it means add/subtract); just tidy the number.
+    if (s === '') { e.target.value = ''; return; }
+    const sign = /^\+/.test(s) ? '+' : (/^[-−]/.test(s) ? '−' : '');
+    e.target.value = sign + Number(Math.abs(parseMoney(s))).toLocaleString();
+    return;
+  }
+  if (['actuals','balance','projections'].includes(field)) {
+    // Keep blank cells blank; only tidy formatting when a value was entered.
+    if (s === '') { e.target.value = ''; return; }
+    e.target.value = Number(parseMoney(s)).toLocaleString();
+  }
+}
+
+// Recompute the live model from saved per-year modifications, then refresh the
+// Budget cards/KPIs and the Timeline so the whole project reflects the change.
+function recomputeBudgetFromState() {
+  applySavedBudgetMods();
+  renderBudget();
+  renderTimeline();
+}
+
+function bmrRecalc() {
+  const setText = (el, v) => { if (el) el.textContent = v; };
+  const yearTotals = { y1:0, y2:0 };
+  document.querySelectorAll('.bmr-year-block').forEach(block => {
+    const yk = block.getAttribute('data-year');
+    let tProp = 0, tAct = 0, tBal = 0, tProj = 0, tBase = 0, balTouched = 0;
+    block.querySelectorAll('tbody tr').forEach(tr => {
+      const code = tr.getAttribute('data-code');
+      const raw = f => ((tr.querySelector(`[data-bmr="${f}"]`) || {}).value || '').trim();
+      const base = baselineYear(code, yk);                 // current proposed funds (this year)
+      const modified = modifiedFromUpdates(base, raw('updates'));  // +add / −reduce / replace
+      const actuals = parseMoney(raw('actuals'));
+      const proj = parseMoney(raw('projections'));
+      const balance = parseMoney(raw('balance'));          // Fund Balance entered by the district
+      const pEl = tr.querySelector('[data-bmr-proposed]');
+      if (pEl) { pEl.textContent = fmt(modified); pEl.classList.toggle('modified', raw('updates') !== ''); }
+      tProp += modified; tAct += actuals; tProj += proj; tBase += base;
+      if (raw('balance') !== '') { tBal += balance; balTouched++; }
+    });
+    setText(block.querySelector('[data-bmr-total="proposed"]'), fmt(tProp));
+    setText(block.querySelector('[data-bmr-total="actuals"]'), fmt(tAct));
+    setText(block.querySelector('[data-bmr-total="balance"]'), balTouched ? fmt(tBal) : '—');
+    setText(block.querySelector('[data-bmr-total="projections"]'), fmt(tProj));
+    const net = tProp - tBase;
+    setText(block.querySelector('[data-bmr-total="updates"]'), (net >= 0 ? '+' : '−') + fmt(Math.abs(net)));
+    setText(block.querySelector('[data-bmr-yeartotal]'), fmt(tProp));
+    yearTotals[yk] = tProp;
+  });
+
+  // Reconciliation summary — whole project vs the fixed award ceiling.
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const award = districts[0].funding;
+  const modifiedBudget = budgetTotal();
+  const variance = modifiedBudget - award;
+  set('bmr-sum-award', fmt(award));
+  set('bmr-sum-proposed', fmt(modifiedBudget));
+  const varEl = document.getElementById('bmr-sum-variance');
+  if (varEl) { varEl.textContent = (variance >= 0 ? '+' : '−') + fmt(Math.abs(variance)); varEl.className = 'bmr-summary-value ' + (Math.round(variance) === 0 ? 'ok' : 'warn'); }
+  const pill = document.getElementById('bmr-sum-pill');
+  if (pill) {
+    const balanced = Math.round(variance) === 0;
+    pill.className = 'bmr-reconcile-pill ' + (balanced ? 'ok' : 'warn');
+    pill.textContent = balanced ? 'Balanced to award' : (variance > 0 ? 'Over award' : 'Under award');
+  }
+  set('bmr-sum-year', `${fmt(yearTotals.y1)} / ${fmt(yearTotals.y2)}`);
+  const y1base = BUDGET_BASELINE.reduce((s, r) => s + r.y1, 0);
+  const y2base = BUDGET_BASELINE.reduce((s, r) => s + r.y2, 0);
+  set('bmr-sum-year-sub', `Baseline ${fmt(y1base)} / ${fmt(y2base)}`);
+}
+
+function persistBmr() {
+  const state = loadBmrState();
+  state.meta = state.meta || {};
+  document.querySelectorAll('[data-bmr-meta]').forEach(el => { state.meta[el.getAttribute('data-bmr-meta')] = el.value; });
+  state.years = { y1:{ rows:{} }, y2:{ rows:{} } };
+  document.querySelectorAll('.bmr-year-block').forEach(block => {
+    const yk = block.getAttribute('data-year');
+    const rows = {};
+    block.querySelectorAll('tbody tr').forEach(tr => {
+      const code = tr.getAttribute('data-code');
+      const g = f => { const el = tr.querySelector(`[data-bmr="${f}"]`); return el ? el.value : ''; };
+      rows[code] = {
+        description: g('description'),
+        actuals: g('actuals').trim() === '' ? null : parseMoney(g('actuals')),
+        balance: g('balance').trim() === '' ? null : parseMoney(g('balance')),   // entered by district
+        projections: g('projections').trim() === '' ? null : parseMoney(g('projections')),
+        updates: g('updates').trim() === '' ? null : g('updates').trim()   // raw entry (may be +/− signed)
+      };
+    });
+    state.years[yk].rows = rows;
+  });
+  saveBmrState(state);
+}
+
+// On load, fold any previously-saved modifications back into the live model
+// so the Year 1 / Year 2 cards and KPIs reflect them before first render.
+function applySavedBudgetMods() {
+  const state = loadBmrState();
+  applyBudgetMods((code, yk) => {
+    const r = yearRows(state, yk)[code];
+    return (r && r.updates != null) ? r.updates : null;
+  });
+}
+
+function resetBudgetModForm() {
+  localStorage.removeItem(BMR_STORE);
+  BUDGET_MODEL = BUDGET_BASELINE.map(r => ({ ...r }));
+  districts[0].yearlyBudget = {
+    y1: BUDGET_MODEL.reduce((s,x) => s + x.y1, 0),
+    y2: BUDGET_MODEL.reduce((s,x) => s + x.y2, 0)
+  };
+  renderBudget();
+  renderTimeline();
+  renderBudgetModForm();
 }
 
 /* ════════════ TIMELINE — 2 years ════════════ */
@@ -2061,31 +2839,39 @@ function translateRole(r) { return ROLE_KEYS[r] ? t(ROLE_KEYS[r]) : r; }
 function renderContacts() {
   const grid = document.getElementById('contacts-grid');
   if (!grid) return;
-  grid.innerHTML = districts.map(d => {
+  const initials = n => n.split(/\s+/).filter(Boolean).map(w => w[0]).slice(0,2).join('').toUpperCase();
+  const mailIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>';
+  const phoneIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+  const html = districts.flatMap(d => {
     const people = [d.contact, d.altContact, d.fiscalReporter, d.planApprover].filter(Boolean);
-    const tierLabel = d.lift ? `${t('kpi_lift')} · ${d.liftRegion}` : `${t('th_tier')} ${d.tier}`;
-    return `
+    const extras = Array.isArray(d.additionalContacts) ? d.additionalContacts : [];
+    const all = [...people, ...extras];
+    const withPhoto = all.filter(p => p.photo);
+    const withoutPhoto = all.filter(p => !p.photo);
+    return [...withPhoto, ...withoutPhoto].map(p => {
+      const photoBlock = p.photo
+        ? `<div class="contact-photo"><div class="contact-photo-initials">${initials(p.name)}</div><img src="${p.photo}" alt="${p.name}" loading="lazy"/></div>`
+        : `<div class="contact-photo"><div class="contact-photo-initials">${initials(p.name)}</div></div>`;
+      const phoneLink = p.phone ? `<div class="contact-card-phone-row"><a class="contact-card-link" href="tel:${p.phone.replace(/[^0-9+]/g,'')}">${phoneIcon}<span>${p.phone}</span></a></div>` : '';
+      return `
       <div class="contact-card">
-        <div class="contact-card-head">
-          <div class="contact-avatar">${people[0] ? people[0].name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase() : d.name.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}</div><div class="contact-identity"><div class="contact-name">${people[0] ? people[0].name : d.name}</div><div class="contact-role">${people[0] ? translateRole(people[0].role) : ''}</div><div class="contact-badge">${translateRole(people[0] ? people[0].role : '')}</div></div>
-          <div class="
-          <div class="
-        </div>
-        <div class="contact-divider"></div><div class="contact-meta">
-          ${people.map(p => `
-            <div class="contact-person">
-              <div class="contact-avatar">${p.name.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase()}</div>
-              <div class="contact-info">
-                <div class="contact-name">${p.name}</div>
-                <div class="contact-role">${translateRole(p.role)}</div>
-                <a class="contact-email" href="mailto:${p.email}">${p.email}</a>
-                ${p.phone ? `<a class="contact-phone" href="tel:${p.phone.replace(/[^0-9+]/g,'')}">${p.phone}</a>` : ''}
-              </div>
-            </div>`).join('')}
+        ${photoBlock}
+        <div class="contact-card-body">
+          <div class="contact-card-name">${p.name}</div>
+          <div class="contact-card-title">${p.title || translateRole(p.role)}</div>
+          <div class="contact-card-role">${translateRole(p.role)}</div>
+          <div class="contact-card-divider"></div>
+          <div class="contact-card-links">
+            <a class="contact-card-link" href="mailto:${p.email}">${mailIcon}<span>${p.email}</span></a>
+            ${phoneLink}
+          </div>
         </div>
       </div>`;
+    });
   }).join('');
+  grid.innerHTML = html;
 }
+
 
 /* ════════════ CHARTS ════════════ */
 let chartInstances = {};
@@ -2386,11 +3172,9 @@ function renderSpendDown() {
       // Header summary row: read-only totals for the year, no buttons (only line items carry Pace/Status)
       const headerRow =
         '<tr class="spend-year-row" data-year-key="' + p.id + '">' +
-          '<td style="border-left:4px solid ' + yearBandColor + ';padding-left:14px;"><strong style="font-size:14px;color:var(--ccc-dark-blue);">' + p.label + '</strong><br><span style="font-size:11px;color:var(--text-muted)">' + p.dates + ' · ' + p.role + '</span></td>' +
-          '<td class="amount" style="font-weight:700;">' + fmt(p.budget) + '</td>' +
-          '<td class="amount" style="font-weight:700;">' + pct + '% of total</td>' +
-          '<td><span style="font-size:11px;color:var(--text-muted);font-weight:700;">' + p.year + '</span></td>' +
-          '<td colspan="3" style="font-size:11px;color:var(--text-muted);"><em>Year-level summary &middot; line items below carry their own pace / status</em></td>' +
+          '<td style="border-left:4px solid ' + yearBandColor + ';padding-left:12px;min-width:140px;"><div style="font-family:var(--font-display);font-size:13.5px;font-weight:700;color:var(--ccc-dark-blue);letter-spacing:-0.01em;line-height:1.2;">' + p.label + '</div><div style="font-size:10.5px;color:var(--text-muted);letter-spacing:0.01em;margin-top:2px;">' + p.dates + '</div></td>' +
+          '<td class="amount num" style="font-weight:700;">' + fmt(p.budget) + '</td>' +
+          '<td colspan="3" class="center" style="font-size:10.5px;color:var(--text-muted);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;background:var(--bg-surface-2);">Year summary &middot; line items below</td>' +
         '</tr>';
       const lineRows = (p.lineItems || []).map((li, idx) => {
         const liId = p.id + '-li' + idx;
@@ -2405,12 +3189,11 @@ function renderSpendDown() {
         const paceText  = t('pace_' + pace);
         return '<tr class="spend-line-row" data-year-key="' + p.id + '">' +
           '<td style="padding-left:32px;border-left:4px solid ' + yearBandColor + ';opacity:0.95;"><span style="font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:0.04em;margin-right:8px;">' + li.fy + '</span>' + codeBadge + '<span style="font-size:12.5px;color:var(--text-primary);">' + li.label + '</span></td>' +
-          '<td class="amount" style="font-size:12.5px;">' + fmt(li.amount) + '</td>' +
-          '<td class="amount" style="font-size:11.5px;color:var(--text-muted);">' + liPct + '%</td>' +
-          '<td><span style="font-size:11px;color:var(--text-muted);">part of ' + p.label + '</span></td>' +
+          '<td class="amount num" style="font-size:12.5px;">' + fmt(li.amount) + '</td>' +
+          
           '<td><div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:0%;background:var(--text-muted)"></div></div><span style="font-size:11px;color:var(--text-muted);">0.0%</span></td>' +
-          '<td><button onclick="togglePeriodPace(this,\'' + liId + '\')" data-pace="' + pace + '" style="background:' + paceColor + ';color:#fff;padding:3px 12px;border-radius:14px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;letter-spacing:0.02em;">' + paceText + '</button></td>' +
-          '<td><button onclick="togglePeriodStatus(this,\'' + liId + '\')" data-on="' + (isOffTrack?'0':'1') + '" style="background:' + statusColor + ';color:#fff;padding:3px 12px;border-radius:14px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;letter-spacing:0.02em;">' + statusText + '</button></td>' +
+          '<td class="center"><button onclick="togglePeriodPace(this,\'' + liId + '\')" data-pace="' + pace + '" style="background:' + paceColor + ';color:#fff;padding:4px 12px;border-radius:14px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;letter-spacing:0.04em;text-transform:uppercase;min-width:80px;display:inline-block;text-align:center;">' + paceText + '</button></td>' +
+          '<td class="center"><button onclick="togglePeriodStatus(this,\'' + liId + '\')" data-on="' + (isOffTrack?'0':'1') + '" style="background:' + statusColor + ';color:#fff;padding:4px 12px;border-radius:14px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;border:none;letter-spacing:0.04em;text-transform:uppercase;min-width:80px;display:inline-block;text-align:center;">' + statusText + '</button></td>' +
         '</tr>';
       }).join('');
       return headerRow + lineRows;
@@ -2431,12 +3214,14 @@ function renderAll() {
   renderTimeline();
   renderContacts();
   renderSpendDown();
+  renderBudgetModForm();
   // Re-init charts so legend labels translate alongside the rest of the UI
   if (typeof Chart !== 'undefined') initCharts();
 }
 
 /* ════════════ INIT ════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  applySavedBudgetMods();   // fold saved budget modifications into the model first
   renderAll();
   requestAnimationFrame(() => initCharts());
   // Restore the user's last active tab from URL hash or localStorage
@@ -2598,6 +3383,67 @@ document.addEventListener('DOMContentLoaded', () => {
       if (modal && !modal.hasAttribute('hidden')) closeA11yModal();
     }
   });
+})();
+</script>
+
+<script>
+/* === Realistic VR avatar — interactive head + eye tracking === */
+(function(){
+  const avatar = document.getElementById('vrwAvatar');
+  if (!avatar) return;
+  const head   = avatar.querySelector('.vrw-head');
+  const pupils = avatar.querySelectorAll('.vrw-pupil');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  let activeUntil = 0;
+  function easeTowards(curr, target, k){ return curr + (target - curr) * k; }
+  let curYaw = 0, curPitch = 0, tgtYaw = 0, tgtPitch = 0;
+  let pupilDX = 0, pupilDY = 0;
+  function loop(){
+    curYaw   = easeTowards(curYaw,   tgtYaw,   0.15);
+    curPitch = easeTowards(curPitch, tgtPitch, 0.15);
+    head.style.transform = `perspective(520px) rotateY(${curYaw}deg) rotateX(${curPitch}deg)`;
+    pupils.forEach(p => {
+      const cx = parseFloat(p.dataset.cx);
+      const cy = parseFloat(p.dataset.cy);
+      p.setAttribute('cx', cx + pupilDX);
+      p.setAttribute('cy', cy + pupilDY);
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+  function onMove(e){
+    const r = avatar.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width/2)) / r.width;   // -1..+1 range when within ~one width
+    const dy = (e.clientY - (r.top  + r.height/2)) / r.height;
+    tgtYaw   = Math.max(-28, Math.min(28, dx * 60));
+    tgtPitch = Math.max(-14, Math.min(20, -dy * 30));
+    pupilDX  = Math.max(-1.6, Math.min(1.6, dx * 2.4));
+    pupilDY  = Math.max(-1.2, Math.min(1.2, dy * 1.8));
+    activeUntil = Date.now() + 2000;
+  }
+  document.addEventListener('mousemove', onMove, {passive:true});
+  /* Idle loop: when cursor is quiet, glance around naturally */
+  const idlePoses = [
+    {y: 0,   p:  0,  px:0,   py:0},
+    {y: -22, p:  0,  px:-1.4,py:0},
+    {y:  0,  p:  0,  px:0,   py:0},
+    {y:  22, p:  0,  px: 1.4,py:0},
+    {y:  0,  p:  0,  px:0,   py:0},
+    {y:  0,  p: 18,  px:0,   py:-1.0},
+    {y:  0,  p:  0,  px:0,   py:0},
+  ];
+  let idleIdx = 0;
+  function idleStep(){
+    if (Date.now() < activeUntil) return;
+    const pose = idlePoses[idleIdx % idlePoses.length];
+    tgtYaw   = pose.y;
+    tgtPitch = pose.p;
+    pupilDX  = pose.px;
+    pupilDY  = pose.py;
+    idleIdx++;
+  }
+  setInterval(idleStep, 1500);
 })();
 </script>
 </body>
