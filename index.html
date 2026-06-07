@@ -498,6 +498,7 @@
     .tl-ht { width:80px; flex-shrink:0; text-align:right; }
 
     .contacts-subhead { font-family:var(--font-display); font-size:clamp(11px, 3.4vw, 18px); font-weight:700; color:var(--ccc-dark-blue); letter-spacing:-0.012em; margin:24px 0 14px; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    [data-theme="dark"] .contacts-subhead { color:var(--accent-light); }
     .contacts-grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:18px; align-items:stretch; padding:4px 0; }
     .contact-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px; transition:box-shadow var(--transition), border-color var(--transition); display:flex; gap:14px; align-items:stretch; box-shadow:var(--shadow-sm); min-height:250px; }
     .contact-card:hover { box-shadow:var(--shadow-md); border-color:var(--ccc-medium-blue); }
@@ -640,6 +641,8 @@
     .a11y-stamp { color:var(--ccc-dark-blue); cursor:pointer; padding:0 16px; font-family:var(--font-body),Source Sans 3,Helvetica Neue,sans-serif; font-size:12.5px; font-weight:600; letter-spacing:0.02em; }
     .a11y-stamp:hover { color:var(--ccc-medium-blue); border-color:var(--ccc-medium-blue); }
     .a11y-stamp:focus-visible { outline:2px solid var(--ccc-dark-blue); outline-offset:2px; }
+    [data-theme="dark"] .a11y-stamp { color:var(--accent-light); }
+    [data-theme="dark"] .a11y-stamp:hover { color:var(--accent-hover); }
     .a11y-stamp-label { display:inline-block; line-height:1; }
     /* Modal overlay — strictly fixed-position so it doesn't shift any layout. */
     .a11y-modal { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:24px; }
