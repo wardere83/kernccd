@@ -615,12 +615,16 @@
     .overview-hero-text { position:relative; }
     .overview-hero-text h2 { padding-right:64px; }
     .overview-hero-text .overview-ticker { padding-right:60px; }
-    .overview-hero-avatar { position:absolute; right:6px; top:4px; width:54px; height:54px; pointer-events:none; border-radius:50%; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.15), 0 0 0 1px var(--border); background:#f6f4ef; perspective:520px; }
+    .overview-hero-avatar { position:absolute; right:2px; top:0; width:68px; height:68px; pointer-events:none; overflow:visible; background:transparent; perspective:560px; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.30)) drop-shadow(0 0 8px rgba(57,224,255,0.50)); }
     .overview-hero-avatar .vr-woman { width:100%; height:100%; display:block; overflow:visible; }
     .vr-woman .vrw-breath { transform-origin:100px 100px; animation:vrw-breath 5.6s ease-in-out infinite; }
     .vr-woman .vrw-head   { transform-origin:100px 110px; transform-box:fill-box; transform-style:preserve-3d; transition:transform 0.35s cubic-bezier(.4,.0,.2,1); will-change:transform; }
     .vr-woman .vrw-catch  { animation:vrw-catch 4.6s ease-in-out infinite; }
     .vr-woman .vrw-led    { animation:vrw-led 2.6s ease-in-out infinite; }
+    .vr-woman .vrw-hud   { transform-box:fill-box; transform-origin:center; animation:vrw-hud 17s linear infinite; }
+    .vr-woman .vrw-hud2  { transform-box:fill-box; transform-origin:center; animation:vrw-hud 27s linear infinite reverse; }
+    .vr-woman .vrw-scan  { animation:vrw-scan 2.9s ease-in-out infinite; }
+    .vr-woman .vrw-glow  { animation:vrw-glow 3.6s ease-in-out infinite; }
     @media (max-width:560px) { .overview-hero { padding:16px 18px 14px; } .overview-hero-text h2 { padding-right:52px; } .overview-hero-text .overview-ticker { padding-right:48px; } .overview-hero-avatar { width:44px; height:44px; right:4px; top:4px; } }
     .overview-hero h2 { font-family:var(--font-display); font-size:26px; font-weight:600; color:var(--text-primary); line-height:1.2; margin:0; letter-spacing:-0.02em; }
     .overview-hero .overview-ticker { margin-top:12px; }
@@ -724,8 +728,11 @@
       75%      { opacity:0.6; }
     }
     @keyframes vrw-led   { 0%, 100% { opacity:0.95; } 50% { opacity:0.55; } }
+    @keyframes vrw-hud  { to { transform:rotate(360deg); } }
+    @keyframes vrw-scan { 0% { transform:translateY(0); opacity:0; } 12% { opacity:0.9; } 50% { transform:translateY(26px); opacity:0.9; } 88% { opacity:0; } 100% { transform:translateY(26px); opacity:0; } }
+    @keyframes vrw-glow { 0%, 100% { opacity:0.45; } 50% { opacity:0.8; } }
     @media (prefers-reduced-motion: reduce) {
-      .vr-woman .vrw-breath, .vr-woman .vrw-head, .vr-woman .vrw-catch, .vr-woman .vrw-led { animation:none; }
+      .vr-woman .vrw-breath, .vr-woman .vrw-head, .vr-woman .vrw-catch, .vr-woman .vrw-led, .vr-woman .vrw-hud, .vr-woman .vrw-hud2, .vr-woman .vrw-scan, .vr-woman .vrw-glow { animation:none; }
     }
       /* Mobile nav clearance */
     @media (max-width:768px) {
@@ -849,7 +856,7 @@
               </div>
             </div>
           </div>
-          <div class="overview-hero-avatar" role="img" aria-label="Animated cartoon portrait of a person wearing a white VR headset, head looks left, right, and up on a loop">
+          <div class="overview-hero-avatar" role="img" aria-label="Animated futuristic portrait of a person wearing a white VR headset inside a holographic HUD; the head and eyes follow your cursor">
             <svg id="vrwAvatar" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="vr-woman" aria-hidden="true">
               <defs>
                 <!-- ===== Realistic skin shading (multi-stop with subsurface warmth) ===== -->
@@ -939,10 +946,34 @@
                 <filter id="vrwSoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="0.45"/></filter>
                 <filter id="vrwLed"  x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
                 <filter id="vrwShadow" x="-20%" y="-20%" width="140%" height="160%"><feGaussianBlur in="SourceAlpha" stdDeviation="1.2"/><feOffset dx="0" dy="1.4"/><feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <radialGradient id="vrwAura" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%"   stop-color="#0a2230" stop-opacity="0"/>
+                  <stop offset="60%"  stop-color="#0a3753" stop-opacity="0.16"/>
+                  <stop offset="84%"  stop-color="#39e0ff" stop-opacity="0.32"/>
+                  <stop offset="100%" stop-color="#39e0ff" stop-opacity="0"/>
+                </radialGradient>
+                <filter id="vrwNeon" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="1.7" result="nb"/><feMerge><feMergeNode in="nb"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <clipPath id="vrwVisorClip"><path d="M66,78 Q70,72 78,72 L122,72 Q130,72 134,78 L134,96 Q130,102 122,102 L78,102 Q70,102 66,96 Z"/></clipPath>
               </defs>
 
               <!-- soft frame background -->
-              <rect x="0" y="0" width="200" height="200" fill="#f4f1ea"/>
+              <!-- Holographic HUD backdrop (replaces the flat badge circle) -->
+              <ellipse class="vrw-glow" cx="100" cy="103" rx="93" ry="97" fill="url(#vrwAura)"/>
+              <g class="vrw-hud" opacity="0.6">
+                <circle cx="100" cy="100" r="93" fill="none" stroke="#39e0ff" stroke-width="1.1" stroke-dasharray="3 7"/>
+                <circle cx="100" cy="100" r="83" fill="none" stroke="#39e0ff" stroke-width="0.6" stroke-dasharray="1 7" opacity="0.6"/>
+                <g stroke="#8af2ff" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M100,4 L100,12"/><path d="M100,188 L100,196"/><path d="M4,100 L12,100"/><path d="M188,100 L196,100"/>
+                </g>
+              </g>
+              <g class="vrw-hud2" opacity="0.5">
+                <path d="M150,28 A84,84 0 0 1 176,72" fill="none" stroke="#39e0ff" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M50,172 A84,84 0 0 1 24,128" fill="none" stroke="#39e0ff" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+              <g stroke="#39e0ff" stroke-width="1.6" fill="none" opacity="0.65" stroke-linecap="round">
+                <path d="M10,32 L10,12 L30,12"/><path d="M190,32 L190,12 L170,12"/>
+                <path d="M10,168 L10,188 L30,188"/><path d="M190,168 L190,188 L170,188"/>
+              </g>
 
               <g class="vrw-breath">
                 <g class="vrw-head">
@@ -1019,6 +1050,9 @@
                   <path d="M76,72 L96,100 L92,100 L72,76 Z" fill="#ffffff" opacity="0.06"/>
                   <path d="M94,102 Q100,106 106,102 L106,98 Q100,100 94,98 Z" fill="#050709"/>
 
+                  <!-- Futuristic neon visor rim + sweeping scan-line -->
+                  <path d="M66,78 Q70,72 78,72 L122,72 Q130,72 134,78 L134,96 Q130,102 122,102 L78,102 Q70,102 66,96 Z" fill="none" stroke="#46e8ff" stroke-width="1.3" opacity="0.85" filter="url(#vrwNeon)"/>
+                  <g clip-path="url(#vrwVisorClip)"><rect class="vrw-scan" x="66" y="74" width="68" height="1.8" fill="#9bf4ff" opacity="0.85" filter="url(#vrwNeon)"/></g>
                   <!-- Lens wells with internal pupil parallax targets -->
                   <ellipse cx="82" cy="86" rx="9.6" ry="7.4" fill="#020610"/>
                   <ellipse cx="82" cy="86" rx="7.6" ry="5.8" fill="url(#vrwLens)"/>
