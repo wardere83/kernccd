@@ -373,6 +373,78 @@
     .budget-line.indirect-line .budget-line-label { color:var(--ccc-dark-gold); font-weight:700; }
     .budget-line.indirect-line .budget-line-amount { color:var(--ccc-dark-gold); }
 
+    /* ════════════ BMR Video Guide ════════════ */
+    .bmrv-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); overflow:hidden; margin-top:22px; }
+    .bmrv-bar { display:flex; align-items:center; justify-content:space-between; gap:7px; padding:9px 14px; background:#1b2330; }
+    .bmrv-bar-left { display:flex; align-items:center; gap:7px; }
+    .bmrv-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+    .bmrv-dot.r{background:#ff5f57;} .bmrv-dot.y{background:#febc2e;} .bmrv-dot.g{background:#28c840;}
+    .bmrv-bar-title { margin-left:8px; font-size:12px; font-weight:600; color:#cdd6e6; letter-spacing:0.01em; }
+    .bmrv-speed-btn { font-size:10px; font-weight:700; letter-spacing:0.04em; color:#cdd6e6; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:4px; padding:2px 7px; cursor:pointer; }
+    .bmrv-speed-btn:hover { background:rgba(255,255,255,0.15); }
+    .bmrv-chapters { display:flex; gap:6px; padding:8px 14px; background:#0f1623; border-bottom:1px solid rgba(255,255,255,0.07); flex-wrap:wrap; }
+    .bmrv-pill { font-size:10.5px; font-weight:600; color:#8faabf; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10); border-radius:20px; padding:3px 10px; cursor:pointer; white-space:nowrap; transition:background 0.18s,color 0.18s,border-color 0.18s; }
+    .bmrv-pill:hover { background:rgba(255,255,255,0.12); color:#e0eaf4; }
+    .bmrv-pill.active { background:var(--ccc-gold,#d4a017); border-color:var(--ccc-gold,#d4a017); color:#111; }
+    .bmrv-pips { display:flex; gap:4px; padding:6px 16px 0; }
+    .bmrv-pip { flex:1; height:3px; border-radius:2px; background:rgba(255,255,255,0.12); transition:background 0.25s; }
+    .bmrv-pip.done { background:var(--ccc-gold,#d4a017); }
+    .bmrv-pip.active { background:var(--ccc-gold,#d4a017); opacity:0.6; }
+    .bmrv-frame { position:relative; height:400px; overflow:hidden; background:var(--bg-surface); }
+    @media (max-width:760px){ .bmrv-frame{ height:340px; } }
+    .bmrv-scroll { position:relative; padding:20px 22px 150px; transition:transform 0.95s cubic-bezier(0.33,1,0.68,1); will-change:transform; }
+    .bmrv-doc-title { font-family:var(--font-display,inherit); font-size:18px; font-weight:600; color:var(--ccc-dark-blue); margin-bottom:14px; }
+    .bmrv-cursor { position:absolute; top:0; left:0; width:22px; height:22px; z-index:6; pointer-events:none; transition:top 0.5s cubic-bezier(0.22,1,0.36,1), left 0.5s cubic-bezier(0.22,1,0.36,1); filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
+    .bmrv-caption { position:absolute; left:0; right:0; bottom:0; padding:12px 16px; background:linear-gradient(transparent, rgba(12,18,28,0.86) 38%); color:#fff; font-size:13.5px; line-height:1.45; font-weight:500; z-index:5; min-height:30px; }
+    .bmrv-caption-inner { display:flex; align-items:flex-start; gap:8px; }
+    .bmrv-avatar { font-size:20px; line-height:1; flex-shrink:0; margin-top:1px; }
+    .bmrv-caption-text { flex:1; }
+    .bmrv-caption span { opacity:0; }
+    .bmrv-caption span.show { animation:bmrvCapIn 0.35s ease forwards; }
+    @keyframes bmrvCapIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    .bmrv-poster { position:absolute; inset:0; z-index:8; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; background:rgba(12,18,28,0.55); border:none; cursor:pointer; color:#fff; }
+    .bmrv-poster-play { width:62px; height:62px; border-radius:50%; background:var(--ccc-gold,#d4a017); color:var(--ccc-dark-blue); display:flex; align-items:center; justify-content:center; font-size:24px; padding-left:4px; box-shadow:0 6px 20px rgba(0,0,0,0.35); }
+    .bmrv-poster-text { font-size:13.5px; font-weight:600; letter-spacing:0.01em; }
+    .bmrv-controls { display:flex; align-items:center; gap:12px; padding:11px 16px; background:var(--bg-surface-2,#f5f5f5); border-top:1px solid var(--border); }
+    .bmrv-play, .bmrv-replay { width:34px; height:34px; flex-shrink:0; border-radius:50%; border:none; background:var(--ccc-dark-blue); color:#fff; cursor:pointer; font-size:13px; display:inline-flex; align-items:center; justify-content:center; }
+    .bmrv-play:hover, .bmrv-replay:hover { background:var(--ccc-darker-blue,#004d4a); }
+    .bmrv-replay { background:var(--bg-surface,#fff); color:var(--text-secondary); border:1px solid var(--border-strong); }
+    .bmrv-time { font-size:11.5px; font-weight:600; color:var(--text-muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .bmrv-track { flex:1; height:6px; background:var(--border); border-radius:3px; cursor:pointer; position:relative; }
+    .bmrv-prog { height:100%; width:0; background:var(--ccc-gold,#d4a017); border-radius:3px; }
+    .bmrv-voice-btn { width:34px; height:34px; flex-shrink:0; border-radius:50%; border:1px solid var(--border-strong); background:var(--bg-surface,#fff); color:var(--text-secondary); cursor:pointer; font-size:16px; display:inline-flex; align-items:center; justify-content:center; }
+    .bmrv-voice-btn:hover { background:var(--bg-surface-2); }
+    .bmrv-voice-btn.active { background:var(--ccc-dark-blue); color:#fff; border-color:var(--ccc-dark-blue); }
+    @keyframes bmrvCaret { 50% { opacity:0; } }
+    .bmrv-meta { display:flex; flex-direction:column; gap:11px; margin-bottom:14px; }
+    .bmrv-fld { display:flex; flex-direction:column; gap:4px; min-width:0; }
+    .bmrv-fld label { font-size:9px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--text-muted); }
+    .bmrv-cell { min-height:15px; font-size:11px; line-height:1.35; color:var(--text-primary); background:var(--bg-surface,#fff); border:1px solid var(--border-strong); border-radius:5px; padding:5px 7px; word-break:break-word; display:block; }
+    .bmrv-cell.num { font-variant-numeric:tabular-nums; }
+    .bmrv-cell.typing { border-color:var(--ccc-dark-gold,#b8860b); box-shadow:0 0 0 2px rgba(241,138,32,0.15); }
+    .bmrv-cell.typing::after { content:''; display:inline-block; width:1px; height:1em; background:var(--ccc-dark-gold,#b8860b); margin-left:1px; vertical-align:-2px; animation:bmrvCaret 0.8s steps(1) infinite; }
+    .bmrv-yblock { margin-top:14px; border:1px solid var(--border-strong); border-radius:8px; overflow:hidden; }
+    .bmrv-yblock.y1 { border-top:3px solid var(--ccc-dark-blue); }
+    .bmrv-yblock.y2 { border-top:3px solid var(--ccc-dark-gold,#b8860b); }
+    .bmrv-yhead { font-size:11px; font-weight:600; color:var(--text-secondary); padding:9px 11px; background:var(--bg-surface-2,#f5f5f5); border-bottom:1px solid var(--border); display:flex; gap:8px; align-items:center; }
+    .bmrv-chip { font-size:9px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:#fff; background:var(--ccc-dark-blue); padding:2px 8px; border-radius:20px; }
+    .bmrv-chip.gold { background:var(--ccc-dark-gold,#b8860b); }
+    .bmrv-tbl { width:100%; border-collapse:collapse; table-layout:fixed; }
+    .bmrv-tbl th { font-size:8px; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; color:var(--text-muted); text-align:left; padding:5px 5px; border-bottom:1px solid var(--border); }
+    .bmrv-tbl td { padding:4px 5px; vertical-align:top; border-bottom:1px solid var(--border); }
+    .bmrv-tbl th:first-child, .bmrv-tbl td:first-child { width:40px; }
+    .bmrv-code { font-size:11px; font-weight:700; color:var(--ccc-dark-blue); }
+    .bmrv-lines { display:flex; flex-direction:column; gap:9px; padding:11px 12px; }
+    .bmrv-rowsum { display:flex; align-items:center; gap:10px; font-size:12px; color:var(--text-secondary); padding:7px 4px; border-bottom:1px solid var(--border); }
+    .bmrv-rowsum-name { flex:1; min-width:0; }
+    .bmrv-rowsum-amt { font-variant-numeric:tabular-nums; font-weight:600; color:var(--text-primary); white-space:nowrap; }
+    .bmrv-line { border:1px solid var(--border-strong); border-radius:8px; padding:13px 14px; background:var(--bg-surface,#fff); display:flex; flex-direction:column; gap:11px; }
+    .bmrv-line-top { display:flex; align-items:center; gap:8px; margin-bottom:1px; }
+    .bmrv-line-name { font-size:13px; font-weight:600; color:var(--text-primary); }
+    .bmrv-nums { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin:9px 0; }
+    .bmrv-fld-full { margin-top:9px; }
+    .bmrv-cell { font-size:12.5px; line-height:1.5; }
+
     /* ════════════ Budget Modification Request Form (interactive, mirrors Word doc) ════════════ */
     .bmr-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); overflow:hidden; margin-top:22px; }
     .bmr-card-head { background:var(--ccc-dark-blue); padding:16px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
@@ -1371,6 +1443,43 @@
         </div>
 
         <div class="budget-grid budget-grid--2col" id="budget-grid"></div>
+        <!-- VIDEO TRAINING GUIDE — screencast of filling out the form (shown above the form) -->
+        <div class="bmrv-card" id="bmr-guide">
+          <div class="bmrv-bar"><div class="bmrv-bar-left"><span class="bmrv-dot r"></span><span class="bmrv-dot y"></span><span class="bmrv-dot g"></span><span class="bmrv-bar-title">Video Guide &middot; Budget Modification Request</span></div><button type="button" class="bmrv-speed-btn" id="bmrv-speed">1&times;</button></div>
+          <div class="bmrv-chapters" id="bmrv-chapters"><span class="bmrv-pill active" data-ch="0">1 &middot; Contact Info</span><span class="bmrv-pill" data-ch="1">2 &middot; Year 1 Changes</span><span class="bmrv-pill" data-ch="2">3 &middot; Year 2 Changes</span><span class="bmrv-pill" data-ch="3">4 &middot; Approval</span></div>
+          <div class="bmrv-pips" id="bmrv-pips"></div>
+          <div class="bmrv-frame" id="bmrv-frame">
+            <div class="bmrv-scroll" id="bmrv-scroll">
+              <div class="bmrv-doc-title">Budget Modification Request Form</div>
+              <div class="bmrv-meta">
+                <div class="bmrv-fld"><label>Community College District</label><span class="bmrv-cell" id="mv-district"></span></div>
+                <div class="bmrv-fld"><label>Submitted by - Name &amp; Role</label><span class="bmrv-cell" id="mv-by"></span></div>
+                <div class="bmrv-fld"><label>Your Email</label><span class="bmrv-cell" id="mv-email"></span></div>
+                <div class="bmrv-fld"><label>Submission Date</label><span class="bmrv-cell" id="mv-date"></span></div>
+              </div>
+              <div class="bmrv-yblock y1">
+                <div class="bmrv-yhead"><span class="bmrv-chip">Year 1</span> Budget Modification &middot; Jan 2026 &ndash; Jun 2027</div>
+                <div id="bmrv-y1body" class="bmrv-lines"></div>
+              </div>
+              <div class="bmrv-yblock y2">
+                <div class="bmrv-yhead"><span class="bmrv-chip gold">Year 2</span> Budget Modification &middot; Jul 2027 &ndash; Jun 2028</div>
+                <div id="bmrv-y2body" class="bmrv-lines"></div>
+              </div>
+              <div class="bmrv-fld" style="margin-top:16px;max-width:320px;"><label>Approved by CCCCO Staff</label><span class="bmrv-cell" id="mv-appr"></span></div>
+            </div>
+            <svg class="bmrv-cursor" id="bmrv-cursor" viewBox="0 0 24 24" fill="#fff" stroke="#1b2330" stroke-width="1.5"><path d="M4 3 L4 19 L8.5 14.5 L11.5 21 L14 20 L11 13.6 L18 13.6 Z"/></svg>
+            <div class="bmrv-caption" id="bmrv-caption"><div class="bmrv-caption-inner"><span class="bmrv-avatar">&#128105;</span><span class="bmrv-caption-text" id="bmrv-caption-text"></span></div></div>
+            <button type="button" class="bmrv-poster" id="bmrv-poster" aria-label="Play the video guide"><span class="bmrv-poster-play">&#9654;</span><span class="bmrv-poster-text">Budget Modification Request &middot; ~3 min walkthrough</span></button>
+          </div>
+          <div class="bmrv-controls">
+            <button type="button" class="bmrv-play" id="bmrv-play" aria-label="Play or pause">&#9654;</button>
+            <span class="bmrv-time" id="bmrv-time">0:00 / 0:00</span>
+            <div class="bmrv-track" id="bmrv-track"><div class="bmrv-prog" id="bmrv-prog"></div></div>
+            <button type="button" class="bmrv-replay" id="bmrv-replay" aria-label="Replay">&#8635;</button>
+            <button type="button" class="bmrv-voice-btn" id="bmrv-voice" title="Toggle voice narration">&#128266;</button>
+          </div>
+        </div>
+
         <!-- INTERACTIVE BUDGET MODIFICATION REQUEST FORM (mirrors Word doc; auto-calculates & drives project totals) -->
         <div class="bmr-card" id="budget-mod-form">
           <div class="bmr-card-head">
@@ -3260,7 +3369,178 @@ function renderAll() {
 }
 
 /* ════════════ INIT ════════════ */
+/* ════════════ BMR VIDEO TRAINING GUIDE ════════════ */
+let bmrvScenes = [], bmrvCum = [], bmrvTotal = 0, bmrvT = 0, bmrvPlaying = false, bmrvLast = 0, bmrvRAF = null, bmrvLastI = -1;
+const BMRV_MOVE = 1000, BMRV_TYPE = 22, BMRV_DWELL = 750;
+const BMRV_EX = { y1:'1000', y2:'5000' };
+const BMRV_IDS = { y1:{desc:'mv-d1',prop:'mv-p1',act:'mv-a1',bal:'mv-b1',proj:'mv-pr1',upd:'mv-u1'},
+                   y2:{desc:'mv-d2',prop:'mv-p2',act:'mv-a2',bal:'mv-b2',proj:'mv-pr2',upd:'mv-u2'} };
+function bmrvFmt(ms) { const s = Math.max(0, Math.round(ms / 1000)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+function bmrvBuildForm() {
+  if (typeof BUDGET_BASELINE === 'undefined') return;
+  ['y1', 'y2'].forEach(yk => {
+    const box = document.getElementById('bmrv-' + yk + 'body');
+    if (!box) return;
+    box.innerHTML = BUDGET_BASELINE.map(r => {
+      const ex = (r.code === BMRV_EX[yk]); const m = BMRV_IDS[yk];
+      if (!ex) {
+        return '<div class="bmrv-rowsum"><span class="bmrv-code">' + r.code + '</span>' +
+               '<span class="bmrv-rowsum-name">' + r.label + '</span>' +
+               '<span class="bmrv-rowsum-amt">Proposed $' + (r[yk]||0).toLocaleString() + '</span></div>';
+      }
+      return '<div class="bmrv-line">' +
+        '<div class="bmrv-line-top"><span class="bmrv-code">' + r.code + '</span><span class="bmrv-line-name">' + r.label + '</span></div>' +
+        '<div class="bmrv-fld"><label>Description</label><span class="bmrv-cell" id="' + m.desc + '"></span></div>' +
+        '<div class="bmrv-fld"><label>Proposed Funds</label><span class="bmrv-cell num" id="' + m.prop + '"></span></div>' +
+        '<div class="bmrv-fld"><label>Actuals (spent to date)</label><span class="bmrv-cell num" id="' + m.act + '"></span></div>' +
+        '<div class="bmrv-fld"><label>Fund Balance</label><span class="bmrv-cell num" id="' + m.bal + '"></span></div>' +
+        '<div class="bmrv-fld"><label>Projections (by Jun 2028)</label><span class="bmrv-cell num" id="' + m.proj + '"></span></div>' +
+        '<div class="bmrv-fld"><label>Expenditure Updates</label><span class="bmrv-cell" id="' + m.upd + '"></span></div>' +
+      '</div>';
+    }).join('');
+  });
+}
+function bmrvBuildScenes() {
+  const dist = (typeof districts !== 'undefined' && districts[0] && districts[0].name) ? districts[0].name : 'Community College District';
+  bmrvScenes = [
+    { t:'mv-district', cap:'Start with your district and contact details.', text:dist },
+    { t:'mv-by',    cap:'Add who is submitting and their grant role.', text:'Project Lead Name, Grant Role' },
+    { t:'mv-email', cap:'Enter your email.', text:'lead@district.edu' },
+    { t:'mv-date',  cap:'Set the submission date.', text:'2026-09-30' },
+    { t:'mv-d1', cap:'In Year 1, take the 1000 Instructional Salaries line. Describe the change and show the math.', text:'Stipends, Faculty to assist with delivery Onboarding Program = $5,000 (2 faculty, 50 hours at $50/hour)' },
+    { t:'mv-p1', cap:'Enter Proposed Funds. This is the modification, and it updates your Year 1 / Year 2 totals automatically.', text:'$5,000' },
+    { t:'mv-a1', cap:'Actuals: the amount spent to date.', text:'$0' },
+    { t:'mv-b1', cap:'Fund Balance: the remaining balance.', text:'$5,000' },
+    { t:'mv-pr1', cap:'Projections: amount to be spent by June 2028.', text:'$0' },
+    { t:'mv-u1', cap:'Expenditure Updates is a written explanation, not a number.', text:'Due to the retirement of the project lead for this initiative, we have been unable to make the progress we wanted on this initiative. While we are currently meeting with constituents on developing this onboarding program, and have secured a consultant, we have made the decision to continue with this project utilizing other EEO/District funds and not continue with this initiative under the EEO IBP Grant.' },
+    { t:'mv-d2', cap:'In Year 2, add a new expenditure not in the grant: the 5000 line.', text:'Launching of California Community College Employee Resource Group Conference, Consultant to support planning and post-conference data analysis.' },
+    { t:'mv-p2', cap:'Proposed Funds for the new line.', text:'$8,000' },
+    { t:'mv-a2', cap:'Actuals to date.', text:'$0' },
+    { t:'mv-b2', cap:'Fund Balance.', text:'$8,000' },
+    { t:'mv-pr2', cap:'Projections through June 2028.', text:'$8,000' },
+    { t:'mv-u2', cap:'Explain the new initiative in Expenditure Updates.', text:'Since the Project Lead on this project was out on a leave of absence, we hired a consultant to assist with planning of conference and will also use consultant to assist with data analysis for EEO IBP reporting.' },
+    { t:'mv-appr', cap:'Finally, complete Approved by. Now you are ready to fill in the live form below.', text:'Approver Name, Title' }
+  ];
+  bmrvCum = []; let acc = 0;
+  bmrvScenes.forEach(sc => { bmrvCum.push(acc); acc += BMRV_MOVE + sc.text.length * BMRV_TYPE + BMRV_DWELL; });
+  bmrvTotal = acc;
+}
+function bmrvMoveTo(id) {
+  const el = document.getElementById(id), scroll = document.getElementById('bmrv-scroll'), frame = document.getElementById('bmrv-frame'), cur = document.getElementById('bmrv-cursor');
+  if (!el || !scroll || !frame) return;
+  const frameH = frame.clientHeight, contentH = scroll.scrollHeight;
+  let shift = el.offsetTop - frameH * 0.30;
+  shift = Math.max(0, Math.min(shift, Math.max(0, contentH - frameH)));
+  scroll.style.transform = 'translateY(' + (-shift) + 'px)';
+  if (cur) { cur.style.top = (el.offsetTop - shift + Math.min(el.offsetHeight, 28) / 2 + 2) + 'px'; cur.style.left = (el.offsetLeft + 14) + 'px'; }
+}
+function bmrvEnter(i) {
+  bmrvScenes.forEach((sc, j) => {
+    const el = document.getElementById(sc.t);
+    if (!el) return;
+    if (j < i) { el.textContent = sc.text; el.classList.remove('typing'); }
+    else if (j > i) { el.textContent = ''; el.classList.remove('typing'); }
+  });
+  const cap = document.getElementById('bmrv-caption');
+  if (cap) cap.innerHTML = '<div class="bmrv-caption-inner"><span class="bmrv-avatar">&#128105;</span><span class="bmrv-caption-text"><span class="show">' + bmrvScenes[i].cap + '</span></span></div>';
+  bmrvMoveTo(bmrvScenes[i].t);
+}
+function bmrvRender(t) {
+  if (!bmrvScenes.length) return;
+  let i = 0; while (i < bmrvScenes.length - 1 && t >= bmrvCum[i + 1]) i++;
+  if (i !== bmrvLastI) { bmrvEnter(i); bmrvLastI = i; }
+  const sc = bmrvScenes[i], lt = t - bmrvCum[i];
+  const ch = Math.max(0, Math.min(sc.text.length, Math.floor((lt - BMRV_MOVE) / BMRV_TYPE)));
+  const el = document.getElementById(sc.t);
+  if (el) { el.textContent = sc.text.slice(0, ch); el.classList.toggle('typing', lt >= BMRV_MOVE && ch < sc.text.length); }
+  const prog = document.getElementById('bmrv-prog'), tm = document.getElementById('bmrv-time');
+  if (prog) prog.style.width = (bmrvTotal ? (t / bmrvTotal * 100) : 0) + '%';
+  if (tm) tm.textContent = bmrvFmt(t) + ' / ' + bmrvFmt(bmrvTotal);
+  /* pips */
+  bmrvScenes.forEach((_,j)=>{ const p=document.getElementById('bmrv-pip-'+j); if(!p)return; p.className='bmrv-pip'+(j<i?' done':j===i?' active':''); });
+  /* chapter pills */
+  const starts=[0,4,10,16]; let activeCh=0; starts.forEach((s,c)=>{ if(i>=s) activeCh=c; });
+  document.querySelectorAll('#bmrv-chapters .bmrv-pill').forEach((p,c)=>{ p.classList.toggle('active',c===activeCh); });
+}
+function bmrvIcon() { const b = document.getElementById('bmrv-play'); if (b) b.textContent = bmrvPlaying ? '\u23f8' : '\u25b6'; }
+function bmrvTick(ts) {
+  if (!bmrvPlaying) return;
+  if (!bmrvLast) bmrvLast = ts;
+  bmrvT += (ts - bmrvLast) * (window._bmrvSpeed || 1); bmrvLast = ts;
+  if (bmrvT >= bmrvTotal) { bmrvT = bmrvTotal; bmrvRender(bmrvTotal); bmrvPlaying = false; bmrvIcon(); if (window._bmrvAudio) { window._bmrvAudio.pause(); window._bmrvAudio.currentTime = 0; } return; }
+  bmrvRender(bmrvT);
+  bmrvRAF = requestAnimationFrame(bmrvTick);
+}
+function bmrvPlay() {
+  const frame = document.getElementById('bmrv-frame');
+  if (frame && frame.clientHeight === 0) return;
+  if (bmrvT >= bmrvTotal) bmrvT = 0;
+  bmrvPlaying = true; bmrvLast = 0; bmrvLastI = -1;
+  const poster = document.getElementById('bmrv-poster'); if (poster) poster.style.display = 'none';
+  bmrvIcon(); bmrvRAF = requestAnimationFrame(bmrvTick);
+}
+function bmrvPause() { bmrvPlaying = false; if (bmrvRAF) cancelAnimationFrame(bmrvRAF); bmrvIcon(); }
+function startBmrGuide() {
+  const frame = document.getElementById('bmrv-frame');
+  if (!frame || frame.dataset.ready) return;
+  frame.dataset.ready = '1';
+  bmrvBuildForm(); bmrvBuildScenes();
+  /* pips */
+  const pipsBar = document.getElementById('bmrv-pips');
+  if (pipsBar) pipsBar.innerHTML = bmrvScenes.map((_,i)=>'<span class="bmrv-pip" id="bmrv-pip-'+i+'"></span>').join('');
+  /* chapter pills */
+  document.querySelectorAll('#bmrv-chapters .bmrv-pill').forEach(pill => {
+    pill.onclick = () => {
+      const ch = parseInt(pill.dataset.ch, 10);
+      const starts = [0,4,10,16];
+      bmrvT = bmrvCum[starts[ch]] || 0; bmrvLastI = -1; bmrvRender(bmrvT); bmrvPlay();
+    };
+  });
+  /* controls */
+  const play = document.getElementById('bmrv-play'), poster = document.getElementById('bmrv-poster'),
+        track = document.getElementById('bmrv-track'), replay = document.getElementById('bmrv-replay');
+  if (play) play.onclick = () => bmrvPlaying ? bmrvPause() : bmrvPlay();
+  if (poster) poster.onclick = bmrvPlay;
+  if (replay) replay.onclick = () => { bmrvT = 0; bmrvLastI = -1; bmrvRender(0); bmrvPlay(); };
+  if (track) track.onclick = (e) => { const r = track.getBoundingClientRect(); bmrvT = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * bmrvTotal; bmrvLastI = -1; bmrvRender(bmrvT); };
+  /* voice */
+  window._bmrvVoiceOn = false; window._bmrvAudio = null; window._bmrvSpeed = 1;
+  const voiceBtn = document.getElementById('bmrv-voice');
+  if (voiceBtn) voiceBtn.onclick = () => {
+    window._bmrvVoiceOn = !window._bmrvVoiceOn;
+    voiceBtn.classList.toggle('active', window._bmrvVoiceOn);
+    if (!window._bmrvVoiceOn && window._bmrvAudio) { window._bmrvAudio.pause(); window._bmrvAudio.currentTime = 0; }
+  };
+  /* speed */
+  const speedBtn = document.getElementById('bmrv-speed');
+  const _speeds = [1, 1.5, 2];
+  if (speedBtn) speedBtn.onclick = () => {
+    window._bmrvSpeed = _speeds[(_speeds.indexOf(window._bmrvSpeed) + 1) % _speeds.length];
+    speedBtn.textContent = window._bmrvSpeed + '\u00d7';
+    if (window._bmrvAudio) window._bmrvAudio.playbackRate = Math.min(4, window._bmrvSpeed * (window._bmrvAudio._baseRate || 1));
+  };
+  /* patch bmrvEnter for voice */
+  const _enterOrig = bmrvEnter;
+  bmrvEnter = function(i) {
+    _enterOrig(i);
+    if (window._bmrvVoiceOn) {
+      if (window._bmrvAudio) { window._bmrvAudio.pause(); window._bmrvAudio.currentTime = 0; }
+      const idx = String(i).padStart(2,'0');
+      const sc = bmrvScenes[i];
+      const sceneDuration = (BMRV_MOVE + sc.text.length * BMRV_TYPE + BMRV_DWELL) / 1000;
+      window._bmrvAudio = new Audio('audio/s' + idx + '.mp3');
+      window._bmrvAudio.addEventListener('loadedmetadata', function() {
+        const audioDur = this.duration;
+        if (audioDur > 0) { this._baseRate = audioDur / sceneDuration; this.playbackRate = Math.min(4, Math.max(0.5, this._baseRate * (window._bmrvSpeed || 1))); }
+      });
+      window._bmrvAudio.play().catch(()=>{});
+    }
+  };
+  bmrvLastI = -1; bmrvRender(0);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  try { startBmrGuide(); } catch(e) {}
   applySavedBudgetMods();   // fold saved budget modifications into the model first
   renderAll();
   requestAnimationFrame(() => initCharts());
