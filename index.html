@@ -18,7 +18,277 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+/* ════════════ EEO IBP GRANT REPORT ════════════ */
+const RPT_STORE = 'eeo_grant_report_v1';
+function rptLoad() { try { return JSON.parse(localStorage.getItem(RPT_STORE)) || {}; } catch (e) { return {}; } }
+function rptSave(s) { try { localStorage.setItem(RPT_STORE, JSON.stringify(s)); } catch (e) {} }
+function rptEsc(v) { return v == null ? '' : String(v).replace(/"/g, '&quot;'); }
+function rptExpRowHTML(r) {
+  r = r || {};
+  return '<tr>' +
+    '<td><input class="bmr-cell-input" data-rpt-ex="type" value="' + rptEsc(r.type) + '" placeholder="e.g. Personnel (1000)"></td>' +
+    '<td><input class="bmr-cell-input" data-rpt-ex="year" value="' + rptEsc(r.year) + '" placeholder="Year 1 / Year 2"></td>' +
+    '<td><input class="bmr-cell-input" data-rpt-ex="description" value="' + rptEsc(r.description) + '" placeholder="Description"></td>' +
+    '<td><input class="bmr-cell-input" data-rpt-ex="approved" value="' + rptEsc(r.approved) + '" placeholder="$0"></td>' +
+    '<td><input class="bmr-cell-input" data-rpt-ex="spent" value="' + rptEsc(r.spent) + '" placeholder="$0"></td>' +
+    '<td><input class="bmr-cell-input" data-rpt-ex="balance" value="' + rptEsc(r.balance) + '" placeholder="$0"></td>' +
+    '<td><button type="button" class="grform-rowdel" aria-label="Remove row" onclick="rptDelRow(this)">&#215;</button></td></tr>';
+}
+function rptSyncConditionals() {
+  const note = document.getElementById('rpt-bmr-note');
+  const sel = document.querySelector('[data-rpt="bmrIntent"]:checked');
+  if (note) note.style.display = (sel && sel.value === 'Yes') ? 'flex' : 'none';
+}
+function renderReportForm() {
+  const tb = document.getElementById('rpt-expenditures');
+  if (!tb) return;
+  const st = rptLoad();
+  document.querySelectorAll('[data-rpt]').forEach(el => {
+    const k = el.getAttribute('data-rpt');
+    if (el.type === 'radio') { el.checked = (st[k] != null && st[k] === el.value); el.onchange = rptPersist; }
+    else { el.value = (st[k] != null) ? st[k] : ''; el.oninput = rptPersist; }
+  });
+  const rows = (st.expenditures && st.expenditures.length) ? st.expenditures : [{}, {}];
+  const tbody = document.getElementById('rpt-exp-body');
+  if (tbody) {
+    tbody.innerHTML = rows.map(rptExpRowHTML).join('');
+    tbody.querySelectorAll('input[data-rpt-ex]').forEach(i => i.oninput = rptPersist);
+  }
+  rptSyncConditionals();
+}
+function rptPersist() {
+  const st = {};
+  document.querySelectorAll('[data-rpt]').forEach(el => {
+    const k = el.getAttribute('data-rpt');
+    if (el.type === 'radio') { if (el.checked) st[k] = el.value; }
+    else st[k] = el.value;
+  });
+  st.expenditures = rptGetRows();
+  rptSave(st);
+  rptSyncConditionals();
+}
+function rptToggle(divId, showVal, radioEl, forceShow) {
+  const div = document.getElementById(divId);
+  if (!div) return;
+  if (forceShow !== undefined) { div.style.display = forceShow ? 'block' : 'none'; return; }
+  div.style.display = (radioEl && radioEl.value === showVal) ? 'block' : 'none';
+}
+function rptSaveDraft() {
+  const st = {};
+  document.querySelectorAll('[data-rpt]').forEach(el => {
+    const k = el.getAttribute('data-rpt');
+    if (el.type === 'radio') { if (el.checked) st[k] = el.value; }
+    else st[k] = el.value;
+  });
+  st.expenditures = rptGetRows();
+  try { localStorage.setItem(RPT_STORE, JSON.stringify(st)); } catch(e) {}
+  setRptSubmitStatus('Draft saved.', 'ok');
+}
+const RPT_EXP_TYPES = ['Non-Instructional Salaries (2000)','Employee Benefits (3000)','Supplies and Materials (4000)','Other Operating Expenses (5000)','Capital Outlay (6000)','Other Outgo (7000)'];
+function rptAddDefaultRows() {
+  const tbody = document.getElementById('rpt-exp-body');
+  if (!tbody) return;
+  const btn = document.getElementById('rpt-add-defaults-btn');
+  RPT_EXP_TYPES.forEach(type => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = rptExpRowHTML({ type });
+    tbody.appendChild(tr);
+    tr.querySelectorAll('input[data-rpt-ex]').forEach(i => i.oninput = rptPersist);
+  });
+  if (btn) btn.style.display = 'none';
+  rptPersist();
+}
+function rptGetRows() {
+  const rows = [];
+  document.querySelectorAll('#rpt-exp-body tr').forEach(tr => {
+    const g = k => { const el = tr.querySelector('[data-rpt-ex="'+k+'"]'); return el ? el.value : ''; };
+    rows.push({ type:g('type'), year:g('year'), description:g('description'), approved:g('approved'), spent:g('spent'), balance:g('balance') });
+  });
+  return rows;
+}
+function rptAddRow() {
+  const tbody = document.getElementById('rpt-exp-body');
+  if (!tbody) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = rptExpRowHTML({});
+  tbody.appendChild(tr);
+  tr.querySelectorAll('input[data-rpt-ex]').forEach(i => i.oninput = rptPersist);
+  rptPersist();
+}
+let _rptUploadFile = null, _rptUploadB64 = null, _rptUploadName = null;
+function rptHandleUpload(input) {
+  const file = input.files && input.files[0]; if (!file) return;
+  _rptUploadFile = file; _rptUploadName = file.name;
+  const lbl = document.getElementById('rpt-upload-label-text');
+  if (lbl) lbl.textContent = '&#10003; ' + file.name + ' (' + (file.size > 1024*1024 ? (file.size/1024/1024).toFixed(1)+'MB' : (file.size/1024).toFixed(0)+'KB') + ')';
+  const clr = document.getElementById('rpt-upload-clear'); if (clr) clr.style.display = 'block';
+  const reader = new FileReader();
+  reader.onload = e => { _rptUploadB64 = e.target.result.split(',')[1]; };
+  reader.readAsDataURL(file);
+}
+function rptClearUpload() {
+  _rptUploadFile = null; _rptUploadB64 = null; _rptUploadName = null;
+  const input = document.getElementById('rpt-upload-input'); if (input) input.value = '';
+  const lbl = document.getElementById('rpt-upload-label-text'); if (lbl) lbl.textContent = 'Drop files here or click to select (PDF, Excel, CSV)';
+  const clr = document.getElementById('rpt-upload-clear'); if (clr) clr.style.display = 'none';
+}
+const RPT_SUBMIT_TO = ['eeosubmissions@cccco.edu', 'admin@bulleconsulting.com'];
+const EEO_RPT_URL = 'https://eeo-rpt-sync.shrill-king-ef4e.workers.dev';
+function setRptSubmitStatus(msg, kind) {
+  const el = document.getElementById('rpt-submit-status'); if (!el) return;
+  el.textContent = msg; el.className = 'bmr-submit-status' + (kind ? ' ' + kind : '');
+}
+function submitRptForm() {
+  const btn = document.getElementById('rpt-submit-btn');
+  const certify = (document.querySelector('[data-rpt="certify"]') || {}).value || '';
+  if (!certify.trim()) { setRptSubmitStatus('Please enter your name in the certification field before submitting.', 'warn'); return; }
+  const st = {};
+  document.querySelectorAll('[data-rpt]').forEach(el => {
+    const k = el.getAttribute('data-rpt');
+    if (el.type === 'radio') { if (el.checked) st[k] = el.value; }
+    else st[k] = el.value;
+  });
+  st.expenditures = rptGetRows();
+  const districtId = (st.district || 'kern').toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').slice(0,30) || 'kern';
+  const payload = { formType:'eeo_ibp_grant_report', district:st.district||'', state:st, recipients:RPT_SUBMIT_TO, submittedAt:new Date().toISOString(), uploadFileName:_rptUploadName||null, uploadFileB64:_rptUploadB64||null };
+  if (btn) { btn.disabled=true; btn.textContent='Submitting…'; }
+  setRptSubmitStatus('Sending to EEO office…','pending');
+  fetch(EEO_RPT_URL + '/rpt/' + districtId + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) })
+    .then(r=>r.json()).then(data => {
+      if (btn) { btn.disabled=false; btn.textContent='Submit Report'; }
+      if (data.ok) { setRptSubmitStatus('&#10003; Submitted — a copy was emailed to ' + RPT_SUBMIT_TO.join(' and ') + '.','ok'); }
+      else { setRptSubmitStatus('Submission error: '+(data.error||'unknown'),'error'); }
+    }).catch(() => {
+      if (btn) { btn.disabled=false; btn.textContent='Submit Report'; }
+      setRptSubmitStatus('Network error — please try again or use Print / Save PDF.','error');
+    });
+}
+function rptDelRow(btn) { const tr = btn.closest('tr'); if (tr) tr.remove(); rptPersist(); }
+function resetReportForm() { try { localStorage.removeItem(RPT_STORE); } catch(e) {} renderReportForm(); }
+function openForm(which) {
+  const list = document.getElementById('forms-list'), rw = document.getElementById('report-wrap');
+  if (list) list.style.display = 'none';
+  if (rw) rw.style.display = (which === 'report') ? 'block' : 'none';
+  if (which === 'report') { renderReportForm(); try { startReportGuide(); } catch(e) {} }
+  try { (document.querySelector('.main')||window).scrollTo({top:0,behavior:'smooth'}); } catch(e) {}
+}
+function backToForms() {
+  const list = document.getElementById('forms-list'), rw = document.getElementById('report-wrap');
+  if (list) list.style.display = 'flex';
+  if (rw) rw.style.display = 'none';
+}
+
+/* ════════════ EEO REPORT VIDEO GUIDE ════════════ */
+let rpvScenes = [], rpvCum = [], rpvTotal = 0, rpvT = 0, rpvPlaying = false, rpvLast = 0, rpvRAF = null, rpvLastI = -1;
+function rpvFmt(ms) { const s = Math.max(0,Math.round(ms/1000)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+function rpvBuildScenes() {
+  const dist = (typeof districts !== 'undefined' && districts[0] && districts[0].name) ? districts[0].name : 'Kern Community College District';
+  rpvScenes = [
+    { t:'rv-district',     cap:'Start with your Community College District name.', text:dist },
+    { t:'rv-lead',         cap:'Enter the Project Lead\'s full name and title.', text:'Dr. Jane Smith, Project Lead' },
+    { t:'rv-leademail',    cap:'Add the Project Lead\'s email address.', text:'jdoe@example.edu' },
+    { t:'rv-staff',        cap:'Name the support staff member for grant activities and their title.', text:'John Doe, Support Coordinator' },
+    { t:'rv-staffemail',   cap:'And the support staff email.', text:'johndoe@example.edu' },
+    { t:'rv-team-no',      cap:'Has your project team changed since the grant began? Select Yes or No. Here we select No.', kind:'pick' },
+    { t:'rv-teamdetail',   cap:'If you selected Yes, use this box to list additions or removals and outline their roles.', text:'Adding Dr. Rivera as co-lead for data analysis; removing J. Smith, who has left the district.' },
+    { t:'rv-goals',        cap:'Describe your grant goals as submitted in section 2.3 of your approved application for Year 1.', text:'Goal 1: Audit district-wide hiring practices for equity. Goal 2: Convene a cross-constituent EEO workgroup and publish evidence-based recommendations.' },
+    { t:'rv-goalsmet-yes', cap:'Are the goals listed above currently being met? Select Yes or No.', kind:'pick' },
+    { t:'rv-goalsdetail',  cap:'If Yes, briefly describe how each goal is being met. If No, detail your plan for meeting them.', text:'The EEO workgroup meets monthly; five years of hiring data are under analysis and the first process-mapping workshops are complete.' },
+    { t:'rv-updates-no',   cap:'Have there been any significant updates to your goals or activities? Select Yes or No. Here we select No.', kind:'pick' },
+    { t:'rv-updatesdetail',cap:'If Yes, provide a brief summary of those updates in the box below.', text:'Launched mentorship pilot program in March 2026 with 12 participants.' },
+    { t:'rv-barriers',     cap:'Identify any barriers affecting your progress or spending, and the steps you are taking to address them.', text:'Hiring delays slowed onboarding; we secured a consultant and shifted two workshops to spring to stay on schedule.' },
+    { t:'rv-ex-type',      cap:'In the expenditures table, list each expenditure type from your approved budget.', text:'Non-Instructional Salaries (2000)' },
+    { t:'rv-ex-year',      cap:'Note the grant year for this expenditure line.', text:'Year 1' },
+    { t:'rv-ex-desc',      cap:'Describe the expenditure.', text:'Project coordinator stipend' },
+    { t:'rv-ex-approved',  cap:'Enter the approved grant award amount for this line.', text:'$18,000' },
+    { t:'rv-ex-spent',     cap:'Then enter the total expenditures to date.', text:'$12,500' },
+    { t:'rv-ex-balance',   cap:'The unexpended balance is the amount remaining.', text:'$5,500' },
+    { t:'rv-bmr-yes',      cap:'Does your district intend to submit a budget modification request? Select Yes or No.', kind:'pick' },
+    { t:'rv-bmrnote',      cap:'If Yes, a note appears — contact Drs. John Parker and Herbert English at your earliest convenience to discuss next steps.', text:'If yes, please contact Drs. John Parker and Herbert English at your earliest convenience.' },
+    { t:'rv-certify',      cap:'Finally, type your full name to certify the report is complete and accurate. You are now ready to submit.', text:'Dr. Jane Smith' }
+  ];
+  rpvCum = []; let acc = 0;
+  rpvScenes.forEach(sc => { rpvCum.push(acc); acc += 1000 + (sc.text||'').length * 22 + 750; });
+  rpvTotal = acc;
+}
+function rpvMoveTo(id) {
+  const el = document.getElementById(id), scroll = document.getElementById('rpv-scroll'), frame = document.getElementById('rpv-frame'), cur = document.getElementById('rpv-cursor');
+  if (!el||!scroll||!frame) return;
+  const frameH = frame.clientHeight, contentH = scroll.scrollHeight;
+  let shift = el.offsetTop - frameH * 0.30;
+  shift = Math.max(0, Math.min(shift, Math.max(0, contentH - frameH)));
+  scroll.style.transform = 'translateY(' + (-shift) + 'px)';
+  if (cur) { cur.style.top = (el.offsetTop - shift + Math.min(el.offsetHeight,28)/2+2)+'px'; cur.style.left = (el.offsetLeft+14)+'px'; }
+}
+function rpvEnter(i) {
+  rpvScenes.forEach((sc,j) => {
+    if (j===i) return;
+    const el = document.getElementById(sc.t); if (!el) return;
+    if (sc.kind==='pick') { el.classList.toggle('rpv-sel', j<i); }
+    else { el.textContent = (j<i) ? sc.text : ''; el.classList.remove('typing'); }
+  });
+  const cur = document.getElementById(rpvScenes[i].t);
+  if (cur) { if (rpvScenes[i].kind==='pick') cur.classList.remove('rpv-sel'); else { cur.textContent=''; cur.classList.remove('typing'); } }
+  const cap = document.getElementById('rpv-caption');
+  if (cap) cap.innerHTML = '<div class="bmrv-caption-inner"><span class="bmrv-avatar">&#128105;</span><span class="bmrv-caption-text" id="rpv-caption-text"><span class="show">'+rpvScenes[i].cap+'</span></span></div>';
+  rpvMoveTo(rpvScenes[i].t);
+}
+function rpvRender(t) {
+  if (!rpvScenes.length) return;
+  let i=0; while(i<rpvScenes.length-1 && t>=rpvCum[i+1]) i++;
+  if (i!==rpvLastI) { rpvEnter(i); rpvLastI=i; }
+  const sc=rpvScenes[i], lt=t-rpvCum[i], el=document.getElementById(sc.t);
+  if (sc.kind==='pick') { if (el && lt>=1000) el.classList.add('rpv-sel'); }
+  else { const ch=Math.max(0,Math.min((sc.text||'').length,Math.floor((lt-1000)/22))); if(el){el.textContent=(sc.text||'').slice(0,ch);el.classList.toggle('typing',lt>=1000&&ch<(sc.text||'').length);} }
+  const prog=document.getElementById('rpv-prog'), tm=document.getElementById('rpv-time');
+  if(prog) prog.style.width=(rpvTotal?(t/rpvTotal*100):0)+'%';
+  if(tm) tm.textContent=rpvFmt(t)+' / '+rpvFmt(rpvTotal);
+  rpvScenes.forEach((_,j)=>{const p=document.getElementById('rpv-pip-'+j);if(!p)return;p.className='bmrv-pip'+(j<i?' done':j===i?' active':'');});
+  const starts=[0,7,12,19]; let activeCh=0; starts.forEach((s,c)=>{if(i>=s)activeCh=c;});
+  document.querySelectorAll('#rpv-chapters .bmrv-pill').forEach((p,c)=>p.classList.toggle('active',c===activeCh));
+}
+function rpvIcon(){const b=document.getElementById('rpv-play');if(b)b.textContent=rpvPlaying?'⏸':'▶';}
+function rpvTick(ts){
+  if(!rpvPlaying)return;
+  if(!rpvLast)rpvLast=ts;
+  rpvT+=(ts-rpvLast)*(window._rpvSpeed||1);rpvLast=ts;
+  if(rpvT>=rpvTotal){rpvT=rpvTotal;rpvRender(rpvTotal);rpvPlaying=false;rpvIcon();return;}
+  rpvRender(rpvT);rpvRAF=requestAnimationFrame(rpvTick);
+}
+function rpvPlay(){
+  const frame=document.getElementById('rpv-frame');if(frame&&frame.clientHeight===0)return;
+  if(rpvT>=rpvTotal)rpvT=0;
+  rpvPlaying=true;rpvLast=0;rpvLastI=-1;
+  const poster=document.getElementById('rpv-poster');if(poster)poster.style.display='none';
+  rpvIcon();rpvRAF=requestAnimationFrame(rpvTick);
+}
+function rpvPause(){rpvPlaying=false;if(rpvRAF)cancelAnimationFrame(rpvRAF);rpvIcon();}
+function startReportGuide(){
+  const frame=document.getElementById('rpv-frame');if(!frame||frame.dataset.ready)return;
+  frame.dataset.ready='1';
+  rpvBuildScenes();
+  const pipsBar=document.getElementById('rpv-pips');
+  if(pipsBar)pipsBar.innerHTML=rpvScenes.map((_,i)=>'<span class="bmrv-pip" id="rpv-pip-'+i+'"></span>').join('');
+  document.querySelectorAll('#rpv-chapters .bmrv-pill').forEach(pill=>{
+    pill.onclick=()=>{
+      const ch=parseInt(pill.dataset.ch,10);
+      const starts=[0,7,12,19];
+      rpvT=rpvCum[starts[ch]]||0;rpvLastI=-1;rpvRender(rpvT);rpvPlay();
+    };
+  });
+  const play=document.getElementById('rpv-play'),poster=document.getElementById('rpv-poster'),track=document.getElementById('rpv-track'),replay=document.getElementById('rpv-replay');
+  if(play)play.onclick=()=>rpvPlaying?rpvPause():rpvPlay();
+  if(poster)poster.onclick=rpvPlay;
+  if(replay)replay.onclick=()=>{rpvT=0;rpvLastI=-1;rpvRender(0);rpvPlay();};
+  if(track)track.onclick=(e)=>{const r=track.getBoundingClientRect();rpvT=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*rpvTotal;rpvLastI=-1;rpvRender(rpvT);};
+  window._rpvSpeed=1;
+  const speedBtn=document.getElementById('rpv-speed');
+  if(speedBtn)speedBtn.onclick=()=>{const sp=[1,1.5,2];window._rpvSpeed=sp[(sp.indexOf(window._rpvSpeed)+1)%sp.length];speedBtn.textContent=window._rpvSpeed+'×';};
+  rpvLastI=-1;rpvRender(0);
+}
+
+</script>
   <style>
     /* ════════════ MINIMALIST POLISH ON KERN CCD PALETTE ════════════
        Clean typography (Source Sans 3 + Crimson Text), generous whitespace, subtle
@@ -816,7 +1086,64 @@
       /* Dark-mode legibility: brand dark-blue text kept readable on dark surfaces */
     [data-theme="dark"] .bmr-btn:not(.primary):hover { color:var(--accent-light); border-color:var(--accent-light); }
     [data-theme="dark"] .budget-card-total { color:var(--accent-light); }
-</style>
+
+    /* ── Forms section ── */
+    .forms-list { display:flex; flex-direction:column; gap:12px; }
+    .forms-item { display:flex; align-items:center; gap:14px; text-align:left; width:100%; background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--ccc-dark-blue); border-radius:var(--radius-lg); padding:16px 18px; cursor:pointer; transition:box-shadow var(--transition),transform var(--transition),border-color var(--transition); box-shadow:var(--shadow-sm); }
+    .forms-item:hover { box-shadow:var(--shadow-md); border-left-color:var(--ccc-dark-gold,#b8860b); transform:translateY(-1px); }
+    .forms-item-ic { width:42px; height:42px; flex-shrink:0; border-radius:10px; background:var(--bg-surface-2); color:var(--ccc-dark-blue); display:flex; align-items:center; justify-content:center; }
+    .forms-item-main { flex:1; min-width:0; }
+    .forms-item-title { font-family:var(--font-display,inherit); font-size:16px; font-weight:600; color:var(--ccc-dark-blue); display:block; }
+    .forms-item-desc { font-size:12.5px; color:var(--text-muted); margin-top:3px; line-height:1.45; display:block; }
+    .forms-item-go { font-size:13px; font-weight:700; color:var(--ccc-dark-gold,#b8860b); white-space:nowrap; flex-shrink:0; }
+    .forms-back { margin-bottom:14px; }
+    /* EEO form */
+    .grform-section-title { font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--ccc-dark-blue); margin:20px 0 8px; }
+    .grform-required { color:#c53030; font-weight:700; }
+    .grform-prompt { font-size:12.5px; color:var(--text-muted); margin:0 0 8px; line-height:1.5; max-width:820px; }
+    .grform-note { display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:space-between; border:1px solid var(--border); border-left:3px solid var(--ccc-dark-gold,#b8860b); background:var(--bg-surface); border-radius:var(--radius-md,8px); padding:12px 16px; margin-top:10px; }
+    .grform-note p { margin:0; font-size:12.5px; color:var(--text-secondary); line-height:1.5; max-width:720px; }
+    .grform-cert-text { font-size:12px; color:var(--text-secondary); line-height:1.6; padding:12px 14px; background:var(--bg-surface-2); border-left:3px solid var(--ccc-dark-blue); border-radius:0 6px 6px 0; }
+    .grform-q { font-size:13.5px; font-weight:600; color:var(--text-primary); margin:20px 0 8px; line-height:1.5; max-width:820px; }
+    .grform-radio { display:flex; gap:10px; flex-wrap:wrap; margin:2px 0 6px; }
+    .grform-radio label { display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--text-secondary); border:1px solid var(--border-strong); border-radius:var(--radius-md,8px); padding:7px 16px; cursor:pointer; transition:border-color var(--transition),background var(--transition); background:var(--bg-surface); }
+    .grform-radio label:hover { border-color:var(--ccc-dark-blue); }
+    .grform-radio input { accent-color:var(--ccc-dark-blue); margin:0; }
+    .grform-radio input:checked ~ span { font-weight:700; color:var(--ccc-dark-blue); }
+    .grform-rowdel { width:26px; height:26px; border-radius:6px; border:1px solid var(--border-strong); background:var(--bg-surface); color:var(--text-muted); cursor:pointer; font-size:15px; line-height:1; }
+    .grform-rowdel:hover { border-color:#c53030; color:#c53030; }
+    /* Expenditure table */
+    .rpt-upload-wrap { margin-top:8px; }
+    .rpt-upload-label { display:flex; align-items:center; gap:10px; padding:14px 18px; border:2px dashed var(--border-strong); border-radius:var(--radius-md,8px); cursor:pointer; background:var(--bg-surface); color:var(--text-secondary); font-size:13px; transition:border-color var(--transition),background var(--transition); }
+    .rpt-upload-label:hover { border-color:var(--ccc-dark-blue); background:var(--bg-surface-2); }
+    .rpt-upload-label svg { flex-shrink:0; }
+    .rpt-upload-clear { margin-top:8px; }
+    .rpt-tbl-wrap { border:1px solid var(--border-strong); border-radius:var(--radius-md,8px); overflow:hidden; margin-top:4px; }
+    .rpt-exp-table { width:100%; border-collapse:collapse; font-size:12px; min-width:700px; }
+    .rpt-exp-table th { background:var(--ccc-dark-blue); color:#fff; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:8px 10px; text-align:left; white-space:nowrap; }
+    .rpt-exp-table td { padding:6px 8px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .rpt-exp-table tbody tr:last-child td { border-bottom:none; }
+    .rpt-exp-table tbody tr:hover td { background:var(--bg-surface-2); }
+    .rpt-exp-table input { width:100%; font-size:12px; border:1px solid var(--border-strong); border-radius:4px; padding:4px 6px; background:var(--bg-surface); color:var(--text-primary); min-width:80px; }
+    .rpt-exp-table input:focus { outline:none; border-color:var(--ccc-dark-blue); box-shadow:0 0 0 2px rgba(0,62,90,.12); }
+    .grform-rowdel { width:26px; height:26px; border-radius:6px; border:1px solid var(--border-strong); background:var(--bg-surface); color:var(--text-muted); cursor:pointer; font-size:15px; line-height:1; }
+    .bmr-submit-status { font-size:12px; font-weight:600; margin-top:10px; min-height:16px; line-height:1.4; }
+    .bmr-submit-status.pending { color:var(--text-secondary); }
+    .bmr-submit-status.ok { color:#1f7a3d; }
+    .bmr-submit-status.warn { color:#9a6b00; }
+    .bmr-submit-status.error { color:#b3261e; }
+    /* Video guide extras */
+    .bmrv-q { display:flex; flex-direction:column; gap:6px; margin-top:14px; }
+    .bmrv-qlabel { font-size:11px; font-weight:700; letter-spacing:0.02em; color:var(--text-secondary); line-height:1.35; }
+    .rpv-opts { display:flex; gap:8px; flex-wrap:wrap; }
+    .rpv-opt { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; color:var(--text-muted); border:1px solid var(--border-strong); border-radius:7px; padding:5px 12px; background:var(--bg-surface); transition:border-color 0.2s,color 0.2s,background 0.2s; }
+    .rpv-dot { width:11px; height:11px; border-radius:50%; border:2px solid var(--text-muted); box-sizing:border-box; flex-shrink:0; transition:all 0.2s; }
+    .rpv-opt.rpv-sel { border-color:var(--ccc-dark-blue); color:var(--ccc-dark-blue); background:var(--bg-surface-2); font-weight:700; }
+    .rpv-opt.rpv-sel .rpv-dot { border-color:var(--ccc-dark-blue); background:var(--ccc-dark-blue); box-shadow:inset 0 0 0 2px var(--bg-surface); }
+    .rpv-box { display:block; min-height:26px; }
+    .bmrv-line-top { display:flex; align-items:center; gap:8px; margin-bottom:1px; }
+    .bmrv-line-name { font-size:13px; font-weight:600; color:var(--text-primary); }
+  </style>
 </head>
 <body>
 
@@ -872,6 +1199,10 @@
     <button class="nav-item" onclick="showSection('spenddown',this)" data-i18n="nav_spenddown">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
       Spend-Down Monitor
+    </button>
+    <button class="nav-item" onclick="showSection('forms',this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Forms
     </button>
     <div class="sidebar-footer">
       <div class="sidebar-footer-label">Administered by</div>
@@ -1647,7 +1978,205 @@
         </div>
       </div>
 
-    </main>
+    
+      <!-- FORMS TAB -->
+      <div id="section-forms" class="section">
+        <div class="page-header"><h2>Forms</h2><p>District request forms for the EEO IBP Grant. Click a form to open and complete it.</p></div>
+
+        <div class="forms-list" id="forms-list">
+          <button type="button" class="forms-item" onclick="openForm('report')">
+            <span class="forms-item-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2h6a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V3a1 1 0 0 1 1-1z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <span class="forms-item-main"><span class="forms-item-title">EEO IBP Grant Report</span><span class="forms-item-desc">Periodic progress report on grant goals, expenditures to date, barriers, and project-team updates.</span></span>
+            <span class="forms-item-go">Open ›</span>
+          </button>
+        </div>
+
+        <!-- EEO IBP GRANT REPORT -->
+        <div id="report-wrap" style="display:none;">
+          <button type="button" class="bmr-btn forms-back" onclick="backToForms()">‹ Back to Forms</button>
+
+          <!-- VIDEO GUIDE — EEO IBP Grant Report -->
+          <div class="bmrv-card" id="report-guide">
+            <div class="bmrv-bar"><div class="bmrv-bar-left"><span class="bmrv-dot r"></span><span class="bmrv-dot y"></span><span class="bmrv-dot g"></span><span class="bmrv-bar-title">Video Guide &middot; EEO IBP Grant Report</span></div><button type="button" class="bmrv-speed-btn" id="rpv-speed">1&times;</button></div>
+            <div class="bmrv-chapters" id="rpv-chapters">
+              <span class="bmrv-pill active" data-ch="0">1 &middot; Team Info</span>
+              <span class="bmrv-pill" data-ch="1">2 &middot; Grant Goals</span>
+              <span class="bmrv-pill" data-ch="2">3 &middot; Barriers &amp; Expenditures</span>
+              <span class="bmrv-pill" data-ch="3">4 &middot; Certification</span>
+            </div>
+            <div class="bmrv-pips" id="rpv-pips"></div>
+            <div class="bmrv-frame" id="rpv-frame">
+              <div class="bmrv-scroll" id="rpv-scroll">
+                <div class="bmrv-doc-title">EEO IBP Grant Report</div>
+                <div class="bmrv-meta">
+                  <div class="bmrv-fld"><label>Community College District</label><span class="bmrv-cell" id="rv-district"></span></div>
+                  <div class="bmrv-fld"><label>Project Lead Name and Title</label><span class="bmrv-cell" id="rv-lead"></span></div>
+                  <div class="bmrv-fld"><label>Project Lead Email</label><span class="bmrv-cell" id="rv-leademail"></span></div>
+                  <div class="bmrv-fld"><label>Support Staff for Grant Activities — Name and Title</label><span class="bmrv-cell" id="rv-staff"></span></div>
+                  <div class="bmrv-fld"><label>Support Staff Email</label><span class="bmrv-cell" id="rv-staffemail"></span></div>
+                </div>
+                <div class="bmrv-q">
+                  <label class="bmrv-qlabel">Has your project team changed since the grant began?</label>
+                  <div class="rpv-opts"><span class="rpv-opt" id="rv-team-yes"><i class="rpv-dot"></i>Yes</span><span class="rpv-opt" id="rv-team-no"><i class="rpv-dot"></i>No</span></div>
+                  <span class="bmrv-cell rpv-box" id="rv-teamdetail"></span>
+                </div>
+                <div class="bmrv-q">
+                  <label class="bmrv-qlabel">Grant goals as submitted in section 2.3 (Year 1)</label>
+                  <span class="bmrv-cell rpv-box" id="rv-goals"></span>
+                </div>
+                <div class="bmrv-q">
+                  <label class="bmrv-qlabel">Are the goals listed above currently being met?</label>
+                  <div class="rpv-opts"><span class="rpv-opt" id="rv-goalsmet-yes"><i class="rpv-dot"></i>Yes</span><span class="rpv-opt" id="rv-goalsmet-no"><i class="rpv-dot"></i>No</span></div>
+                  <span class="bmrv-cell rpv-box" id="rv-goalsdetail"></span>
+                </div>
+                <div class="bmrv-q">
+                  <label class="bmrv-qlabel">Significant updates to goals or planned activities?</label>
+                  <div class="rpv-opts"><span class="rpv-opt" id="rv-updates-yes"><i class="rpv-dot"></i>Yes</span><span class="rpv-opt" id="rv-updates-no"><i class="rpv-dot"></i>No</span></div>
+                  <span class="bmrv-cell rpv-box" id="rv-updatesdetail"></span>
+                </div>
+                <div class="bmrv-q">
+                  <label class="bmrv-qlabel">Barriers, and the steps you are taking to address them</label>
+                  <span class="bmrv-cell rpv-box" id="rv-barriers"></span>
+                </div>
+                <div class="bmrv-yblock y1">
+                  <div class="bmrv-yhead"><span class="bmrv-chip">Expenditures</span> Total Grant Expenditures to Date</div>
+                  <div class="bmrv-lines">
+                    <div class="bmrv-line">
+                      <div class="bmrv-line-top"><span class="bmrv-line-name">An approved budget line</span></div>
+                      <div class="bmrv-fld"><label>Expenditure Type</label><span class="bmrv-cell" id="rv-ex-type"></span></div>
+                      <div class="bmrv-fld"><label>Year</label><span class="bmrv-cell" id="rv-ex-year"></span></div>
+                      <div class="bmrv-fld"><label>Description</label><span class="bmrv-cell" id="rv-ex-desc"></span></div>
+                      <div class="bmrv-fld"><label>Approved Grant Award Amount</label><span class="bmrv-cell num" id="rv-ex-approved"></span></div>
+                      <div class="bmrv-fld"><label>Total Expenditures to Date</label><span class="bmrv-cell num" id="rv-ex-spent"></span></div>
+                      <div class="bmrv-fld"><label>Unexpended Balance</label><span class="bmrv-cell num" id="rv-ex-balance"></span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bmrv-q">
+                  <label class="bmrv-qlabel">Do you intend to submit a budget modification request?</label>
+                  <div class="rpv-opts"><span class="rpv-opt" id="rv-bmr-yes"><i class="rpv-dot"></i>Yes</span><span class="rpv-opt" id="rv-bmr-no"><i class="rpv-dot"></i>No</span></div>
+                  <span class="bmrv-cell rpv-box" id="rv-bmrnote"></span>
+                </div>
+                <div class="bmrv-q" style="max-width:340px;">
+                  <label class="bmrv-qlabel">Enter your name to certify *</label>
+                  <span class="bmrv-cell" id="rv-certify"></span>
+                </div>
+              </div>
+              <svg class="bmrv-cursor" id="rpv-cursor" viewBox="0 0 24 24" fill="#fff" stroke="#1b2330" stroke-width="1.5"><path d="M4 3 L4 19 L8.5 14.5 L11.5 21 L14 20 L11 13.6 L18 13.6 Z"/></svg>
+              <div class="bmrv-caption" id="rpv-caption"><div class="bmrv-caption-inner"><span class="bmrv-avatar">&#128105;</span><span class="bmrv-caption-text" id="rpv-caption-text"></span></div></div>
+              <button type="button" class="bmrv-poster" id="rpv-poster" aria-label="Play the video guide"><span class="bmrv-poster-play">&#9654;</span><span class="bmrv-poster-text">EEO IBP Grant Report &middot; ~4 min walkthrough</span></button>
+            </div>
+            <div class="bmrv-controls">
+              <button type="button" class="bmrv-play" id="rpv-play" aria-label="Play or pause">&#9654;</button>
+              <span class="bmrv-time" id="rpv-time">0:00 / 0:00</span>
+              <div class="bmrv-track" id="rpv-track"><div class="bmrv-prog" id="rpv-prog"></div></div>
+              <button type="button" class="bmrv-replay" id="rpv-replay" aria-label="Replay">&#8635;</button>
+            </div>
+          </div>
+
+          <!-- EEO IBP GRANT REPORT FORM -->
+          <div class="bmr-card" id="report-form-card" style="margin-top:22px;">
+            <div class="bmr-card-head">
+              <div>
+                <div class="bmr-title">EEO IBP Grant Report</div>
+                <div class="bmr-subtitle">Periodic progress report on grant goals, expenditures to date, barriers, and project-team updates. All fields marked * are required.</div>
+              </div>
+              <span class="bmr-badge"><span class="bmr-ticker"><span class="bmr-ticker-text">CCCCO is proud of your IBP Grant Initiative journey!</span><span class="bmr-ticker-text" aria-hidden="true">CCCCO is proud of your IBP Grant Initiative journey!</span></span></span>
+            </div>
+            <div class="bmr-card-body">
+              <div class="bmr-meta-grid">
+                <label class="bmr-field"><span class="bmr-field-label">Community College District <span class="grform-required">*</span></span><input class="bmr-input" type="text" data-rpt="district" placeholder="District name" required></label>
+                <label class="bmr-field"><span class="bmr-field-label">Project Lead Name and Title <span class="grform-required">*</span></span><input class="bmr-input" type="text" data-rpt="leadName" placeholder="Name, Title" required></label>
+                <label class="bmr-field"><span class="bmr-field-label">Project Lead Email <span class="grform-required">*</span></span><input class="bmr-input" type="email" data-rpt="leadEmail" placeholder="name@district.edu" required></label>
+                <label class="bmr-field"><span class="bmr-field-label">Support Staff Name and Title <span class="grform-required">*</span></span><input class="bmr-input" type="text" data-rpt="staffName" placeholder="Name, Title" required></label>
+                <label class="bmr-field"><span class="bmr-field-label">Support Staff Email <span class="grform-required">*</span></span><input class="bmr-input" type="email" data-rpt="staffEmail" placeholder="name@district.edu" required></label>
+              </div>
+
+              <p class="grform-q">Has your project team changed since the grant began? <span class="grform-required">*</span></p>
+              <div class="grform-radio">
+                <label><input type="radio" name="rpt-teamChanged" data-rpt="teamChanged" value="Yes" onchange="rptToggle('rpt-team-detail','Yes',this)"><span>Yes</span></label>
+                <label><input type="radio" name="rpt-teamChanged" data-rpt="teamChanged" value="No" onchange="rptToggle('rpt-team-detail','Yes',this)"><span>No</span></label>
+              </div>
+              <div id="rpt-team-detail" style="display:none;">
+                <label class="bmr-field" style="margin-top:10px;"><span class="bmr-field-label">If yes, please update us on which project leads to add or remove and provide an outline of their roles. <span class="grform-required">*</span></span><textarea class="bmr-textarea" rows="4" data-rpt="teamDetail" placeholder="List additions and removals with role descriptions…"></textarea></label>
+              </div>
+
+              <label class="bmr-field" style="margin-top:18px;"><span class="bmr-field-label">Grant goals as submitted in section 2.3 (Year 1) <span class="grform-required">*</span></span><textarea class="bmr-textarea" rows="5" data-rpt="goals" placeholder="Describe your grant goals per section 2.3…" required></textarea></label>
+
+              <p class="grform-q" style="margin-top:14px;">Are the goals listed above currently being met? <span class="grform-required">*</span></p>
+              <div class="grform-radio">
+                <label><input type="radio" name="rpt-goalsMet" data-rpt="goalsMet" value="Yes" onchange="rptToggle('rpt-goals-detail','Yes',this)"><span>Yes</span></label>
+                <label><input type="radio" name="rpt-goalsMet" data-rpt="goalsMet" value="No" onchange="rptToggle('rpt-goals-detail','Yes',this)"><span>No</span></label>
+              </div>
+              <div id="rpt-goals-detail" style="display:none;">
+                <label class="bmr-field" style="margin-top:10px;"><span class="bmr-field-label">If so, briefly describe how each grant goal is being met. If no, detail your plan. <span class="grform-required">*</span></span><textarea class="bmr-textarea" rows="4" data-rpt="goalsDetail" placeholder="Describe progress on each goal…"></textarea></label>
+              </div>
+
+              <p class="grform-q" style="margin-top:14px;">Since your original proposal, have there been any significant updates to your project's goals or plans/activities? <span class="grform-required">*</span></p>
+              <div class="grform-radio">
+                <label><input type="radio" name="rpt-goalsUpdated" data-rpt="goalsUpdated" value="Yes" onchange="rptToggle('rpt-updates-detail','Yes',this)"><span>Yes</span></label>
+                <label><input type="radio" name="rpt-goalsUpdated" data-rpt="goalsUpdated" value="No" onchange="rptToggle('rpt-updates-detail','Yes',this)"><span>No</span></label>
+              </div>
+              <div id="rpt-updates-detail" style="display:none;">
+                <label class="bmr-field" style="margin-top:10px;"><span class="bmr-field-label">If so, please provide a brief summary. <span class="grform-required">*</span></span><textarea class="bmr-textarea" rows="4" data-rpt="goalsUpdatedDetail" placeholder="Brief summary of updates…"></textarea></label>
+              </div>
+
+              <label class="bmr-field" style="margin-top:18px;"><span class="bmr-field-label">Identify any barriers you have encountered that may affect your progress/spending. Describe the steps you are taking to address these barriers. <span class="grform-required">*</span></span><textarea class="bmr-textarea" rows="5" data-rpt="barriers" placeholder="Describe barriers and your steps to address them…" required></textarea></label>
+
+              <div class="grform-section-title" style="margin-top:24px;">Total Grant Expenditures to Date <span class="grform-required">*</span></div>
+              <p class="grform-prompt">List the amount spent as of the date of this submission, aligned with your approved application budget.</p>
+              <div class="rpt-tbl-wrap" style="overflow-x:auto;">
+                <table class="rpt-exp-table" id="rpt-expenditures">
+                  <thead><tr>
+                    <th>Expenditure Type</th><th>Year</th><th>Description</th>
+                    <th>Approved Grant Award Amount</th><th>Total Expenditures to Date</th>
+                    <th>Unexpended Balance</th><th></th>
+                  </tr></thead>
+                  <tbody id="rpt-exp-body"></tbody>
+                </table>
+              </div>
+              <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                <button type="button" class="bmr-btn" onclick="rptAddRow()">+ Add Expenditure Row</button>
+                <button type="button" class="bmr-btn" onclick="rptAddDefaultRows()" id="rpt-add-defaults-btn">+ Add All Budget Categories</button>
+              </div>
+
+              <div class="grform-section-title" style="margin-top:24px;">Expenditure Report Upload <span class="grform-required">*</span></div>
+              <p class="grform-prompt">To ensure compliance with auditing requirements, please upload a corresponding expenditure report.</p>
+              <div class="rpt-upload-wrap" id="rpt-upload-wrap">
+                <label class="rpt-upload-label" for="rpt-upload-input">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <span id="rpt-upload-label-text">Drop files here or click to select (PDF, Excel, CSV)</span>
+                </label>
+                <input type="file" id="rpt-upload-input" accept=".pdf,.xlsx,.xls,.csv,.doc,.docx" style="display:none;" onchange="rptHandleUpload(this)">
+                <div class="rpt-upload-clear" id="rpt-upload-clear" style="display:none;"><button type="button" class="bmr-btn" onclick="rptClearUpload()">&#10005; Remove file</button></div>
+              </div>
+
+              <p class="grform-q" style="margin-top:24px;">Does your district have any intention of submitting a budget modification request? <span class="grform-required">*</span></p>
+              <div class="grform-radio">
+                <label><input type="radio" name="rpt-bmrIntent" data-rpt="bmrIntent" value="Yes" onchange="rptToggle('rpt-bmr-note',null,null,true)"><span>Yes</span></label>
+                <label><input type="radio" name="rpt-bmrIntent" data-rpt="bmrIntent" value="No" onchange="rptToggle('rpt-bmr-note',null,null,false)"><span>No</span></label>
+              </div>
+              <div class="grform-note" id="rpt-bmr-note" style="display:none;">
+                <p>If so, please contact Drs. John Parker and Herbert English at your earliest convenience to discuss next steps.</p>
+              </div>
+
+              <label class="bmr-field" style="margin-top:18px;"><span class="bmr-field-label">Optional: Any other barriers or anything else you would like to share?</span><textarea class="bmr-textarea" rows="4" data-rpt="optional" placeholder="Optional…"></textarea></label>
+
+              <div class="bmr-footer" style="margin-top:24px;">
+                <p class="grform-cert-text">The Chancellor's Office may modify reporting requirements and may convene required technical assistance meetings or workshops, facilitated by the Grant Monitor or Chancellor's Office staff, to address implementation challenges and leverage Vision 2030 or institution specific resources. The designated Point of Contact or team member is required to participate in all required technical assistance activities during the performance period.</p>
+                <label class="bmr-field" style="margin-top:12px;"><span class="bmr-field-label">By submitting this form, you certify that the information recorded is complete and accurate. Enter your name to certify. <span class="grform-required">*</span></span><input class="bmr-input" type="text" data-rpt="certify" placeholder="Your full name" required></label>
+                <div class="bmr-actions" style="margin-top:16px;">
+                  <button type="button" class="bmr-btn" onclick="rptSaveDraft()">Save Draft</button>
+                  <button type="button" class="bmr-btn" onclick="resetReportForm()">Reset</button>
+                  <button type="button" class="bmr-btn primary" id="rpt-submit-btn" onclick="submitRptForm()">Submit Report</button>
+                </div>
+                <div class="bmr-submit-status" id="rpt-submit-status" role="status" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </main>
   </div>
 
   <nav class="mobile-nav">
@@ -1659,6 +2188,7 @@
       <button class="mobile-nav-btn" onclick="showSection('timeline',this,true)" data-mobile-nav><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span data-i18n="nav_timeline">Timeline</span></button>
       <button class="mobile-nav-btn" onclick="showSection('contacts',this,true)" data-mobile-nav><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="nav_contacts">Contacts</span></button>
       <button class="mobile-nav-btn" onclick="showSection('spenddown',this,true)" data-mobile-nav><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="nav_spenddown">Spend</span></button>
+          <button class="mobile-nav-btn" onclick="showSection('forms',this,true)" data-mobile-nav><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Forms</span></button>
     </div>
   </nav>
 </div>
