@@ -1857,9 +1857,11 @@ function startReportGuide(){
               <label class="bmr-field"><span class="bmr-field-label">Approved by</span><input class="bmr-input" type="text" data-bmr-meta="approvedBy" placeholder="Approver name &amp; title"></label>
               <div class="bmr-actions">
                 <button type="button" class="bmr-btn" onclick="resetBudgetModForm()">Reset to Current Budget</button>
+                <button type="button" class="bmr-btn primary" id="bmr-submit-btn" onclick="submitBmrForm()">Submit to CCCCO</button>
                 <button type="button" class="bmr-btn primary" onclick="window.print()">Print / Save PDF</button>
               </div>
             </div>
+            <div class="bmr-submit-status" id="bmr-submit-status" role="status" aria-live="polite" style="margin:6px 0 4px;font-size:12px;font-weight:600;min-height:16px;"></div>
             <div class="bmr-saved-note" id="bmr-saved-note">Entries are saved automatically in this browser.</div>
           </div>
         </div>
@@ -3255,14 +3257,78 @@ function renderBudget() {
      Year 1 / Year 2 cards, the KPI cards and the Timeline live.
    - All entries persist in localStorage.
 ════════════════════════════════════════════════════════════════ */
-const BMR_STORE = 'avc_budget_mod_form_v1';
+const BMR_STORE = 'kccd_budget_mod_form_v1';
 const parseMoney = s => { const n = parseFloat(String(s).replace(/−/g, '-').replace(/[^0-9.\-]/g, '')); return isFinite(n) ? n : 0; };
 
 function loadBmrState() {
   try { return JSON.parse(localStorage.getItem(BMR_STORE)) || {}; } catch(e) { return {}; }
 }
 function saveBmrState(state) {
-  try { localStorage.setItem(BMR_STORE, JSON.stringify(state)); } catch(e) {}
+  try { localStorage.setItem(BMR_STORE, JSON.stringify(state)); }
+
+/* ── BMR submit to CCCCO via bmr-sync Worker ── */
+const BMR_SYNC_URL  = 'https://bmr-sync.shrill-king-ef4e.workers.dev';
+const BMR_SYNC_ID   = 'kern';
+const BMR_SYNC_NAME = 'Kern Community College District';
+const BMR_SUBMIT_TO = ['eeosubmissions@cccco.edu', 'admin@bulleconsulting.com'];
+
+function setBmrSubmitStatus(msg, kind) {
+  const el = document.getElementById('bmr-submit-status');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.className = 'bmr-submit-status' + (kind ? ' ' + kind : '');
+}
+
+function bmrReadiness(state) {
+  const meta = state.meta || {};
+  if (!meta.submittedBy || !String(meta.submittedBy).trim()) return 'Please enter the Submitted-by name before submitting.';
+  if (!meta.email || !String(meta.email).trim()) return 'Please enter your email before submitting.';
+  return '';
+}
+
+async function submitBmrToWorker(state, btn) {
+  const meta = state.meta || {};
+  const submitterEmail = (meta.email || '').trim();
+  const recipients = (submitterEmail && !BMR_SUBMIT_TO.some(a => a.toLowerCase() === submitterEmail.toLowerCase()))
+    ? BMR_SUBMIT_TO.concat(submitterEmail) : BMR_SUBMIT_TO.slice();
+  const award = (typeof districts !== 'undefined' && districts[0] && districts[0].funding) ? districts[0].funding : 150000;
+  const payload = {
+    district: BMR_SYNC_ID, name: BMR_SYNC_NAME, formName: 'Budget Modification Request',
+    award: award, state: state, recipients: recipients,
+    submittedBy: meta.submittedBy || '', submittedAt: new Date().toISOString()
+  };
+  try {
+    const r = await fetch(BMR_SYNC_URL.replace(/\/+$/, '') + '/bmr/' + BMR_SYNC_ID + '/submit', {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload)
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json().catch(() => ({}));
+    if (data && data.mailed === false) throw new Error('delivery failed: ' + (data.mailError || 'unknown'));
+    const copyNote = submitterEmail ? ' (with a copy to you at ' + submitterEmail + ')' : '';
+    setBmrSubmitStatus('✓ Submitted — the completed form was emailed to ' + BMR_SUBMIT_TO.join(' and ') + copyNote + '.', 'ok');
+    try { localStorage.removeItem(BMR_STORE); } catch (e) {}
+    return true;
+  } catch (e) {
+    setBmrSubmitStatus('Submission didn’t reach the service — your draft is saved. Please click Submit to try again.', 'error');
+    return false;
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function submitBmrForm() {
+  const state = loadBmrState();
+  const problem = bmrReadiness(state);
+  if (problem) { setBmrSubmitStatus(problem, 'warn'); return; }
+  if (!window.confirm('Submit this Budget Modification Request?\n\nOn confirm, the completed form is emailed to CCCCO and Bulle admin.')) {
+    setBmrSubmitStatus('Submission cancelled — your draft is saved.', 'warn');
+    return;
+  }
+  const btn = document.getElementById('bmr-submit-btn');
+  if (btn) btn.disabled = true;
+  setBmrSubmitStatus('Submitting…', 'pending');
+  submitBmrToWorker(state, btn);
+} catch(e) {}
 }
 
 // The project year the form is currently showing ('y1' | 'y2').
