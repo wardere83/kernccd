@@ -3264,7 +3264,8 @@ function loadBmrState() {
   try { return JSON.parse(localStorage.getItem(BMR_STORE)) || {}; } catch(e) { return {}; }
 }
 function saveBmrState(state) {
-  try { localStorage.setItem(BMR_STORE, JSON.stringify(state)); }
+  try { localStorage.setItem(BMR_STORE, JSON.stringify(state)); } catch(e) {}
+}
 
 /* ── BMR submit to CCCCO via bmr-sync Worker ── */
 const BMR_SYNC_URL  = 'https://bmr-sync.shrill-king-ef4e.workers.dev';
@@ -3328,7 +3329,6 @@ function submitBmrForm() {
   if (btn) btn.disabled = true;
   setBmrSubmitStatus('Submitting…', 'pending');
   submitBmrToWorker(state, btn);
-} catch(e) {}
 }
 
 // The project year the form is currently showing ('y1' | 'y2').
