@@ -127,7 +127,7 @@ function rptHandleUpload(input) {
   const file = input.files && input.files[0]; if (!file) return;
   _rptUploadFile = file; _rptUploadName = file.name;
   const lbl = document.getElementById('rpt-upload-label-text');
-  if (lbl) lbl.textContent = '&#10003; ' + file.name + ' (' + (file.size > 1024*1024 ? (file.size/1024/1024).toFixed(1)+'MB' : (file.size/1024).toFixed(0)+'KB') + ')';
+  if (lbl) lbl.textContent = '\u2713 ' + file.name + ' (' + (file.size > 1024*1024 ? (file.size/1024/1024).toFixed(1)+'MB' : (file.size/1024).toFixed(0)+'KB') + ')';
   const clr = document.getElementById('rpt-upload-clear'); if (clr) clr.style.display = 'block';
   const reader = new FileReader();
   reader.onload = e => { _rptUploadB64 = e.target.result.split(',')[1]; };
@@ -206,6 +206,7 @@ function submitRptForm() {
   st.goalsMetDetail = st.goalsMetDetail || st.goalsDetail || '';
   st.updates = st.updates || st.goalsUpdated || '';
   st.updatesDetail = st.updatesDetail || st.goalsUpdatedDetail || '';
+  st._uploadFileName = _rptUploadName || null;
   const districtId = (st.district || 'kern').toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').slice(0,30) || 'kern';
   const payload = { formType:'eeo_ibp_grant_report', district:st.district||'', state:st, recipients:RPT_SUBMIT_TO, submittedAt:new Date().toISOString(), uploadFileName:_rptUploadName||null, uploadFileB64:_rptUploadB64||null };
   if (btn) { btn.disabled=true; btn.textContent='Submitting…'; }
@@ -213,7 +214,7 @@ function submitRptForm() {
   fetch(EEO_RPT_URL + '/rpt/' + districtId + '/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) })
     .then(r=>r.json()).then(data => {
       if (btn) { btn.disabled=false; btn.textContent='Submit Report'; }
-      if (data.ok) { setRptSubmitStatus('&#10003; Submitted — a copy was emailed to ' + RPT_SUBMIT_TO.join(' and ') + '.','ok'); }
+      if (data.ok) { setRptSubmitStatus('\u2713 Submitted — a copy was emailed to ' + RPT_SUBMIT_TO.join(' and ') + '.','ok'); }
       else { setRptSubmitStatus('The submission service couldn\u2019t send email (' + (data.error || 'unknown') + ') \u2014 opening your email app with a complete copy instead.', 'warn');
       window.location.href = rptMailtoHref(st); }
     }).catch(() => {
@@ -3345,6 +3346,53 @@ function bmrReadiness(state) {
   return '';
 }
 
+// Build the plain-text email body — the complete, readable form — used by the
+// mail-app fallback when the submission service can't be reached.
+function bmrEmailBody(state) {
+  const meta = state.meta || {};
+  const money = v => (v == null || v === '') ? '\u2014' : fmt(Number(v));
+  const lines = [];
+  lines.push('BUDGET MODIFICATION REQUEST');
+  lines.push(meta.district || BMR_SYNC_NAME);
+  lines.push('');
+  lines.push('Submitted by: ' + (meta.submittedBy || ''));
+  lines.push('Email: ' + (meta.email || ''));
+  lines.push('Submission date: ' + (meta.date || ''));
+  if (meta.approvedBy) lines.push('Approved by: ' + meta.approvedBy);
+  lines.push('');
+  lines.push('Total award (ceiling): ' + fmt(districts[0].funding));
+  lines.push('Modified project budget: ' + fmt(budgetTotal()));
+  lines.push('');
+  ['y1', 'y2'].forEach(yk => {
+    const ym = yearMeta[yk] || { label: yk, dates: '' };
+    const rows = ((state.years && state.years[yk] && state.years[yk].rows) || {});
+    let yearTotal = 0;
+    const body = [];
+    BUDGET_BASELINE.forEach(r => {
+      const rs = rows[r.code] || {};
+      const base = baselineYear(r.code, yk);
+      const proposed = rs.proposed != null ? rs.proposed : base;
+      yearTotal += proposed;
+      body.push(r.code + ' ' + r.label);
+      body.push('    Proposed ' + money(proposed) + ' | Actuals ' + money(rs.actuals) +
+                ' | Fund Balance ' + money(rs.balance) + ' | Projections ' + money(rs.projections));
+      if (rs.updates && String(rs.updates).trim()) body.push('    Update: ' + String(rs.updates).trim());
+    });
+    lines.push('== ' + ym.label.toUpperCase() + ' \u00b7 ' + ym.dates + ' ==  Modified total: ' + fmt(yearTotal));
+    lines.push.apply(lines, body);
+    lines.push('');
+  });
+  lines.push('\u2014 Submitted via the Kern CCD EEO dashboard.');
+  return lines.join('\n');
+}
+function bmrMailtoHref(state) {
+  const subject = 'Budget Modification Request \u2014 ' + (state.meta && state.meta.district || BMR_SYNC_NAME) +
+                  (state.meta && state.meta.date ? ' (' + state.meta.date + ')' : '');
+  return 'mailto:' + BMR_SUBMIT_TO.join(',') +
+         '?subject=' + encodeURIComponent(subject) +
+         '&body=' + encodeURIComponent(bmrEmailBody(state));
+}
+
 async function submitBmrToWorker(state, btn) {
   const meta = state.meta || {};
   const submitterEmail = (meta.email || '').trim();
@@ -3369,7 +3417,8 @@ async function submitBmrToWorker(state, btn) {
     try { localStorage.removeItem(BMR_STORE); } catch (e) {}
     return true;
   } catch (e) {
-    setBmrSubmitStatus('Submission didn’t reach the service — your draft is saved. Please click Submit to try again.', 'error');
+    setBmrSubmitStatus('Couldn\u2019t reach the submission service \u2014 opening your email app with a complete copy instead. Your draft is saved here too.', 'warn');
+    window.location.href = bmrMailtoHref(state);
     return false;
   } finally {
     if (btn) btn.disabled = false;
