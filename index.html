@@ -156,6 +156,13 @@ function submitRptForm() {
     else st[k] = el.value;
   });
   st.expenditures = rptGetRows();
+  // The eeo-rpt-sync Worker's emailed rendering reads teamChangedDetail /
+  // goalsMetDetail / updates / updatesDetail — alias this form's field names
+  // so every answer appears in the emailed copy of the full document.
+  st.teamChangedDetail = st.teamChangedDetail || st.teamDetail || '';
+  st.goalsMetDetail = st.goalsMetDetail || st.goalsDetail || '';
+  st.updates = st.updates || st.goalsUpdated || '';
+  st.updatesDetail = st.updatesDetail || st.goalsUpdatedDetail || '';
   const districtId = (st.district || 'kern').toLowerCase().replace(/[^a-z0-9]/g,'-').replace(/-+/g,'-').slice(0,30) || 'kern';
   const payload = { formType:'eeo_ibp_grant_report', district:st.district||'', state:st, recipients:RPT_SUBMIT_TO, submittedAt:new Date().toISOString(), uploadFileName:_rptUploadName||null, uploadFileB64:_rptUploadB64||null };
   if (btn) { btn.disabled=true; btn.textContent='Submitting…'; }
@@ -3301,7 +3308,8 @@ async function submitBmrToWorker(state, btn) {
   const award = (typeof districts !== 'undefined' && districts[0] && districts[0].funding) ? districts[0].funding : 150000;
   const payload = {
     district: BMR_SYNC_ID, name: BMR_SYNC_NAME, formName: 'Budget Modification Request',
-    award: award, state: state, recipients: recipients,
+    award: award, baseline: BUDGET_BASELINE, model: BUDGET_MODEL,
+    state: state, recipients: recipients,
     submittedBy: meta.submittedBy || '', submittedAt: new Date().toISOString()
   };
   try {
