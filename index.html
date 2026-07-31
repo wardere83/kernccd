@@ -73,6 +73,7 @@ function rptPersist() {
   st.expenditures = rptGetRows();
   rptSave(st);
   rptSyncConditionals();
+  if (typeof publishRpt === 'function') publishRpt();
 }
 function rptToggle(divId, showVal, radioEl, forceShow) {
   const div = document.getElementById(divId);
@@ -3278,6 +3279,28 @@ const BMR_SYNC_URL  = 'https://bmr-sync.shrill-king-ef4e.workers.dev';
 const BMR_SYNC_ID   = 'kern';
 const BMR_SYNC_NAME = 'Kern Community College District';
 const BMR_SUBMIT_TO = ['eeosubmissions@cccco.edu', 'admin@bulleconsulting.com'];
+
+/* ── Report draft live sync: publish this district's in-progress EEO IBP
+      Grant Report draft to the report feed, mirroring the BMR sync above ── */
+const RPT_SYNC_ID = 'kern';
+let rptSyncTimer = null;
+function publishRpt() {
+  clearTimeout(rptSyncTimer);
+  rptSyncTimer = setTimeout(() => {
+    const base = String(EEO_RPT_URL || '').replace(/\/+$/, '');
+    if (!base) return;
+    fetch(base + '/rpt/' + RPT_SYNC_ID, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        district: RPT_SYNC_ID,
+        name: BMR_SYNC_NAME,
+        state: rptLoad(),
+        updatedAt: new Date().toISOString()
+      })
+    }).catch(() => {});
+  }, 1200);
+}
 
 function setBmrSubmitStatus(msg, kind) {
   const el = document.getElementById('bmr-submit-status');
