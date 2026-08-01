@@ -3280,6 +3280,29 @@ const BMR_SYNC_ID   = 'kern';
 const BMR_SYNC_NAME = 'Kern Community College District';
 const BMR_SUBMIT_TO = ['eeosubmissions@cccco.edu', 'admin@bulleconsulting.com'];
 
+/* ── BMR live sync: publish this district's Budget Modification data to the
+      shared feed consumed by the EEO Data Intelligence "BMR Updates" tab ── */
+let bmrSyncTimer = null;
+function publishBmr() {
+  if (!BMR_SYNC_URL) return;
+  clearTimeout(bmrSyncTimer);
+  bmrSyncTimer = setTimeout(() => {
+    const payload = {
+      district: BMR_SYNC_ID,
+      name: BMR_SYNC_NAME,
+      award: districts[0].funding,
+      baseline: BUDGET_BASELINE,
+      model: BUDGET_MODEL,
+      state: loadBmrState()
+    };
+    fetch(BMR_SYNC_URL + '/bmr/' + BMR_SYNC_ID, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {});
+  }, 1200);
+}
+
 /* ── Report draft live sync: publish this district's in-progress EEO IBP
       Grant Report draft to the report feed, mirroring the BMR sync above ── */
 const RPT_SYNC_ID = 'kern';
@@ -3554,6 +3577,7 @@ function persistBmr() {
     state.years[yk].rows = rows;
   });
   saveBmrState(state);
+  if (typeof publishBmr === 'function') publishBmr();
 }
 
 // On load, fold any previously-saved modifications back into the live model
