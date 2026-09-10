@@ -1239,11 +1239,7 @@ function startReportGuide(){
     .sme-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:12px 18px; background:var(--bg-surface-2); border-bottom:1px solid var(--border); }
     .sme-bar-title { font-family:var(--font-display,inherit); font-size:14px; font-weight:600; color:var(--ccc-dark-blue); display:flex; align-items:center; gap:8px; }
     [data-theme="dark"] .sme-bar-title { color:var(--accent-light); }
-    .sme-open-btn { display:inline-flex; align-items:center; gap:6px; font-family:var(--font-body); font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:var(--radius-md); border:1px solid var(--border-strong); background:var(--bg-surface); color:var(--ccc-dark-blue); text-decoration:none; cursor:pointer; transition:all var(--transition); white-space:nowrap; }
-    .sme-open-btn:hover { border-color:var(--ccc-dark-gold,#b8860b); box-shadow:var(--shadow-md); }
-    .sme-open-btn:focus-visible { outline:2px solid var(--ccc-gold); outline-offset:2px; }
-    [data-theme="dark"] .sme-open-btn { color:var(--accent-light); }
-    .sme-frame-wrap { position:relative; width:100%; height:clamp(620px, calc(100vh - 210px), 1100px); background:var(--bg-surface); }
+    .sme-frame-wrap { position:relative; width:100%; height:clamp(720px, calc(100vh - 180px), 1200px); background:var(--bg-surface); }
     .sme-frame { width:100%; height:100%; border:0; display:block; }
     .sme-state { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; padding:28px; background:var(--bg-surface); }
     .sme-state[hidden] { display:none; }
@@ -1251,12 +1247,7 @@ function startReportGuide(){
     @keyframes smeSpin { to { transform:rotate(360deg); } }
     @media (prefers-reduced-motion:reduce) { .sme-spinner { animation-duration:2400ms; } }
     .sme-state-title { font-size:14px; font-weight:600; color:var(--text-primary); }
-    .sme-state-msg { font-size:12.5px; color:var(--text-muted); line-height:1.55; max-width:440px; }
-    .sme-hint { display:flex; align-items:center; justify-content:center; gap:6px; flex-wrap:wrap; padding:10px 18px; border-top:1px solid var(--border); background:var(--bg-surface-2); font-size:12px; color:var(--text-muted); line-height:1.5; text-align:center; }
-    .sme-hint a { color:var(--ccc-dark-blue); font-weight:600; text-decoration:none; border-bottom:1px solid currentColor; }
-    .sme-hint a:hover { color:var(--ccc-dark-gold,#b8860b); }
-    [data-theme="dark"] .sme-hint a { color:var(--accent-light); }
-    @media (max-width:900px) { .sme-frame-wrap { height:clamp(560px, calc(100vh - 190px), 900px); } }
+    @media (max-width:900px) { .sme-frame-wrap { height:clamp(640px, calc(100vh - 160px), 1000px); } }
   </style>
 </head>
 <body>
@@ -2072,7 +2063,6 @@ function startReportGuide(){
         <div class="sme-card">
           <div class="sme-bar">
             <div class="sme-bar-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg><span data-i18n="booksme_bar">SME Booking</span></div>
-            <a class="sme-open-btn" href="https://eeo.bulleconsulting.com/frm/2rW8i3RKy21HEeheX" target="_blank" rel="noopener noreferrer"><span data-i18n="booksme_open">Open in a new tab</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
           </div>
           <div class="sme-frame-wrap">
             <iframe id="sme-frame" class="sme-frame" title="Booking SME" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -2080,15 +2070,6 @@ function startReportGuide(){
               <div class="sme-spinner" aria-hidden="true"></div>
               <div class="sme-state-title" data-i18n="booksme_loading">Loading the booking page…</div>
             </div>
-            <div class="sme-state" id="sme-fallback" hidden>
-              <div class="sme-state-title" data-i18n="booksme_fb_title">The booking page could not be shown here</div>
-              <div class="sme-state-msg" data-i18n="booksme_fb_msg">The scheduler declined to load inside the dashboard. Open it in a new tab instead — it works exactly the same.</div>
-              <a class="sme-open-btn" href="https://eeo.bulleconsulting.com/frm/2rW8i3RKy21HEeheX" target="_blank" rel="noopener noreferrer"><span data-i18n="booksme_open">Open in a new tab</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-            </div>
-          </div>
-          <div class="sme-hint">
-            <span data-i18n="booksme_hint">Booking form not appearing above?</span>
-            <a href="https://eeo.bulleconsulting.com/frm/2rW8i3RKy21HEeheX" target="_blank" rel="noopener noreferrer" data-i18n="booksme_hint_link">Open the booking page in a new tab ›</a>
           </div>
         </div>
       </div>
@@ -2414,12 +2395,7 @@ const translations = {
     booksme_title:'Booking SME',
     booksme_sub:'Schedule time with a Bulle Consulting subject matter expert for technical assistance on your EEO IBP grant deliverables.',
     booksme_bar:'SME Booking',
-    booksme_open:'Open in a new tab',
     booksme_loading:'Loading the booking page…',
-    booksme_fb_title:'The booking page could not be shown here',
-    booksme_fb_msg:'The scheduler declined to load inside the dashboard. Open it in a new tab instead — it works exactly the same.',
-    booksme_hint:'Booking form not appearing above?',
-    booksme_hint_link:'Open the booking page in a new tab ›',
     nav_overview:'Overview', nav_goals:'Goals & Objectives', nav_districts:'Project Profile',
     nav_outcomes:'Outcomes', nav_budget:'Budget Breakdown', nav_timeline:'Timeline', nav_contacts:'Contacts', nav_spenddown:'Spend-Down Monitor',
     topbar_title:'Kern CCD Project',
@@ -2530,12 +2506,7 @@ const translations = {
     booksme_title:'Reservar con un experto (SME)',
     booksme_sub:'Programe una cita con un experto en la materia de Bulle Consulting para recibir asistencia técnica con los entregables de su subvención EEO IBP.',
     booksme_bar:'Reserva con un experto',
-    booksme_open:'Abrir en una pestaña nueva',
     booksme_loading:'Cargando la página de reservas…',
-    booksme_fb_title:'No se pudo mostrar la página de reservas aquí',
-    booksme_fb_msg:'El programador no permitió cargarse dentro del panel. Ábralo en una pestaña nueva; funciona exactamente igual.',
-    booksme_hint:'¿No aparece el formulario de reserva?',
-    booksme_hint_link:'Abrir la página de reservas en una pestaña nueva ›',
     nav_overview:'Resumen', nav_goals:'Metas y Objetivos', nav_districts:'Perfil del Proyecto', nav_outcomes:'Resultados', nav_budget:'Presupuesto', nav_timeline:'Cronograma', nav_contacts:'Contactos', nav_spenddown:'Monitor de Gastos',
     topbar_title:'Proyecto Kern CCD',
     overview_title:'Resumen del Programa', overview_sub:'Kern Community College District — beneficiario de Nivel 2, Programas de Desarrollo Profesional y Representantes de EEO. Subvención de $100,000 del ciclo EEO IBP 2026–2028.',
@@ -2631,12 +2602,7 @@ const translations = {
     booksme_title:'Đặt lịch với chuyên gia (SME)',
     booksme_sub:'Đặt lịch hẹn với chuyên gia của Bulle Consulting để được hỗ trợ kỹ thuật cho các sản phẩm bàn giao của khoản tài trợ EEO IBP.',
     booksme_bar:'Đặt lịch chuyên gia',
-    booksme_open:'Mở trong tab mới',
     booksme_loading:'Đang tải trang đặt lịch…',
-    booksme_fb_title:'Không thể hiển thị trang đặt lịch tại đây',
-    booksme_fb_msg:'Trình đặt lịch không cho phép tải bên trong bảng điều khiển. Hãy mở trong tab mới — chức năng hoàn toàn giống nhau.',
-    booksme_hint:'Biểu mẫu đặt lịch không hiển thị ở trên?',
-    booksme_hint_link:'Mở trang đặt lịch trong tab mới ›',
     nav_overview:'Tổng quan', nav_goals:'Mục tiêu & Đối tượng', nav_districts:'Hồ sơ Dự án', nav_outcomes:'Kết quả', nav_budget:'Ngân sách', nav_timeline:'Lịch trình', nav_contacts:'Liên lạc', nav_spenddown:'Theo dõi Chi tiêu',
     topbar_title:'Dự án Kern CCD',
     overview_title:'Tổng quan Chương trình', overview_sub:'Kern Community College District — Người nhận Bậc 2, Chương trình Phát triển Chuyên môn và Đại diện EEO. Khoản tài trợ $100,000 từ chu kỳ EEO IBP 2026–2028.',
@@ -2732,12 +2698,7 @@ const translations = {
     booksme_title:'Ամրագրել հանդիպում մասնագետի հետ',
     booksme_sub:'Ամրագրեք հանդիպում Bulle Consulting-ի ոլորտի մասնագետի հետ՝ EEO IBP դրամաշնորհի արդյունքների վերաբերյալ տեխնիկական աջակցության համար։',
     booksme_bar:'Մասնագետի ամրագրում',
-    booksme_open:'Բացել նոր ներդիրում',
     booksme_loading:'Ամրագրման էջը բեռնվում է…',
-    booksme_fb_title:'Ամրագրման էջը հնարավոր չէ ցուցադրել այստեղ',
-    booksme_fb_msg:'Ամրագրման համակարգը թույլ չտվեց բեռնվել վահանակի ներսում։ Բացեք այն նոր ներդիրում՝ գործառույթը նույնն է։',
-    booksme_hint:'Ամրագրման ձևը վերևում չի՞ երևում',
-    booksme_hint_link:'Բացել ամրագրման էջը նոր ներդիրում ›',
     nav_overview:'Ընդհանուր ակնարկ',
     nav_goals:'Նպատակներ և նպատակներ',
     nav_districts:'Ծրագրի պրոֆիլը',
@@ -2900,12 +2861,7 @@ const translations = {
     booksme_title:'전문가(SME) 예약',
     booksme_sub:'EEO IBP 보조금 산출물에 대한 기술 지원을 위해 Bulle Consulting 주제 전문가와의 상담을 예약하세요.',
     booksme_bar:'전문가 예약',
-    booksme_open:'새 탭에서 열기',
     booksme_loading:'예약 페이지를 불러오는 중…',
-    booksme_fb_title:'예약 페이지를 여기에 표시할 수 없습니다',
-    booksme_fb_msg:'예약 시스템이 대시보드 내 표시를 허용하지 않았습니다. 새 탭에서 열어 주세요 — 기능은 완전히 동일합니다.',
-    booksme_hint:'위에 예약 양식이 표시되지 않나요?',
-    booksme_hint_link:'새 탭에서 예약 페이지 열기 ›',
     nav_overview:'개요',
     nav_goals:'목표 및 목표',
     nav_districts:'프로젝트 프로필',
@@ -3068,12 +3024,7 @@ const translations = {
     booksme_title:'預約專家（SME）',
     booksme_sub:'預約 Bulle Consulting 主題專家的時間，為您的 EEO IBP 補助交付成果提供技術協助。',
     booksme_bar:'專家預約',
-    booksme_open:'在新分頁開啟',
     booksme_loading:'正在載入預約頁面…',
-    booksme_fb_title:'無法在此顯示預約頁面',
-    booksme_fb_msg:'預約系統不允許在儀表板內載入。請在新分頁開啟 — 功能完全相同。',
-    booksme_hint:'上方的預約表單沒有顯示嗎？',
-    booksme_hint_link:'在新分頁開啟預約頁面 ›',
     nav_overview:'總覽', nav_goals:'目標與宗旨', nav_districts:'計畫簡介', nav_outcomes:'成果', nav_budget:'預算明細', nav_timeline:'時間表', nav_contacts:'聯絡資訊', nav_spenddown:'支出進度監測',
     topbar_title:'Kern CCD 計畫',
     overview_title:'計畫總覽',
@@ -3212,11 +3163,8 @@ function toggleSidebar() { document.getElementById('sidebar').classList.toggle('
 function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('open'); }
 
 /* Book SME — the scheduler is third-party, so only fetch it once the tab is
-   actually opened, and keep a new-tab escape hatch in case it refuses to be
-   framed (X-Frame-Options / CSP frame-ancestors). A refused frame still fires
-   `load` (the browser renders its own error page), so `load` only means "stop
-   spinning" — it is not proof the scheduler rendered. The always-visible hint
-   bar below the frame is what covers a refused embed. */
+   actually opened. The spinner covers the frame until it reports load (or a
+   few seconds pass), then the frame is left to fill the panel. */
 const SME_BOOKING_URL = 'https://eeo.bulleconsulting.com/frm/2rW8i3RKy21HEeheX';
 let smeFrameStarted = false;
 function initSmeFrame() {
@@ -3224,22 +3172,9 @@ function initSmeFrame() {
   if (!frame || smeFrameStarted) return;
   smeFrameStarted = true;
   const loading = document.getElementById('sme-loading');
-  const fallback = document.getElementById('sme-fallback');
-  let settled = false;
-  const showFallback = () => {
-    if (settled) return;
-    settled = true;
-    if (loading) loading.hidden = true;
-    if (fallback) fallback.hidden = false;
-  };
-  const timer = setTimeout(showFallback, 9000);
-  frame.addEventListener('load', () => {
-    if (settled) return;
-    settled = true;
-    clearTimeout(timer);
-    if (loading) loading.hidden = true;
-  });
-  frame.addEventListener('error', () => { clearTimeout(timer); showFallback(); });
+  const hideSpinner = () => { if (loading) loading.hidden = true; };
+  const timer = setTimeout(hideSpinner, 9000);
+  frame.addEventListener('load', () => { clearTimeout(timer); hideSpinner(); });
   frame.src = SME_BOOKING_URL;
 }
 
