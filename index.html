@@ -19,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>window.Chart || document.write('<script src="vendor/chart.umd.js"><\/script>');</script>
   <script>
 /* One-time copy of saved drafts off storage keys that were shared with other district dashboards on this origin */
 (function () {
@@ -103,7 +104,7 @@ function rptSaveDraft() {
   try { localStorage.setItem(RPT_STORE, JSON.stringify(st)); } catch(e) {}
   setRptSubmitStatus('Draft saved.', 'ok');
 }
-const RPT_EXP_TYPES = ['Non-Instructional Salaries (2000)','Employee Benefits (3000)','Supplies and Materials (4000)','Other Operating Expenses (5000)','Capital Outlay (6000)','Other Outgo (7000)'];
+const RPT_EXP_TYPES = ['Instructional Salaries (1000)','Non-Instructional Salaries (2000)','Employee Benefits (3000)','Supplies and Materials (4000)','Other Operating Expenses (5000)','Capital Outlay (6000)','Other Outgo (7000)'];
 function rptAddDefaultRows() {
   const tbody = document.getElementById('rpt-exp-body');
   if (!tbody) return;
@@ -2188,9 +2189,9 @@ function startReportGuide(){
           </div>
           <div class="bmr-card-body">
             <div class="bmr-meta-grid">
-              <label class="bmr-field"><span class="bmr-field-label">Community College District</span><input class="bmr-input" type="text" data-bmr-meta="district" placeholder="Antelope Valley CCD"></label>
+              <label class="bmr-field"><span class="bmr-field-label">Community College District</span><input class="bmr-input" type="text" data-bmr-meta="district" placeholder="Kern Community College District"></label>
               <label class="bmr-field"><span class="bmr-field-label">Submitted by - Name &amp; Designated Grant Role</span><input class="bmr-input" type="text" data-bmr-meta="submittedBy" placeholder="Name, Project Lead"></label>
-              <label class="bmr-field"><span class="bmr-field-label">Your Email</span><input class="bmr-input" type="email" data-bmr-meta="email" placeholder="name@avc.edu"></label>
+              <label class="bmr-field"><span class="bmr-field-label">Your Email</span><input class="bmr-input" type="email" data-bmr-meta="email" placeholder="name@kccd.edu"></label>
               <label class="bmr-field"><span class="bmr-field-label">Submission Date</span><input class="bmr-input" type="date" data-bmr-meta="date"></label>
             </div>
 
